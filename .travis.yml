@@ -1,0 +1,29 @@
+language: java
+jdk:
+  - oraclejdk8
+
+before_deploy:
+  - mvn package
+  - cd target
+  - zip -r gilmore ./* -x ./maven-archiver\* ./maven-status\* ./classes\* ./surefire-reports\* ./test-classes\* ./generated-sources\* ./generated-test-sources\* ./generated-classes\* ./cobertura\* ./testtarget\*
+  - ls
+  - cd ..
+
+script:
+  - sh ./src/travis/serenity.sh
+  - mvn test -B
+
+deploy:
+  provider: releases
+  api-key: "$GITHUB_TOKEN"
+  file: "./target/gilmore.zip"
+  skip_cleanup: true
+  on:
+    tags: true
+    all_branches: true
+    jdk: oraclejdk8
+
+notifications:
+  email:
+    on_success: change
+    on_failure: always

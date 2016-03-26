@@ -1,0 +1,23 @@
+# Ignore IntelliJ IDEA files and folders
+*.idea
+*.iml
+
+# Ignore Eclipse files and folders
+*.project
+*.settings
+*.classpath
+
+# Ignore NetBeans files and folders
+**/nbproject
+
+# Ignore Maven files and folders
+**/target
+
+# Ignore logs
+**/logs
+
+**/Thumbs.db
+/build/
+/dist/
+
+/gource/
