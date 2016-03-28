@@ -9,10 +9,17 @@ import net.dv8tion.jda.hooks.ListenerAdapter;
  */
 public class VersionListener extends ListenerAdapter {
 
-    class ReplyMessage implements Runnable {
+    public void onMessageReceived(MessageReceivedEvent event) {
+        if (event.getMessage().getContent().startsWith("!version")) {
+            System.out.println("!version command called");
+            new Thread(new HandleCommand(event)).start();
+        }
+    }
+
+    class HandleCommand implements Runnable {
         MessageReceivedEvent event;
 
-        ReplyMessage(MessageReceivedEvent event) {
+        HandleCommand(MessageReceivedEvent event) {
             this.event = event;
         }
 
@@ -29,14 +36,6 @@ public class VersionListener extends ListenerAdapter {
             }
             event.getMessage().deleteMessage();
             msg.deleteMessage();
-        }
-    }
-
-    public void onMessageReceived(MessageReceivedEvent event) {
-
-        if (event.getMessage().getContent().startsWith("!version")) {
-            System.out.println("!version command called");
-            new Thread(new ReplyMessage(event)).start();
         }
     }
 

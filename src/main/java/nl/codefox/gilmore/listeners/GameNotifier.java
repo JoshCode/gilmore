@@ -30,13 +30,22 @@ public class GameNotifier {
 
         List<User> allUsers = Launcher.JDA.getUsers();
 
-        for(User u : allUsers) {
-            if (interestedUsers.contains(u))
+        System.out.println(interestedUsers);
+
+        for (User u : allUsers) {
+//            System.out.println("User " + u);
+            if (interestedUsers.contains(u)) {
+                System.out.println("PMing " + u);
                 u.getPrivateChannel().sendMessage(host.getUsername() + " is about to start a game of '" + name + "'");
+            }
         }
     }
 
     public String getName() {
         return name;
+    }
+
+    public String toString() {
+        return this.getName();
     }
 }

@@ -16,10 +16,10 @@ public class GameListener extends ListenerAdapter {
     public void onMessageReceived(MessageReceivedEvent event) {
         String command = event.getMessage().getContent();
         if (command.startsWith("!game list")) {
-            if(!games.isEmpty()) {
+            if (!games.isEmpty()) {
                 StringBuilder sb = new StringBuilder();
                 for (GameNotifier g : games) {
-                    sb.append(g.getName());
+                    sb.append(g.getName()).append(System.getProperty("line.separator"));
                 }
                 event.getChannel().sendMessage(sb.toString());
             } else {
@@ -28,21 +28,21 @@ public class GameListener extends ListenerAdapter {
         }
         if (command.startsWith("!game create ")) {
             String params = command.substring("!game create ".length());
-            if(gameExists(params)) {
+            if (gameExists(params)) {
                 event.getChannel().sendMessage("This game already exists, try `!game interest + " + params + "`");
             } else {
                 GameNotifier game = new GameNotifier(params);
                 game.addUser(event.getAuthor());
                 games.add(game);
-                event.getChannel().sendMessage("The game '" + params + "' has been created and '" + event.getAuthor() + "' has been added to it's interest list");
+                event.getChannel().sendMessage("The game '" + params + "' has been created and '" + event.getAuthor() + "' has been added to its interest list");
             }
         }
         if (command.startsWith("!game host ")) {
             String params = command.substring("!game host ".length());
             if (gameExists(params)) {
                 GameNotifier game = null;
-                for(GameNotifier g : games) {
-                    if(g.getName().equals(params)) {
+                for (GameNotifier g : games) {
+                    if (g.getName().equals(params)) {
                         game = g;
                         break;
                     }
@@ -55,7 +55,11 @@ public class GameListener extends ListenerAdapter {
         if (command.startsWith("!game interest ")) {
             String params = command.substring("!game interest ".length());
 
-            if(gameExists(params)) {
+            if (gameExists(params)) {
+                for (GameNotifier game : games) {
+                    if (game.getName().equals(params))
+                        game.addUser(event.getAuthor());
+                }
                 event.getChannel().sendMessage("You have been added to the interest list of '" + params + "'");
             } else {
                 event.getChannel().sendMessage("This game does not exist, try `!game create + " + params + "`");
@@ -67,11 +71,15 @@ public class GameListener extends ListenerAdapter {
         if (games.isEmpty())
             return false;
 
-        for(GameNotifier g : games) {
-            if(g.getName().equals(name))
+        for (GameNotifier g : games) {
+            if (g.getName().equals(name))
                 return true;
         }
         return false;
+    }
+
+    public ArrayList<GameNotifier> getGames() {
+        return games;
     }
 
 }
