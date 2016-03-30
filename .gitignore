@@ -13,6 +13,9 @@
 # Ignore Maven files and folders
 **/target
 
+# Ignore DB folder
+**/db
+
 # Ignore logs
 **/logs
 

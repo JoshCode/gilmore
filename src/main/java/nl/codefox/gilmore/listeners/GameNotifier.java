@@ -1,43 +1,44 @@
 package nl.codefox.gilmore.listeners;
 
-import net.dv8tion.jda.entities.User;
 import nl.codefox.gilmore.Launcher;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author JoshCode
  */
 public class GameNotifier {
 
-    private ArrayList<User> interestedUsers;
+    private ArrayList<String> interestedUsers;
 
     private String name;
 
     public GameNotifier(String name) {
         this.name = name;
-        this.interestedUsers = new ArrayList<User>();
+        this.interestedUsers = new ArrayList<>();
     }
 
-    public void addUser(User interestee) {
-        interestedUsers.add(interestee);
+    public void addUser(String userID) {
+        interestedUsers.add(userID);
     }
 
-    public void notifyUsers(User host) {
+    public void removeUser(String userID) {
+        interestedUsers.remove(userID);
+    }
+
+    public ArrayList<String> getInterestedUsers() {
+        return interestedUsers;
+    }
+
+    public void notifyUsers(String hostUserID) {
         if (interestedUsers.isEmpty())
             return;
 
-        List<User> allUsers = Launcher.JDA.getUsers();
-
         System.out.println(interestedUsers);
 
-        for (User u : allUsers) {
-//            System.out.println("User " + u);
-            if (interestedUsers.contains(u)) {
-                System.out.println("PMing " + u);
-                u.getPrivateChannel().sendMessage(host.getUsername() + " is about to start a game of '" + name + "'");
-            }
+        for (String userID : interestedUsers) {
+            System.out.println("PMing " + Launcher.JDA.getUserById(userID));
+            Launcher.JDA.getUserById(userID).getPrivateChannel().sendMessage(Launcher.JDA.getUserById(hostUserID).getUsername() + " is about to start a game of '" + name + "'");
         }
     }
 
@@ -46,6 +47,9 @@ public class GameNotifier {
     }
 
     public String toString() {
-        return this.getName();
+        StringBuilder sb = new StringBuilder();
+        sb.append(this.getName()).append(" ");
+        sb.append("(").append(interestedUsers.size()).append(" interested").append(")");
+        return sb.toString();
     }
 }

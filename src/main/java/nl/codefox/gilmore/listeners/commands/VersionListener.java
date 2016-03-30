@@ -26,7 +26,7 @@ public class VersionListener extends ListenerAdapter {
         public void run() {
             StringBuilder sb = new StringBuilder();
             sb.append("**Gilmore's Glorious Bot**").append("\n");
-            sb.append("Version   : ").append("v1.0.0").append("\n");
+            sb.append("Version   : ").append("v1.0.0-SNAPSHOT").append("\n");
             sb.append("Created by: ").append("Dexcuracy").append("\n");
             Message msg = event.getChannel().sendMessage(sb.toString());
             try {
