@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import net.dv8tion.jda.JDA;
 import net.dv8tion.jda.JDABuilder;
+import nl.codefox.gilmore.config.GilmoreConfiguration;
 import nl.codefox.gilmore.listeners.GameNotifier;
 import nl.codefox.gilmore.listeners.ReadyListener;
 import nl.codefox.gilmore.listeners.commands.GameListener;
@@ -22,14 +23,19 @@ import java.util.ArrayList;
 public class Launcher {
 
     public static JDA JDA;
-    private static final String dbms = "mysql";
-    private static final String serverName = "localhost";
-    private static final String portNumber = "3307";
-
-    public static void main(String[] args) {
+    
+    
+    public static void main(String[] args) 
+    {
         JDABuilder jdaBuilder = new JDABuilder();
 
         jdaBuilder.setBotToken(System.getenv("GILMORE_BOT_TOKEN"));
+        
+        GilmoreConfiguration.getInstance();
+        
+        System.out.println(GilmoreConfiguration.getInstance().getDatabaseManagmentSystem());
+        System.out.println(GilmoreConfiguration.getInstance().getDatabaseHostname());
+        System.out.println(GilmoreConfiguration.getInstance().getDatabasePort());
 
         loadSavedDB(jdaBuilder);
 
