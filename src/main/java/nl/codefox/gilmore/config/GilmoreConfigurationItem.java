@@ -11,5 +11,6 @@ public @interface GilmoreConfigurationItem
 {
     
    public String key();
+   public Class<?> type();
    
 }

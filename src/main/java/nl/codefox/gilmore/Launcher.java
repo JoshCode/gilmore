@@ -9,6 +9,7 @@ import nl.codefox.gilmore.listeners.GameNotifier;
 import nl.codefox.gilmore.listeners.ReadyListener;
 import nl.codefox.gilmore.listeners.commands.GameListener;
 import nl.codefox.gilmore.listeners.commands.VersionListener;
+import nl.codefox.gilmore.util.Logging;
 
 import javax.security.auth.login.LoginException;
 import java.io.File;
@@ -26,11 +27,8 @@ public class Launcher {
     
     
     public static void main(String[] args) 
-    {
-        
-        // Call the getInstance() method at the start
-        // so that all the values are loaded in as soon
-        // as they're needed.
+    {   
+        Logging.info("Gilmore starting up!");
         GilmoreConfiguration.getInstance();
     	
         JDABuilder jdaBuilder = new JDABuilder();

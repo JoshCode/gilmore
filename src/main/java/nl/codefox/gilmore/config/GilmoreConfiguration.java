@@ -6,6 +6,8 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Properties;
 
+import nl.codefox.gilmore.util.Logging;
+
 public class GilmoreConfiguration 
 {
 
@@ -14,10 +16,12 @@ public class GilmoreConfiguration
     
     private String databaseManagementSystem = "mysql";
     private String databaseHostname = "localhost";
-    private String databasePort = "3306";
+    private Integer databasePort = 3306;
     private String databasePassword = "password";
     private String databaseUsername = "username";
     private String databaseName = "GILMORE";
+    private Boolean debug = false;
+    private String logLocation = "~/logs/gilmore.log";
 
     private GilmoreConfiguration() { }
     
@@ -37,7 +41,7 @@ public class GilmoreConfiguration
         return databaseManagementSystem;
     }
     
-    @GilmoreConfigurationItem(key = "db_managmentsystem")
+    @GilmoreConfigurationItem(key = "db_managmentsystem", type = String.class)
     public void setDatabaseManagmentSystem(String databaseManagementSystem)
     {
         this.databaseManagementSystem = databaseManagementSystem;
@@ -48,19 +52,19 @@ public class GilmoreConfiguration
         return databaseHostname;
     }
     
-    @GilmoreConfigurationItem(key = "db_hostname")
+    @GilmoreConfigurationItem(key = "db_hostname", type = String.class)
     public void setDatabaseHostname(String databaseHostname)
     {
         this.databaseHostname = databaseHostname;
     }
     
-    public String getDatabasePort()
+    public Integer getDatabasePort()
     {
         return databasePort;
     }
     
-    @GilmoreConfigurationItem(key = "db_port")
-    public void setDatabasePort(String databasePort)
+    @GilmoreConfigurationItem(key = "db_port", type = Integer.class)
+    public void setDatabasePort(Integer databasePort)
     {
         this.databasePort = databasePort;
     }
@@ -70,7 +74,7 @@ public class GilmoreConfiguration
         return databaseUsername;
     }
     
-    @GilmoreConfigurationItem(key = "db_username")
+    @GilmoreConfigurationItem(key = "db_username", type = String.class)
     public void getDatabaseUsername(String databaseUsername)
     {
         this.databaseUsername = databaseUsername;
@@ -81,7 +85,7 @@ public class GilmoreConfiguration
         return databasePassword;
     }
     
-    @GilmoreConfigurationItem(key = "db_password")
+    @GilmoreConfigurationItem(key = "db_password", type = String.class)
     public void setDatabasePassword(String databasePassword)
     {
         this.databasePassword = databasePassword;
@@ -92,10 +96,32 @@ public class GilmoreConfiguration
         return databaseName;
     }
     
-    @GilmoreConfigurationItem(key = "db_name")
+    @GilmoreConfigurationItem(key = "db_name", type = String.class)
     public void setDatabaseName(String databaseName)
     {
         this.databaseName = databaseName;
+    }
+    
+    public Boolean isDebug()
+    {
+        return debug;
+    }
+    
+    @GilmoreConfigurationItem(key = "debug", type = Boolean.class)
+    public void setDebug(Boolean debug)
+    {
+        this.debug = debug;
+    }
+    
+    public String getLogLocation()
+    {
+        return logLocation;
+    }
+    
+    @GilmoreConfigurationItem(key = "log_location", type = String.class)
+    public void setLogLocation(String logLocation)
+    {
+        this.logLocation = logLocation;
     }
     
     public void load()
@@ -114,7 +140,24 @@ public class GilmoreConfiguration
                     
                     if(properties.containsKey(item.key()))
                     {
-                        method.invoke(this, properties.get(item.key()));
+                        if(item.type() == Integer.class)
+                        {
+                            Integer value = Integer.parseInt((String) properties.get(item.key()));
+                            method.invoke(this, value);
+                            Logging.debug(String.format("[GilmoreConfiguration] %s(%s)", method.getName(), value), true);
+                            continue;
+                        }
+                        else if(item.type() == Boolean.class)
+                        {
+                            Boolean value = Boolean.parseBoolean((String) properties.get(item.key()));
+                            method.invoke(this, value);
+                            Logging.debug(String.format("[GilmoreConfiguration] %s(%s)", method.getName(), value), true);
+                            continue;
+                        }
+
+                        String value = (String) properties.get(item.key());
+                        method.invoke(this, value);
+                        Logging.debug(String.format("[GilmoreConfiguration] %s(%s)", method.getName(), value), true);
                     }
                 }
             }
@@ -129,6 +172,8 @@ public class GilmoreConfiguration
             System.out.println(String.format("Exception when loading in configuration, using default configuration values.", CONFIGURATION_PATH));
             ex.printStackTrace();
         }
+        
+        
     }
     
 }
