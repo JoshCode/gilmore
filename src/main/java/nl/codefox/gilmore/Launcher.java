@@ -31,11 +31,11 @@ public class Launcher {
         // Call the getInstance() method at the start
         // so that all the values are loaded in as soon
         // as they're needed.
+        GilmoreConfiguration.getInstance();
     	
         JDABuilder jdaBuilder = new JDABuilder();
 
         jdaBuilder.setBotToken(System.getenv("GILMORE_BOT_TOKEN"));
-        GilmoreConfiguration.getInstance();
 
         loadSavedDB(jdaBuilder);
 
