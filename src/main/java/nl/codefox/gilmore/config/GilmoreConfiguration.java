@@ -2,20 +2,22 @@ package nl.codefox.gilmore.config;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Properties;
 
 public class GilmoreConfiguration 
 {
 
-	private final String CONFIGURATION_PATH = "~/conf/gilmore.conf";
+	private final String CONFIGURATION_PATH = "C:\\Users\\patrick\\Documents\\Software\\gilmore.conf";
 	private static GilmoreConfiguration instance;
 	
 	private String databaseManagementSystem = "mysql";
 	private String databaseHostname = "localhost";
-	private Integer databasePort = 3306;
+	private String databasePort = "3306";
 	private String databasePassword = "password";
 	private String databaseUsername = "username";
+	private String databaseName = "GILMORE";
 
 	private GilmoreConfiguration() { }
 	
@@ -36,7 +38,7 @@ public class GilmoreConfiguration
 	}
 	
 	@GilmoreConfigurationItem(key = "db_managmentsystem")
-	private void setDatabaseManagmentSystem(String databaseManagementSystem)
+	public void setDatabaseManagmentSystem(String databaseManagementSystem)
 	{
 		this.databaseManagementSystem = databaseManagementSystem;
 	}
@@ -47,26 +49,20 @@ public class GilmoreConfiguration
 	}
 	
 	@GilmoreConfigurationItem(key = "db_hostname")
-	private void setDatabaseHostname(String databaseHostname)
+	public void setDatabaseHostname(String databaseHostname)
 	{
 		this.databaseHostname = databaseHostname;
 	}
 	
-	public Integer getDatabasePort()
+	public String getDatabasePort()
 	{
 		return databasePort;
 	}
 	
 	@GilmoreConfigurationItem(key = "db_port")
-	private void setDatabasePort(Integer databasePort)
+	public void setDatabasePort(String databasePort)
 	{
 		this.databasePort = databasePort;
-	}
-	
-	@GilmoreConfigurationItem(key = "db_username")
-	private void getDatabaseUsername(String databaseUsername)
-	{
-		this.databaseUsername = databaseUsername;
 	}
 	
 	public String getDatabaseUsername()
@@ -74,15 +70,32 @@ public class GilmoreConfiguration
 		return databaseUsername;
 	}
 	
-	@GilmoreConfigurationItem(key = "db_password")
-	private void setDatabasePassword(String databasePassword)
+	@GilmoreConfigurationItem(key = "db_username")
+	public void getDatabaseUsername(String databaseUsername)
 	{
-		this.databasePassword = databasePassword;
+		this.databaseUsername = databaseUsername;
 	}
 	
 	public String getDatabasePassword()
 	{
 		return databasePassword;
+	}
+	
+	@GilmoreConfigurationItem(key = "db_password")
+	public void setDatabasePassword(String databasePassword)
+	{
+		this.databasePassword = databasePassword;
+	}
+	
+	public String getDatabaseName()
+	{
+		return databaseName;
+	}
+	
+	@GilmoreConfigurationItem(key = "db_name")
+	public void setDatabaseName(String databaseName)
+	{
+		this.databaseName = databaseName;
 	}
 	
 	public void load()
@@ -116,11 +129,6 @@ public class GilmoreConfiguration
 			System.out.println(String.format("Exception when loading in configuration, using default configuration values.", CONFIGURATION_PATH));
 			ex.printStackTrace();
 		}
-	}
-	
-	private @interface GilmoreConfigurationItem
-	{
-		public String key();
 	}
 	
 }
