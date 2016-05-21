@@ -9,7 +9,6 @@ public class GilmoreDatabase
     
     private static Connection connection;
     
-
     private static Connection getConnection()
     {
         try
@@ -21,7 +20,7 @@ public class GilmoreDatabase
                 
                 connection = DriverManager.getConnection(
                         String.format("jdbc:%s://%s:%s/%s?useSSL=false", config.getDatabaseManagmentSystem(), config.getDatabaseHostname(),
-                                                            config.getDatabasePort(), config.getDatabaseName()),
+                                                                         config.getDatabasePort(), config.getDatabaseName()),
                         config.getDatabaseUsername(), config.getDatabasePassword()
                 );
             }
