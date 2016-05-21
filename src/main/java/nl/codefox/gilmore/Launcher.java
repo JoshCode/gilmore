@@ -9,6 +9,7 @@ import nl.codefox.gilmore.listeners.GameNotifier;
 import nl.codefox.gilmore.listeners.ReadyListener;
 import nl.codefox.gilmore.listeners.commands.GameListener;
 import nl.codefox.gilmore.listeners.commands.VersionListener;
+import nl.codefox.gilmore.listeners.commands.VoxMachinaListener;
 import nl.codefox.gilmore.util.Logging;
 
 import javax.security.auth.login.LoginException;
@@ -39,6 +40,7 @@ public class Launcher {
 
         jdaBuilder.addListener(new ReadyListener());
         jdaBuilder.addListener(new VersionListener());
+        jdaBuilder.addListener(new VoxMachinaListener());
 
         try {
             JDA = jdaBuilder.buildBlocking();
