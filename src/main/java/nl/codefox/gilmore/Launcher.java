@@ -27,15 +27,15 @@ public class Launcher {
     
     public static void main(String[] args) 
     {
+        
+        // Call the getInstance() method at the start
+        // so that all the values are loaded in as soon
+        // as they're needed.
+    	
         JDABuilder jdaBuilder = new JDABuilder();
 
         jdaBuilder.setBotToken(System.getenv("GILMORE_BOT_TOKEN"));
-        
         GilmoreConfiguration.getInstance();
-        
-        System.out.println(GilmoreConfiguration.getInstance().getDatabaseManagmentSystem());
-        System.out.println(GilmoreConfiguration.getInstance().getDatabaseHostname());
-        System.out.println(GilmoreConfiguration.getInstance().getDatabasePort());
 
         loadSavedDB(jdaBuilder);
 
