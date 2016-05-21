@@ -8,12 +8,14 @@ import java.util.Properties;
 public class GilmoreConfiguration 
 {
 
-	private final String CONFIGURATION_PATH = "";
+	private final String CONFIGURATION_PATH = "~/conf/gilmore.conf";
 	private static GilmoreConfiguration instance;
 	
 	private String databaseManagementSystem = "mysql";
 	private String databaseHostname = "localhost";
 	private Integer databasePort = 3306;
+	private String databasePassword = "password";
+	private String databaseUsername = "username";
 
 	private GilmoreConfiguration() { }
 	
@@ -59,6 +61,28 @@ public class GilmoreConfiguration
 	private void setDatabasePort(Integer databasePort)
 	{
 		this.databasePort = databasePort;
+	}
+	
+	@GilmoreConfigurationItem(key = "db_username")
+	private void getDatabaseUsername(String databaseUsername)
+	{
+		this.databaseUsername = databaseUsername;
+	}
+	
+	public String getDatabaseUsername()
+	{
+		return databaseUsername;
+	}
+	
+	@GilmoreConfigurationItem(key = "db_password")
+	private void setDatabasePassword(String databasePassword)
+	{
+		this.databasePassword = databasePassword;
+	}
+	
+	public String getDatabasePassword()
+	{
+		return databasePassword;
 	}
 	
 	public void load()
