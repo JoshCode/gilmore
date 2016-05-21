@@ -2,7 +2,6 @@ package nl.codefox.gilmore.config;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Properties;
 
