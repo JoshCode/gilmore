@@ -13,7 +13,6 @@ import javax.imageio.ImageIO;
 
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.ValueRange;
-import com.mysql.fabric.xmlrpc.base.Value;
 
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 import nl.codefox.gilmore.util.GoogleSheetsUtil;
