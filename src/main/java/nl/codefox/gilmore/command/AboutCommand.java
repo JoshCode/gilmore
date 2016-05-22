@@ -15,7 +15,6 @@ public class AboutCommand extends GilmoreCommand
     {
         StringBuilder sb = new StringBuilder();
         
-        sb.append("**Gilmore's Glorious Bot**").append("\n");
         sb.append("```");
         sb.append("Version : ").append("v1.0.0-SNAPSHOT").append("\n");
         sb.append("Github  : ").append("https://github.com/joshcode/gilmore");
