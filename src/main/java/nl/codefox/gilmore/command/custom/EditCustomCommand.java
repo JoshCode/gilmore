@@ -1,5 +1,6 @@
 package nl.codefox.gilmore.command.custom;
 
+import net.dv8tion.jda.Permission;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 import nl.codefox.gilmore.command.CustomCommand;
 import nl.codefox.gilmore.command.GilmoreCommand;
@@ -9,7 +10,7 @@ import nl.codefox.gilmore.util.StringUtil;
 public class EditCustomCommand extends GilmoreCommand {
 
     public EditCustomCommand() {
-        super("Edit a custom command", "Usage: !customCommand edit ![command] [new description]", 4, 100, null, "!customCommand edit");
+        super("Edit a custom command", "Usage: !custom edit ![command] [new description]", 4, 100, Permission.MANAGE_SERVER, "!custom edit");
     }
 
     @Override

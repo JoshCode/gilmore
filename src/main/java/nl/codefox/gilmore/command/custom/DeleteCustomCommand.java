@@ -1,5 +1,6 @@
 package nl.codefox.gilmore.command.custom;
 
+import net.dv8tion.jda.Permission;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 import nl.codefox.gilmore.command.CustomCommand;
 import nl.codefox.gilmore.command.GilmoreCommand;
@@ -8,7 +9,7 @@ import nl.codefox.gilmore.database.GilmoreDatabase;
 public class DeleteCustomCommand extends GilmoreCommand {
 
     public DeleteCustomCommand() {
-        super("Delete a custom command", "Usage: !customCommand delete ![command]", 3, null, "!customCommand delete");
+        super("Delete a custom command", "Usage: !custom delete ![command]", 3, Permission.MANAGE_SERVER, "!custom delete");
     }
 
     @Override
