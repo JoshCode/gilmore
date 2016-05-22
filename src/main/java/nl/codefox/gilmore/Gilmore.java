@@ -8,6 +8,7 @@ import nl.codefox.gilmore.command.GameCommand;
 import nl.codefox.gilmore.command.HelpCommand;
 import nl.codefox.gilmore.config.GilmoreConfiguration;
 import nl.codefox.gilmore.listener.CommandListener;
+import nl.codefox.gilmore.listener.ConnectionListener;
 import nl.codefox.gilmore.util.Logging;
 
 import javax.security.auth.login.LoginException;
@@ -17,6 +18,7 @@ public class Gilmore
 
     private static JDA JDA;
     private static CommandListener commandListener;
+    private static ConnectionListener connectionListener;
         
     public static void main(String[] args) 
     {   
@@ -26,19 +28,22 @@ public class Gilmore
             Logging.info("Gilmore starting up!");
             GilmoreConfiguration config = GilmoreConfiguration.getInstance();
         	
-            JDABuilder jdaBuilder = new JDABuilder();
+            JDABuilder builder = new JDABuilder();
     
-            jdaBuilder.setBotToken(config.getBotToken());
+            builder.setBotToken(config.getBotToken());
     
             commandListener = new CommandListener()
                                         .registerCommand(new AboutCommand())
                                         .registerCommand(new GameCommand())
                                         .registerCommand(new DiceCommand())
                                         .registerCommand(new HelpCommand());
-            
-            jdaBuilder.addListener(commandListener);
 
-            JDA = jdaBuilder.buildBlocking();
+            connectionListener = new ConnectionListener();
+                    
+            builder.addListener(commandListener);
+            builder.addListener(connectionListener);
+
+            JDA = builder.buildBlocking();
             
         } catch (LoginException e) {
             e.printStackTrace();
