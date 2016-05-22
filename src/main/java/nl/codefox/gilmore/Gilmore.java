@@ -8,8 +8,8 @@ import nl.codefox.gilmore.command.GameCommand;
 import nl.codefox.gilmore.command.HelpCommand;
 import nl.codefox.gilmore.command.MuteCommand;
 import nl.codefox.gilmore.command.UnmuteCommand;
+import nl.codefox.gilmore.command.CustomCommand;
 import nl.codefox.gilmore.config.GilmoreConfiguration;
-import nl.codefox.gilmore.database.GilmoreDatabase;
 import nl.codefox.gilmore.listener.ChannelListener;
 import nl.codefox.gilmore.listener.ConnectionListener;
 import nl.codefox.gilmore.util.Logging;
@@ -22,7 +22,7 @@ public class Gilmore
     private static JDA JDA;
     private static ChannelListener commandListener;
     private static ConnectionListener connectionListener;
-        
+
     public static void main(String[] args) 
     {   
 
@@ -41,15 +41,17 @@ public class Gilmore
                                         .registerCommand(new DiceCommand())
                                         .registerCommand(new HelpCommand())
                                         .registerCommand(new MuteCommand())
-                                        .registerCommand(new UnmuteCommand());
-            
+                                        .registerCommand(new UnmuteCommand())
+                                        .registerCommand(new HelpCommand())
+                                        .registerCommand(new CustomCommand());
+
             connectionListener = new ConnectionListener();
-                    
+
             builder.addListener(commandListener);
             builder.addListener(connectionListener);
 
             JDA = builder.buildBlocking();
-            
+
             JDA.getAccountManager().setGame("with your hearts");
             
         } catch (LoginException e) {
