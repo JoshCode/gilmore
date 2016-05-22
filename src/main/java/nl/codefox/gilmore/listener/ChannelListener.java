@@ -8,12 +8,12 @@ import net.dv8tion.jda.hooks.ListenerAdapter;
 import nl.codefox.gilmore.Gilmore;
 import nl.codefox.gilmore.command.GilmoreCommand;
 
-public class CommandListener extends ListenerAdapter 
+public class ChannelListener extends ListenerAdapter 
 {
 
     private List<GilmoreCommand> commands = new ArrayList<GilmoreCommand>();
     
-    public CommandListener registerCommand(GilmoreCommand command)
+    public ChannelListener registerCommand(GilmoreCommand command)
     {
         commands.add(command);
         return this;
@@ -27,6 +27,7 @@ public class CommandListener extends ListenerAdapter
     @Override
     public void onMessageReceived(MessageReceivedEvent event) 
     {
+        
         if(event.getAuthor() != Gilmore.getJDA().getSelfInfo())
         {
             String[] args = event.getMessage().getRawContent().split(" ");

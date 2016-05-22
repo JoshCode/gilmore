@@ -18,13 +18,16 @@ public class GilmoreDatabase
     
     private static final String SQL_GET_GAMES       = "SELECT NAME FROM GILMORE_GAME";
     private static final String SQL_GET_SUBSCRIBERS = "SELECT USER FROM GILMORE_GAME_SUBSCRIBER WHERE GAME = ?";
+    private static final String SQL_GET_MUTES       = "SELECT * FROM GILMORE_MUTE";
     
     private static final String SQL_ADD_GAME       = "INSERT INTO GILMORE_GAME VALUES ( ? )";
     private static final String SQL_ADD_SUBSCRIBER = "INSERT INTO GILMORE_GAME_SUBSCRIBER VALUES ( ?, ? )";
+    private static final String SQL_ADD_MUTE       = "INSERT INTO GILMORE_MUTE VALUES ( ? )";
     
-    private static final String SQL_DELETE_GAME       = "DELETE FROM GILMORE_GAME WHERE NAME = ?";
+    private static final String SQL_DELETE_GAME        = "DELETE FROM GILMORE_GAME WHERE NAME = ?";
     private static final String SQL_DELETE_SUBSCRIBERS = "DELETE FROM GILMORE_GAME_SUBSCRIBER WHERE GAME = ?";
-    private static final String SQL_DELETE_SUBSCRIBER = "DELETE FROM GILMORE_GAME_SUBSCRIBER WHERE GAME = ? AND USER = ?";
+    private static final String SQL_DELETE_SUBSCRIBER  = "DELETE FROM GILMORE_GAME_SUBSCRIBER WHERE GAME = ? AND USER = ?";
+    private static final String SQL_DELETE_MUTE        = "DELETE FROM GILMORE_MUTE WHERE ID = ?";
     
     private static Connection getConnection()
     {

@@ -6,8 +6,11 @@ import nl.codefox.gilmore.command.AboutCommand;
 import nl.codefox.gilmore.command.DiceCommand;
 import nl.codefox.gilmore.command.GameCommand;
 import nl.codefox.gilmore.command.HelpCommand;
+import nl.codefox.gilmore.command.MuteCommand;
+import nl.codefox.gilmore.command.UnmuteCommand;
 import nl.codefox.gilmore.config.GilmoreConfiguration;
-import nl.codefox.gilmore.listener.CommandListener;
+import nl.codefox.gilmore.database.GilmoreDatabase;
+import nl.codefox.gilmore.listener.ChannelListener;
 import nl.codefox.gilmore.listener.ConnectionListener;
 import nl.codefox.gilmore.util.Logging;
 
@@ -17,7 +20,7 @@ public class Gilmore
 {
 
     private static JDA JDA;
-    private static CommandListener commandListener;
+    private static ChannelListener commandListener;
     private static ConnectionListener connectionListener;
         
     public static void main(String[] args) 
@@ -32,12 +35,14 @@ public class Gilmore
     
             builder.setBotToken(config.getBotToken());
     
-            commandListener = new CommandListener()
+            commandListener = new ChannelListener()
                                         .registerCommand(new AboutCommand())
                                         .registerCommand(new GameCommand())
                                         .registerCommand(new DiceCommand())
-                                        .registerCommand(new HelpCommand());
-
+                                        .registerCommand(new HelpCommand())
+                                        .registerCommand(new MuteCommand())
+                                        .registerCommand(new UnmuteCommand());
+            
             connectionListener = new ConnectionListener();
                     
             builder.addListener(commandListener);
@@ -60,7 +65,7 @@ public class Gilmore
         return JDA;
     }
     
-    public static CommandListener getCommandListener()
+    public static ChannelListener getCommandListener()
     {
         return commandListener;
     }

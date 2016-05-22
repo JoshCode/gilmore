@@ -51,7 +51,7 @@ public class HelpCommand extends GilmoreCommand
             
             builder.append("```");
         }
-        event.getChannel().sendMessage(builder.toString());
+        event.getAuthor().getPrivateChannel().sendMessage(builder.toString());
     }
 
 }
