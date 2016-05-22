@@ -3,6 +3,7 @@ package nl.codefox.gilmore;
 import net.dv8tion.jda.JDA;
 import net.dv8tion.jda.JDABuilder;
 import nl.codefox.gilmore.command.AboutCommand;
+import nl.codefox.gilmore.command.DiceCommand;
 import nl.codefox.gilmore.command.GameCommand;
 import nl.codefox.gilmore.config.GilmoreConfiguration;
 import nl.codefox.gilmore.listener.CommandListener;
@@ -30,7 +31,8 @@ public class Gilmore
     
             commandListener = new CommandListener()
                                         .registerCommand(new AboutCommand())
-                                        .registerCommand(new GameCommand());
+                                        .registerCommand(new GameCommand())
+                                        .registerCommand(new DiceCommand());
             
             jdaBuilder.addListener(commandListener);
 
