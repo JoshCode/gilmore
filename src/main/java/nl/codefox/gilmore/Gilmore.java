@@ -3,6 +3,7 @@ package nl.codefox.gilmore;
 import net.dv8tion.jda.JDA;
 import net.dv8tion.jda.JDABuilder;
 import nl.codefox.gilmore.command.AboutCommand;
+import nl.codefox.gilmore.command.CriticalRoleCommand;
 import nl.codefox.gilmore.command.DiceCommand;
 import nl.codefox.gilmore.command.GameCommand;
 import nl.codefox.gilmore.command.HelpCommand;
@@ -43,7 +44,8 @@ public class Gilmore
                                         .registerCommand(new MuteCommand())
                                         .registerCommand(new UnmuteCommand())
                                         .registerCommand(new HelpCommand())
-                                        .registerCommand(new CustomCommand());
+                                        .registerCommand(new CustomCommand())
+                                        .registerCommand(new CriticalRoleCommand());
 
             connectionListener = new ConnectionListener();
 
