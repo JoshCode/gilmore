@@ -69,9 +69,6 @@ public class GoogleSheetsUtil
     private static final String APPLICATION_NAME =
         "Google Sheets API Java Quickstart";
 
-    /** Global instance of the {@link FileDataStoreFactory}. */
-    private static FileDataStoreFactory DATA_STORE_FACTORY;
-
     /** Global instance of the JSON factory. */
     private static final JsonFactory JSON_FACTORY =
         JacksonFactory.getDefaultInstance();
@@ -104,16 +101,13 @@ public class GoogleSheetsUtil
         }
         byte[] bytes = section.getBase64DecodedBytes();
         PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(bytes);
-        Exception unexpectedException = null;
         try {
           KeyFactory keyFactory = SecurityUtils.getRsaKeyFactory();
           PrivateKey privateKey = keyFactory.generatePrivate(keySpec);
           return privateKey;
-        } catch (NoSuchAlgorithmException exception) {
-          unexpectedException = exception;
-        } catch (InvalidKeySpecException exception) {
-          unexpectedException = exception;
-        }
+        } 
+        catch (NoSuchAlgorithmException exception) {} 
+        catch (InvalidKeySpecException exception) { }
         return null;
       }
 
