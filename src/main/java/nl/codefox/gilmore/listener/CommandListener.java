@@ -18,6 +18,11 @@ public class CommandListener extends ListenerAdapter
         commands.add(command);
         return this;
     }
+    
+    public List<GilmoreCommand> getCommands()
+    {
+        return commands;
+    }
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) 
