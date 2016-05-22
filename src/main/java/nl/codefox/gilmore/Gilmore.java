@@ -45,6 +45,8 @@ public class Gilmore
 
             JDA = builder.buildBlocking();
             
+            JDA.getAccountManager().setGame("with your hearts");
+            
         } catch (LoginException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
