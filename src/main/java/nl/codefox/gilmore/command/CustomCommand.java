@@ -9,10 +9,11 @@ import nl.codefox.gilmore.command.custom.ListCustomCommands;
 import nl.codefox.gilmore.database.GilmoreDatabase;
 
 import java.util.Map;
+import java.util.Set;
 
 public class CustomCommand extends GilmoreCommand
 {
-    private static Map<String, String> commandList;
+    private static Map<String, String> commands;
 
     public CustomCommand()
     {
@@ -47,38 +48,31 @@ public class CustomCommand extends GilmoreCommand
 
     private void load()
     {
-        commandList = GilmoreDatabase.getCommands();
+        commands = GilmoreDatabase.getCommands();
     }
 
     public static boolean commandExists(String command)
     {
-        return commandList.containsKey(command);
+        return commands.containsKey(command);
+    }
+    
+    public static Set<String> getCommands()
+    {
+        return commands.keySet();
     }
 
     public static String getCommand(String command)
     {
-        return commandList.get(command);
+        return commands.get(command);
     }
 
-    public static void editCommand(String command, String description) {
-        commandList.put(command, description);
+    public static void editCommand(String command, String description) 
+    {
+        commands.put(command, description);
     }
 
-    public static void deleteCommand(String command) {
-        commandList.remove(command);
-    }
-
-    public static void listCustomCommands(String[] args, MessageReceivedEvent event) {
-        StringBuilder builder = new StringBuilder();
-
-        builder.append(String.format("[%s] ```Here is a list of all available custom commands;\n", event.getAuthor().getAsMention()));
-
-        for(String command : commandList.keySet())
-        {
-            builder.append("> " + command + "\n");
-        }
-
-        builder.append("```");
-        event.getAuthor().getPrivateChannel().sendMessage(builder.toString());
+    public static void deleteCommand(String command) 
+    {
+        commands.remove(command);
     }
 }

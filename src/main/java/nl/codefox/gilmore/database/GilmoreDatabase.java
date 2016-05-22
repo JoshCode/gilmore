@@ -28,11 +28,10 @@ public class GilmoreDatabase
 
     private static final String SQL_DELETE_GAME        = "DELETE FROM GILMORE_GAME WHERE NAME = ?";
     private static final String SQL_DELETE_COMMAND     = "DELETE FROM GILMORE_CUSTOM_COMMANDS WHERE COMMAND = ?";
-
     private static final String SQL_DELETE_SUBSCRIBERS = "DELETE FROM GILMORE_GAME_SUBSCRIBER WHERE GAME = ?";
     private static final String SQL_DELETE_SUBSCRIBER  = "DELETE FROM GILMORE_GAME_SUBSCRIBER WHERE GAME = ? AND USER = ?";
 
-    private static final String SQL_EDIT_COMMAND    = "UPDATE GILMORE_CUSTOM_COMMANDS SET DESCRIPTION=? WHERE COMMAND=?";
+    private static final String SQL_EDIT_COMMAND = "UPDATE GILMORE_CUSTOM_COMMANDS SET DESCRIPTION = ? WHERE COMMAND = ?";
 
     private static Connection getConnection()
     {
@@ -235,11 +234,12 @@ public class GilmoreDatabase
         return commands;
     }
 
-    public static void deleteCommand(String commaand) {
+    public static void deleteCommand(String command) 
+    {
         try
         {
             PreparedStatement subs = getConnection().prepareStatement(SQL_DELETE_COMMAND);
-            subs.setString(1, commaand);
+            subs.setString(1, command);
             subs.executeUpdate();
         }
         catch (Exception ex)

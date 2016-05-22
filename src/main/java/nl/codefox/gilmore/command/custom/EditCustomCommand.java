@@ -10,23 +10,24 @@ import nl.codefox.gilmore.util.StringUtil;
 public class EditCustomCommand extends GilmoreCommand {
 
     public EditCustomCommand() {
-        super("Edit a custom command", "Usage: !custom edit ![command] [new description]", 4, 100, Permission.MANAGE_SERVER, "!custom edit");
+        super("Edit a custom command", "Usage: !custom edit [command] [new description]", 4, 100, Permission.MANAGE_SERVER, "!custom edit");
     }
 
     @Override
     public void run(String[] args, MessageReceivedEvent event) 
     {
-        String name = StringUtil.arrayToString(args, 3, " ");
-
-        if (CustomCommand.commandExists(args[2]))
+        String desc = StringUtil.arrayToString(args, 3, " ");
+        String label = (args[2].contains("!") ? args[2] : "!" + args[2]);
+        
+        if (CustomCommand.commandExists(label))
         {
-            GilmoreDatabase.editCommand(args[2], name);
-            CustomCommand.editCommand(args[2], name);
-            event.getChannel().sendMessage(String.format("[%s] `The command %s has been edited`", event.getAuthor().getAsMention(), args[2]));
+            GilmoreDatabase.editCommand(label, desc);
+            CustomCommand.editCommand(label, desc);
+            event.getChannel().sendMessage(String.format("[%s] `The command '%s' has been edited`", event.getAuthor().getAsMention(), args[2]));
         }
         else
         {
-            event.getChannel().sendMessage(String.format("[%s] `This command doesn't exists, please create the command %s, first`", event.getAuthor().getAsMention(), args[3]));
+            event.getChannel().sendMessage(String.format("[%s] `This command doesn't exist, please create the command %s, first`", event.getAuthor().getAsMention(), args[2]));
         }
     }
 }

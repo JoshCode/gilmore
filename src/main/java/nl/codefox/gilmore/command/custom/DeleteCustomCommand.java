@@ -9,21 +9,23 @@ import nl.codefox.gilmore.database.GilmoreDatabase;
 public class DeleteCustomCommand extends GilmoreCommand {
 
     public DeleteCustomCommand() {
-        super("Delete a custom command", "Usage: !custom delete ![command]", 3, Permission.MANAGE_SERVER, "!custom delete");
+        super("Delete a custom command", "Usage: !custom delete [command]", 3, Permission.MANAGE_SERVER, "!custom delete");
     }
 
     @Override
-    public void run(String[] args, MessageReceivedEvent event) {
-
-        if (CustomCommand.commandExists(args[2]))
+    public void run(String[] args, MessageReceivedEvent event) 
+    {
+        String label = (args[2].contains("!") ? args[2] : "!" + args[2]);
+        
+        if (CustomCommand.commandExists(label))
         {
-            GilmoreDatabase.deleteCommand(args[2]);
-            CustomCommand.deleteCommand(args[2]);
-            event.getChannel().sendMessage(String.format("[%s] `The command %s has been delete`", event.getAuthor().getAsMention(), args[2]));
+            GilmoreDatabase.deleteCommand(label);
+            CustomCommand.deleteCommand(label);
+            event.getChannel().sendMessage(String.format("[%s] `The command '%s' has been deleted`", event.getAuthor().getAsMention(), label));
         }
         else
         {
-            event.getChannel().sendMessage(String.format("[%s] `This command doesn't exists, please create the command %s, first`", event.getAuthor().getAsMention(), args[3]));
+            event.getChannel().sendMessage(String.format("[%s] `This command doesn't exist, please create the command '!%s', first`", event.getAuthor().getAsMention(), args[2]));
         }
     }
 }

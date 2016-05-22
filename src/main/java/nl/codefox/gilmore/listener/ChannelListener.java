@@ -24,10 +24,15 @@ public class ChannelListener extends ListenerAdapter
     {
         return commands;
     }
-
+    
     @Override
     public void onMessageReceived(MessageReceivedEvent event) 
     {
+        
+        if(!event.getMessage().getContent().startsWith("!"))
+        {
+            return;
+        }
         
         if(event.getAuthor() != Gilmore.getJDA().getSelfInfo())
         {
