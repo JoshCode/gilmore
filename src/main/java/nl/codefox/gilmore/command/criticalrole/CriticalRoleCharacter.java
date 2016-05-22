@@ -1,33 +1,33 @@
 package nl.codefox.gilmore.command.criticalrole;
 
-public enum CriticalRoleCharacter 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class CriticalRoleCharacter 
 {
 
-    VAX     ("/img/vax.png",     2,  "vax"),
-    VEX     ("/img/vex.png",     3,  "vex"),
-    GROG    ("/img/grog.png",    4,  "grog"),
-    PERCY   ("/img/percy.png",   5,  "percy"),
-    KEYLETH ("/img/keyleth.png", 6,  "keyleth"),
-    SCANLAN ("/img/scanlan.png", 7,  "scanlan"),
-    KASHAW  ("/img/kashaw.png",  8,  "kashaw"),
-    ZAHRA   ("/img/zahra.png",   9,  "zahra"),
-    GERN    ("/img/gern.png",    10, "gern"),
-    PIKE    ("/img/pike.png",    14, "pike"),
-    GARTHOK ("/img/garthok.png", 15, "garthok"),
-    TIBERIUS("/img/tiberius.png",16, "tiberius"),
-    LILLITH ("/img/lillith.png", 17, "lillith"),
-    THORBIR ("/img/thorbir.png", 18, "thorbir"),
-    LYRA    ("/img/lyra.png",    19, "lyra");
+    private static List<CriticalRoleCharacter> characters = new ArrayList<CriticalRoleCharacter>();
     
-    private String resource;
-    private int row;
-    private String name;
+    private List<String> aliases = new ArrayList<String>();
+    private String resource = "";
+    private String name = "";
+    private String title = "";
+    private int row = 0;
     
-    CriticalRoleCharacter(String resource, int row, String name)
+    public CriticalRoleCharacter(String resource, int row, String name, String title, String... aliases)
     {
         this.resource = resource;
         this.row = row;
         this.name = name;
+        this.title = title;
+        this.aliases.addAll(Arrays.asList(aliases));
+        this.aliases.add(name.toLowerCase());
+    }
+    
+    public List<String> getAliases()
+    {
+        return this.aliases;
     }
     
     public String getResource()
@@ -45,28 +45,31 @@ public enum CriticalRoleCharacter
         return this.name;
     }
     
-    public static CriticalRoleCharacter byName(String name)
+    public String getTitle()
     {
-        for(CriticalRoleCharacter crc : values())
+        return this.title;
+    }
+    
+    public static void clear()
+    {
+        characters.clear();
+    }
+    
+    public static void addCharacter(CriticalRoleCharacter character)
+    {
+        characters.add(character);
+    }
+    
+    public static CriticalRoleCharacter getCharacter(String name)
+    {
+        for(CriticalRoleCharacter character : characters)
         {
-            if(crc.getName().equals(name))
+            if(character.getAliases().contains(name))
             {
-                return crc;
+                return character;
             }
         }
         return null;
-    }
-    
-    public static boolean contains(String name)
-    {
-        for(CriticalRoleCharacter crc : values())
-        {
-            if(crc.getName().equals(name))
-            {
-                return true;
-            }
-        }
-        return false;
     }
     
 }
