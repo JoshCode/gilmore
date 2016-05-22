@@ -95,7 +95,7 @@ public class CriticalRoleTask extends Thread
                     }
                 }
                 
-                Thread.sleep(60000L);
+                Thread.sleep(10000L);
             }
         }
         catch (Exception e)

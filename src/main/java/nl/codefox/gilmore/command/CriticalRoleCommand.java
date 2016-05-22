@@ -47,7 +47,7 @@ public class CriticalRoleCommand extends GilmoreCommand
 
     }
     
-    private int[] getData(int row)
+    private String[] getData(int row)
     {
         
         try 
@@ -66,17 +66,17 @@ public class CriticalRoleCommand extends GilmoreCommand
             {
                 for (List<Object> r : values) 
                 {
-                    int[] data = new int[10];
-                    data[CriticalRoleConstants.HP] = Integer.parseInt(String.valueOf(r.get(0)));
-                    data[CriticalRoleConstants.MAXHP] = Integer.parseInt(String.valueOf(r.get(1)));
-                    data[CriticalRoleConstants.TMPHP] = Integer.parseInt(String.valueOf(r.get(2)));
-                    data[CriticalRoleConstants.AC] = Integer.parseInt(String.valueOf(r.get(3)));
-                    data[CriticalRoleConstants.STR] = Integer.parseInt(String.valueOf(r.get(5)));
-                    data[CriticalRoleConstants.DEX] = Integer.parseInt(String.valueOf(r.get(6)));
-                    data[CriticalRoleConstants.CON] = Integer.parseInt(String.valueOf(r.get(7)));
-                    data[CriticalRoleConstants.INT] = Integer.parseInt(String.valueOf(r.get(8)));
-                    data[CriticalRoleConstants.WIS] = Integer.parseInt(String.valueOf(r.get(9)));
-                    data[CriticalRoleConstants.CHA] = Integer.parseInt(String.valueOf(r.get(10)));
+                    String[] data = new String[10];
+                    data[CriticalRoleConstants.HP] =String.valueOf(r.get(0));
+                    data[CriticalRoleConstants.MAXHP] =String.valueOf(r.get(1));
+                    data[CriticalRoleConstants.TMPHP] =String.valueOf(r.get(2));
+                    data[CriticalRoleConstants.AC] =String.valueOf(r.get(3));
+                    data[CriticalRoleConstants.STR] =String.valueOf(r.get(5));
+                    data[CriticalRoleConstants.DEX] =String.valueOf(r.get(6));
+                    data[CriticalRoleConstants.CON] =String.valueOf(r.get(7));
+                    data[CriticalRoleConstants.INT] =String.valueOf(r.get(8));
+                    data[CriticalRoleConstants.WIS] =String.valueOf(r.get(9));
+                    data[CriticalRoleConstants.CHA] =String.valueOf(r.get(10));
                     return data;
                 }
             }
@@ -86,7 +86,7 @@ public class CriticalRoleCommand extends GilmoreCommand
             e.printStackTrace();
         }
         
-        return new int[10];
+        return new String[10];
     }
     
     private void draw(MessageReceivedEvent event, CriticalRoleCharacter crc)
@@ -94,13 +94,21 @@ public class CriticalRoleCommand extends GilmoreCommand
         try
         {
             
-            int[] data = getData(crc.getRow());
+            String[] data = getData(crc.getRow());
             
             BufferedImage image = new BufferedImage(CriticalRoleConstants.IMAGE_WIDTH, CriticalRoleConstants.IMAGE_HEIGHT, BufferedImage.TYPE_INT_ARGB);
             Graphics2D graphics = image.createGraphics();
 
             graphics.drawImage(ImageIO.read(new URL(CriticalRoleConstants.IMAGE_URL)), 0, 0, null);
-            graphics.drawImage(ImageIO.read(new URL(crc.getResource())), 0, 0, null);
+            
+            try
+            {
+                graphics.drawImage(ImageIO.read(new URL(crc.getResource())), 0, 0, null);
+            }
+            catch (Exception ex)
+            {
+                graphics.drawImage(ImageIO.read(new URL(CriticalRoleConstants.AVATAR_URL)), 0, 0, null);
+            }
 
             graphics.setColor(Color.BLACK);
             graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
@@ -112,18 +120,18 @@ public class CriticalRoleCommand extends GilmoreCommand
             graphics.drawString(crc.getTitle(), CriticalRoleConstants.TEXT_X, CriticalRoleConstants.TITLE_Y);
             
             graphics.setFont(new Font("COCOGOOSE", Font.PLAIN, CriticalRoleConstants.DATA_FONT_SIZE)); 
-            graphics.drawString(String.valueOf(data[CriticalRoleConstants.STR]),    CriticalRoleConstants.FIRST_COLUMN, CriticalRoleConstants.FIRST_ROW);
-            graphics.drawString(String.valueOf(data[CriticalRoleConstants.DEX]),    CriticalRoleConstants.FIRST_COLUMN, CriticalRoleConstants.SECOND_ROW);
-            graphics.drawString(String.valueOf(data[CriticalRoleConstants.CON]),    CriticalRoleConstants.FIRST_COLUMN, CriticalRoleConstants.THIRD_ROW);
-            graphics.drawString(String.valueOf(data[CriticalRoleConstants.INT]),    CriticalRoleConstants.SECOND_COLUMN, CriticalRoleConstants.FIRST_ROW);
-            graphics.drawString(String.valueOf(data[CriticalRoleConstants.WIS]),    CriticalRoleConstants.SECOND_COLUMN, CriticalRoleConstants.SECOND_ROW);
-            graphics.drawString(String.valueOf(data[CriticalRoleConstants.CHA]),    CriticalRoleConstants.SECOND_COLUMN, CriticalRoleConstants.THIRD_ROW);
-            graphics.drawString(String.valueOf(data[CriticalRoleConstants.AC]),     CriticalRoleConstants.THIRD_COLUMN, CriticalRoleConstants.FIRST_ROW);
-            graphics.drawString(String.valueOf(data[CriticalRoleConstants.HP]),     CriticalRoleConstants.THIRD_COLUMN, CriticalRoleConstants.SECOND_ROW);
-            graphics.drawString(String.valueOf(data[CriticalRoleConstants.TMPHP]),  CriticalRoleConstants.THIRD_COLUMN, CriticalRoleConstants.THIRD_ROW);
+            graphics.drawString(data[CriticalRoleConstants.STR],    CriticalRoleConstants.FIRST_COLUMN, CriticalRoleConstants.FIRST_ROW);
+            graphics.drawString(data[CriticalRoleConstants.DEX],    CriticalRoleConstants.FIRST_COLUMN, CriticalRoleConstants.SECOND_ROW);
+            graphics.drawString(data[CriticalRoleConstants.CON],    CriticalRoleConstants.FIRST_COLUMN, CriticalRoleConstants.THIRD_ROW);
+            graphics.drawString(data[CriticalRoleConstants.INT],    CriticalRoleConstants.SECOND_COLUMN, CriticalRoleConstants.FIRST_ROW);
+            graphics.drawString(data[CriticalRoleConstants.WIS],    CriticalRoleConstants.SECOND_COLUMN, CriticalRoleConstants.SECOND_ROW);
+            graphics.drawString(data[CriticalRoleConstants.CHA],    CriticalRoleConstants.SECOND_COLUMN, CriticalRoleConstants.THIRD_ROW);
+            graphics.drawString(data[CriticalRoleConstants.AC],     CriticalRoleConstants.THIRD_COLUMN, CriticalRoleConstants.FIRST_ROW);
+            graphics.drawString(data[CriticalRoleConstants.HP],     CriticalRoleConstants.THIRD_COLUMN, CriticalRoleConstants.SECOND_ROW);
+            graphics.drawString(data[CriticalRoleConstants.TMPHP],  CriticalRoleConstants.THIRD_COLUMN, CriticalRoleConstants.THIRD_ROW);
             
-            float current = data[CriticalRoleConstants.HP];
-            float max = data[CriticalRoleConstants.MAXHP];
+            float current = (data[CriticalRoleConstants.HP].equals("?")   ? 0 : Integer.parseInt(data[CriticalRoleConstants.HP]));
+            float max    = (data[CriticalRoleConstants.MAXHP].equals("?") ? 0 : Integer.parseInt(data[CriticalRoleConstants.MAXHP]));
             
             float n = ((float) CriticalRoleConstants.HP_BAR_WIDTH / 100);
             float m = (((float) current / (float) max) * 100);
