@@ -10,7 +10,7 @@ import nl.codefox.gilmore.util.Logging;
 public class GilmoreConfiguration 
 {
 
-    private static final String CONFIGURATION_PATH = "~/conf/gilmore.conf";
+    private static final String CONFIGURATION_PATH = "C:\\Users\\patrick\\Documents\\Software\\gilmore.conf";
     private static GilmoreConfiguration instance;
     
     private String databaseManagementSystem = "mysql";

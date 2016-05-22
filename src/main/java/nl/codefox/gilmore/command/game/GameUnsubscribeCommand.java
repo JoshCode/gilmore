@@ -4,7 +4,7 @@ import net.dv8tion.jda.events.message.MessageReceivedEvent;
 import nl.codefox.gilmore.command.GameCommand;
 import nl.codefox.gilmore.command.GilmoreCommand;
 import nl.codefox.gilmore.database.GilmoreDatabase;
-import nl.codefox.gilmore.util.ArrayUtil;
+import nl.codefox.gilmore.util.StringUtil;
 
 public class GameUnsubscribeCommand extends GilmoreCommand
 {
@@ -18,7 +18,7 @@ public class GameUnsubscribeCommand extends GilmoreCommand
     public void run(String[] args, MessageReceivedEvent event)
     {
         
-        String name = ArrayUtil.arrayToString(args, 2, " ");
+        String name = StringUtil.arrayToString(args, 2, " ");
         
         if(!GameCommand.gameExists(name))
         {
