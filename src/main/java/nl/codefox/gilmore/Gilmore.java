@@ -6,6 +6,7 @@ import nl.codefox.gilmore.command.AboutCommand;
 import nl.codefox.gilmore.command.DiceCommand;
 import nl.codefox.gilmore.command.GameCommand;
 import nl.codefox.gilmore.command.HelpCommand;
+import nl.codefox.gilmore.command.CustomCommand;
 import nl.codefox.gilmore.config.GilmoreConfiguration;
 import nl.codefox.gilmore.listener.CommandListener;
 import nl.codefox.gilmore.listener.ConnectionListener;
@@ -19,7 +20,7 @@ public class Gilmore
     private static JDA JDA;
     private static CommandListener commandListener;
     private static ConnectionListener connectionListener;
-        
+
     public static void main(String[] args) 
     {   
 
@@ -36,15 +37,16 @@ public class Gilmore
                                         .registerCommand(new AboutCommand())
                                         .registerCommand(new GameCommand())
                                         .registerCommand(new DiceCommand())
-                                        .registerCommand(new HelpCommand());
+                                        .registerCommand(new HelpCommand())
+                                        .registerCommand(new CustomCommand());
 
             connectionListener = new ConnectionListener();
-                    
+
             builder.addListener(commandListener);
             builder.addListener(connectionListener);
 
             JDA = builder.buildBlocking();
-            
+
             JDA.getAccountManager().setGame("with your hearts");
             
         } catch (LoginException e) {

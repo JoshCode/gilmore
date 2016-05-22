@@ -1,6 +1,15 @@
 # Ignore IntelliJ IDEA files and folders
 *.idea
 *.iml
+*.ipr
+*.iws
+*.ids
+*.log
+
+conf
+
+/out
+/.gradle
 
 # Ignore Eclipse files and folders
 *.project
