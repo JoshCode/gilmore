@@ -27,7 +27,7 @@ public class GilmoreConfigurationListener extends Thread
                 if(lastModifiedTime < file.lastModified())
                 {
                     lastModifiedTime = file.lastModified();
-                    Logging.info("Reloading configuration - looks like it changed.");
+                    Logging.info("Reloading configuration - looks like it changed.", true);
                     GilmoreConfiguration.getInstance().load();
                 }
                 
