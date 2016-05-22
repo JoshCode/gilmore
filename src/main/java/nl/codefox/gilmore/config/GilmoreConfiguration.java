@@ -10,7 +10,7 @@ import nl.codefox.gilmore.util.Logging;
 public class GilmoreConfiguration 
 {
 
-    private final String CONFIGURATION_PATH = "~/conf/gilmore.conf";
+    private static final String CONFIGURATION_PATH = "~/conf/gilmore.conf";
     private static GilmoreConfiguration instance;
     
     private String databaseManagementSystem = "mysql";
@@ -30,6 +30,7 @@ public class GilmoreConfiguration
         if(instance == null)
         {
             instance = new GilmoreConfiguration();
+            new GilmoreConfigurationListener(CONFIGURATION_PATH);
             instance.load();
         }
         
