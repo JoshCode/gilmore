@@ -1,7 +1,5 @@
 package nl.codefox.gilmore.command;
 
-import com.google.gson.Gson;
-
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 import nl.codefox.gilmore.command.game.Game;
 import nl.codefox.gilmore.command.game.GameCreateCommand;

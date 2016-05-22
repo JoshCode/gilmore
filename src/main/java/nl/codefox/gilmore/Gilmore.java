@@ -1,12 +1,9 @@
 package nl.codefox.gilmore;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import net.dv8tion.jda.JDA;
 import net.dv8tion.jda.JDABuilder;
 import nl.codefox.gilmore.command.AboutCommand;
 import nl.codefox.gilmore.command.GameCommand;
-import nl.codefox.gilmore.command.game.Game;
 import nl.codefox.gilmore.config.GilmoreConfiguration;
 import nl.codefox.gilmore.listener.CommandListener;
 import nl.codefox.gilmore.util.Logging;
