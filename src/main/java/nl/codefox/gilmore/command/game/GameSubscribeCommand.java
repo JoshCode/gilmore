@@ -3,6 +3,7 @@ package nl.codefox.gilmore.command.game;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 import nl.codefox.gilmore.command.GameCommand;
 import nl.codefox.gilmore.command.GilmoreCommand;
+import nl.codefox.gilmore.database.GilmoreDatabase;
 import nl.codefox.gilmore.util.ArrayUtil;
 
 public class GameSubscribeCommand extends GilmoreCommand
@@ -34,10 +35,10 @@ public class GameSubscribeCommand extends GilmoreCommand
             }
             
             game.addUser(event.getAuthor().getId());
+            GilmoreDatabase.addSubscriber(name, event.getAuthor().getId());
             event.getChannel().sendMessage(String.format("[%s] `You are now subscribed to the game '%s'`", event.getAuthor().getAsMention(), name));
+            
         }
-        
-        GameCommand.save();
         
     }
 

@@ -8,8 +8,10 @@ import nl.codefox.gilmore.command.game.GameListCommand;
 import nl.codefox.gilmore.command.game.GameRemoveCommand;
 import nl.codefox.gilmore.command.game.GameSubscribeCommand;
 import nl.codefox.gilmore.command.game.GameUnsubscribeCommand;
+import nl.codefox.gilmore.database.GilmoreDatabase;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GameCommand extends GilmoreCommand 
 {
@@ -18,7 +20,7 @@ public class GameCommand extends GilmoreCommand
     
     public GameCommand() 
     {
-        super("", "Usage: !game [list|create|remove]", 2, 100, null, "!game");
+        super("", "Usage: !game [list|create|remove|host|subscribe|unsubscribe]", 2, 100, null, "!game");
         load();
     }
 
@@ -42,6 +44,8 @@ public class GameCommand extends GilmoreCommand
                 runSubscribe(args, event); break;
             case "unsubscribe":
                 runUnsubscribe(args, event); break;
+            default:
+                usage(event, event.getAuthor()); break;
         }
         
     }
@@ -76,7 +80,7 @@ public class GameCommand extends GilmoreCommand
         new GameUnsubscribeCommand().process(args, event);
     }
     
-    public static void addGames(ArrayList<Game> games)
+    public static void addGames(List<Game> games)
     {
         getGames().addAll(games);
     }
@@ -96,14 +100,9 @@ public class GameCommand extends GilmoreCommand
         return GameCommand.games;
     }
     
-    public static void save()
-    {
-        // TODO
-    }
-    
     public static void load()
     {
-        
+        addGames(GilmoreDatabase.getGames());
     }
     
     public static Game getGame(String name)

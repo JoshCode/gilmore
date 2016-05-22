@@ -21,6 +21,7 @@ public class GilmoreConfiguration
     private String databaseName = "GILMORE";
     private Boolean debug = false;
     private String logLocation = "~/logs/gilmore.log";
+    private String botToken = "token";
 
     private GilmoreConfiguration() { }
     
@@ -121,6 +122,17 @@ public class GilmoreConfiguration
     public void setLogLocation(String logLocation)
     {
         this.logLocation = logLocation;
+    }
+    
+    public String getBotToken()
+    {
+        return logLocation;
+    }
+    
+    @GilmoreConfigurationItem(key = "bot_token", type = String.class)
+    public void setBotToken(String botToken)
+    {
+        this.botToken = botToken;
     }
     
     public void load()

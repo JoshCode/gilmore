@@ -26,7 +26,7 @@ public class Gilmore
         	
             JDABuilder jdaBuilder = new JDABuilder();
     
-            jdaBuilder.setBotToken(System.getProperty("GILMORE_BOT_TOKEN"));
+            jdaBuilder.setBotToken("MTgzODY4NTk1ODYyODk2NjQw.CiMIeQ.Ip7voO3aWTn-U-Ts1kOOYB2HevA");
     
             commandListener = new CommandListener()
                                         .registerCommand(new AboutCommand())
@@ -35,6 +35,7 @@ public class Gilmore
             jdaBuilder.addListener(commandListener);
 
             JDA = jdaBuilder.buildBlocking();
+            
         } catch (LoginException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
