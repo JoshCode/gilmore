@@ -126,7 +126,7 @@ public class GilmoreConfiguration
     
     public String getBotToken()
     {
-        return logLocation;
+        return botToken;
     }
     
     @GilmoreConfigurationItem(key = "bot_token", type = String.class)

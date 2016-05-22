@@ -22,11 +22,11 @@ public class Gilmore
         try 
         {
             Logging.info("Gilmore starting up!");
-            GilmoreConfiguration.getInstance();
+            GilmoreConfiguration config = GilmoreConfiguration.getInstance();
         	
             JDABuilder jdaBuilder = new JDABuilder();
     
-            jdaBuilder.setBotToken("MTgzODY4NTk1ODYyODk2NjQw.CiMIeQ.Ip7voO3aWTn-U-Ts1kOOYB2HevA");
+            jdaBuilder.setBotToken(config.getBotToken());
     
             commandListener = new CommandListener()
                                         .registerCommand(new AboutCommand())
