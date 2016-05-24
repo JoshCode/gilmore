@@ -12,26 +12,12 @@ import java.util.Map;
 import nl.codefox.gilmore.command.game.Game;
 import nl.codefox.gilmore.config.GilmoreConfiguration;
 import nl.codefox.gilmore.util.Logging;
+import nl.codefox.gilmore.util.Resources;
 
 public class GilmoreDatabase
 {
 
     private static Connection connection;
-
-    private static final String SQL_GET_GAMES       = "SELECT NAME FROM GILMORE_GAME";
-    private static final String SQL_GET_SUBSCRIBERS = "SELECT USER FROM GILMORE_GAME_SUBSCRIBER WHERE GAME = ?";
-    private static final String SQL_GET_COMMANDS    = "SELECT COMMAND, DESCRIPTION FROM GILMORE_CUSTOM_COMMANDS";
-
-    private static final String SQL_ADD_GAME       = "INSERT INTO GILMORE_GAME VALUES ( ? )";
-    private static final String SQL_ADD_COMMAND    = "INSERT INTO GILMORE_CUSTOM_COMMANDS VALUES ( ?, ? )";
-    private static final String SQL_ADD_SUBSCRIBER = "INSERT INTO GILMORE_GAME_SUBSCRIBER VALUES ( ?, ? )";
-
-    private static final String SQL_DELETE_GAME        = "DELETE FROM GILMORE_GAME WHERE NAME = ?";
-    private static final String SQL_DELETE_COMMAND     = "DELETE FROM GILMORE_CUSTOM_COMMANDS WHERE COMMAND = ?";
-    private static final String SQL_DELETE_SUBSCRIBERS = "DELETE FROM GILMORE_GAME_SUBSCRIBER WHERE GAME = ?";
-    private static final String SQL_DELETE_SUBSCRIBER  = "DELETE FROM GILMORE_GAME_SUBSCRIBER WHERE GAME = ? AND USER = ?";
-
-    private static final String SQL_EDIT_COMMAND = "UPDATE GILMORE_CUSTOM_COMMANDS SET DESCRIPTION = ? WHERE COMMAND = ?";
 
     private static Connection getConnection()
     {
@@ -76,14 +62,14 @@ public class GilmoreDatabase
 
         try
         {
-            PreparedStatement stmt = getConnection().prepareStatement(SQL_GET_GAMES);
+            PreparedStatement stmt = getConnection().prepareStatement(Resources.getSQL("SELECT_GAMES"));
             ResultSet rs = stmt.executeQuery();
 
             while(rs.next())
             {
                 Game game = new Game(rs.getString(1));
 
-                PreparedStatement stmt2 = getConnection().prepareStatement(SQL_GET_SUBSCRIBERS);
+                PreparedStatement stmt2 = getConnection().prepareStatement(Resources.getSQL("SELECT_SUBSCRIBERS"));
                 stmt2.setString(1, game.getName());
                 ResultSet rs2 = stmt2.executeQuery();
 
@@ -109,7 +95,7 @@ public class GilmoreDatabase
         try
         {
 
-            PreparedStatement stmt = getConnection().prepareStatement(SQL_ADD_GAME);
+            PreparedStatement stmt = getConnection().prepareStatement(Resources.getSQL("INSERT_GAME"));
             stmt.setString(1, name);
 
             stmt.executeUpdate();
@@ -128,7 +114,7 @@ public class GilmoreDatabase
         try
         {
 
-            PreparedStatement stmt = getConnection().prepareStatement(SQL_ADD_SUBSCRIBER);
+            PreparedStatement stmt = getConnection().prepareStatement(Resources.getSQL("INSERT_SUBSCRIBER"));
             stmt.setString(1, game);
             stmt.setString(2, user);
 
@@ -148,11 +134,11 @@ public class GilmoreDatabase
 
         try
         {
-            PreparedStatement subs = getConnection().prepareStatement(SQL_DELETE_SUBSCRIBERS);
+            PreparedStatement subs = getConnection().prepareStatement(Resources.getSQL("DELETE_SUBSCRIBERS"));
             subs.setString(1, name);
             subs.executeUpdate();
 
-            PreparedStatement game = getConnection().prepareStatement(SQL_DELETE_GAME);
+            PreparedStatement game = getConnection().prepareStatement(Resources.getSQL("DELETE_GAME"));
             game.setString(1, name);
             game.executeUpdate();
         }
@@ -168,7 +154,7 @@ public class GilmoreDatabase
 
         try
         {
-            PreparedStatement subs = getConnection().prepareStatement(SQL_DELETE_SUBSCRIBER);
+            PreparedStatement subs = getConnection().prepareStatement(Resources.getSQL("DELETE_SUBSCRIBERS"));
             subs.setString(1, name);
             subs.setString(2, user);
             subs.executeUpdate();
@@ -184,7 +170,7 @@ public class GilmoreDatabase
     {
         try
         {
-            PreparedStatement customCommand = getConnection().prepareStatement(SQL_ADD_COMMAND);
+            PreparedStatement customCommand = getConnection().prepareStatement(Resources.getSQL("INSERT_COMMAND"));
             customCommand.setString(1, command);
             customCommand.setString(2, description);
             customCommand.executeUpdate();
@@ -200,7 +186,7 @@ public class GilmoreDatabase
     {
         try
         {
-            PreparedStatement customCommand = getConnection().prepareStatement(SQL_EDIT_COMMAND);
+            PreparedStatement customCommand = getConnection().prepareStatement(Resources.getSQL("UPDATE_COMMAND"));
             customCommand.setString(1, description);
             customCommand.setString(2, command);
             customCommand.executeUpdate();
@@ -218,7 +204,7 @@ public class GilmoreDatabase
 
         try
         {
-            PreparedStatement stmt = getConnection().prepareStatement(SQL_GET_COMMANDS);
+            PreparedStatement stmt = getConnection().prepareStatement(Resources.getSQL("SELECT_COMMAND"));
             ResultSet rs = stmt.executeQuery();
 
             while(rs.next())
@@ -238,7 +224,7 @@ public class GilmoreDatabase
     {
         try
         {
-            PreparedStatement subs = getConnection().prepareStatement(SQL_DELETE_COMMAND);
+            PreparedStatement subs = getConnection().prepareStatement(Resources.getSQL("DELETE_SUBSCRIBERS"));
             subs.setString(1, command);
             subs.executeUpdate();
         }
