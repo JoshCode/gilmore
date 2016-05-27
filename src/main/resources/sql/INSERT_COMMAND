@@ -1,0 +1,6 @@
+INSERT 	INTO GILMORE_CUSTOM_COMMANDS 
+VALUES 
+( 
+	?, 
+	? 
+)
