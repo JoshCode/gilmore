@@ -29,7 +29,7 @@ public class Resources {
                 {
                     String sql = "";
                     String sqlLine;
-                    while ((sqlLine = br.readLine()) != null) 
+                    while ((sqlLine = fr.readLine()) != null) 
                     {
                         sql += sqlLine + "\n";
                     }
