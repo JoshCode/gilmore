@@ -5,8 +5,6 @@ import java.io.FileReader;
 import java.lang.reflect.Method;
 import java.util.Properties;
 
-import nl.codefox.gilmore.util.Logging;
-
 public class GilmoreConfiguration 
 {
 
@@ -156,20 +154,20 @@ public class GilmoreConfiguration
                         {
                             Integer value = Integer.parseInt((String) properties.get(item.key()));
                             method.invoke(this, value);
-                            Logging.debug(String.format("[GilmoreConfiguration] %s(%s)", method.getName(), value), true);
+                            System.out.println(String.format("[GilmoreConfiguration] %s(%s)", method.getName(), value));
                             continue;
                         }
                         else if(item.type() == Boolean.class)
                         {
                             Boolean value = Boolean.parseBoolean((String) properties.get(item.key()));
                             method.invoke(this, value);
-                            Logging.debug(String.format("[GilmoreConfiguration] %s(%s)", method.getName(), value), true);
+                            System.out.println(String.format("[GilmoreConfiguration] %s(%s)", method.getName(), value));
                             continue;
                         }
 
                         String value = (String) properties.get(item.key());
                         method.invoke(this, value);
-                        Logging.debug(String.format("[GilmoreConfiguration] %s(%s)", method.getName(), value), true);
+                        System.out.println(String.format("[GilmoreConfiguration] %s(%s)", method.getName(), value));
                     }
                 }
             }

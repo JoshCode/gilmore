@@ -11,38 +11,28 @@ public class Logging
 {
 
     private static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss Z");
-
-    public static void log(LogLevel level, String message)
-    {
-        log(level, message, false);
-    }
     
-    public static void log(LogLevel level, String message, boolean console)
+    public static void log(LogLevel level, String message)
     {
         GilmoreConfiguration config = GilmoreConfiguration.getInstance();
         
         String line = String.format("[%s\t%s] %s\n", level.name(), getTimestamp(), message);
         
-        if(console)
+        System.out.print(line);
+         
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter(config.getLogLocation(), true)))
         {
-            System.out.print(line);
+            if(level == LogLevel.DEBUG && !config.isDebug())
+            {
+                return;
+            }
+            
+            writer.write(line);
         }
-        else
-        {   
-            try(BufferedWriter writer = new BufferedWriter(new FileWriter(config.getLogLocation(), true)))
-            {
-                if(level == LogLevel.DEBUG && !config.isDebug())
-                {
-                    return;
-                }
-                
-                writer.write(line);
-            }
-            catch (Exception ex)
-            {
-                System.out.println("Cannot log to file.");
-                ex.printStackTrace();
-            }
+        catch (Exception ex)
+        {
+            System.out.println("Cannot log to file.");
+            ex.printStackTrace();
         }
     }
     
@@ -51,29 +41,14 @@ public class Logging
         log(LogLevel.DEBUG, message);
     }
     
-    public static void debug(String message, boolean console)
-    {
-        log(LogLevel.DEBUG, message, console);
-    }
-    
     public static void info(String message)
     {
         log(LogLevel.INFO, message);
     }
     
-    public static void info(String message, boolean console)
-    {
-        log(LogLevel.INFO, message, console);
-    }
-    
     public static void error(String message)
     {
         log(LogLevel.ERROR, message);
-    }
-    
-    public static void error(String message, boolean console)
-    {
-        log(LogLevel.ERROR, message, console);
     }
     
     public static void log(Exception ex)
