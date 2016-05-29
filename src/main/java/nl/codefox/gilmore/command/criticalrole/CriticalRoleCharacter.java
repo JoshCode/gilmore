@@ -1,8 +1,9 @@
 package nl.codefox.gilmore.command.criticalrole;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+
+import nl.codefox.gilmore.util.StringUtil;
 
 public class CriticalRoleCharacter 
 {
@@ -10,46 +11,176 @@ public class CriticalRoleCharacter
     private static List<CriticalRoleCharacter> characters = new ArrayList<CriticalRoleCharacter>();
     
     private List<String> aliases = new ArrayList<String>();
-    private String resource = "";
-    private String name = "";
-    private String title = "";
-    private int row = 0;
-    
-    public CriticalRoleCharacter(String resource, int row, String name, String title, String... aliases)
-    {
-        this.resource = resource;
-        this.row = row;
-        this.name = name;
-        this.title = title;
-        this.aliases.addAll(Arrays.asList(aliases));
-        this.aliases.add(name.toLowerCase());
-    }
-    
+    private String resource = "?";
+    private String name = "?";
+    private String title = "?";
+    private String strength = "?";
+    private String currentHP = "?";
+    private String maxHP = "?";
+    private String tempHP = "?";
+    private String armourClass = "?";
+    private String status = "?";
+    private String dexerity = "?";
+    private String constitution = "?";
+    private String intelligence = "?";
+    private String wisdom = "?";
+    private String charisma = "?";
+
     public List<String> getAliases()
     {
-        return this.aliases;
+        return aliases;
     }
-    
+
+    public void setAliases(List<String> aliases)
+    {
+        for(int i = 0; i < aliases.size(); i++)
+        {
+            aliases.set(i, aliases.get(i).toLowerCase());
+        }
+        this.aliases.addAll(aliases);
+    }
+
     public String getResource()
     {
-        return this.resource;
+        return resource;
     }
-    
-    public int getRow()
+
+    public void setResource(String resource)
     {
-        return this.row;
+        this.resource = resource;
     }
-    
+
     public String getName()
     {
-        return this.name;
+        return name;
     }
-    
+
+    public void setName(String name)
+    {
+        this.name = name;
+        this.aliases.add(name.toLowerCase());
+    }
+
     public String getTitle()
     {
-        return this.title;
+        return title;
     }
-    
+
+    public void setTitle(String title)
+    {
+        this.title = title;
+    }
+
+    public String getStrength()
+    {
+        return strength;
+    }
+
+    public void setStrength(String strength)
+    {
+        this.strength = strength;
+    }
+
+    public String getCurrentHP()
+    {
+        return currentHP;
+    }
+
+    public void setCurrentHP(String currentHP)
+    {
+        this.currentHP = currentHP;
+    }
+
+    public String getMaxHP()
+    {
+        return maxHP;
+    }
+
+    public void setMaxHP(String maxHP)
+    {
+        this.maxHP = maxHP;
+    }
+
+    public String getTempHP()
+    {
+        return tempHP;
+    }
+
+    public void setTempHP(String tempHP)
+    {
+        this.tempHP = tempHP;
+    }
+
+    public String getArmourClass()
+    {
+        return armourClass;
+    }
+
+    public void setArmourClass(String armourClass)
+    {
+        this.armourClass = armourClass;
+    }
+
+    public String getStatus()
+    {
+        return status;
+    }
+
+    public void setStatus(String status)
+    {
+        this.status = status;
+    }
+
+    public String getDexerity()
+    {
+        return dexerity;
+    }
+
+    public void setDexerity(String dexerity)
+    {
+        this.dexerity = dexerity;
+    }
+
+    public String getConstitution()
+    {
+        return constitution;
+    }
+
+    public void setConstitution(String constitution)
+    {
+        this.constitution = constitution;
+    }
+
+    public String getIntelligence()
+    {
+        return intelligence;
+    }
+
+    public void setIntelligence(String intelligence)
+    {
+        this.intelligence = intelligence;
+    }
+
+    public String getWisdom()
+    {
+        return wisdom;
+    }
+
+    public void setWisdom(String wisdom)
+    {
+        this.wisdom = wisdom;
+    }
+
+    public String getCharisma()
+    {
+        return charisma;
+    }
+
+    public void setCharisma(String charisma)
+    {
+        this.charisma = charisma;
+    }
+
     public static void clear()
     {
         characters.clear();
