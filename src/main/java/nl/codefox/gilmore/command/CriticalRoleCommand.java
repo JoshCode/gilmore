@@ -34,6 +34,7 @@ public class CriticalRoleCommand extends GilmoreCommand
     @Override
     public void run(String[] args, MessageReceivedEvent event) 
     {
+        
         if(CriticalRoleCharacter.getCharacter(args[1].toLowerCase()) != null)
         {
             Message message = event.getChannel().sendMessage(String.format("[%s] `Preparing that for you now - one moment...`", event.getAuthor().getAsMention()));
@@ -47,54 +48,10 @@ public class CriticalRoleCommand extends GilmoreCommand
 
     }
     
-    private String[] getData(int row)
-    {
-        
-        try 
-        {
-            
-            Sheets service = GoogleSheetsUtil.getSheetsService();
-            
-            String sid = CriticalRoleConstants.SPREADSHEET_ID;
-            String range = String.format(CriticalRoleConstants.SPREADSHEET_RANGE, row, row);
-            
-            ValueRange response = service.spreadsheets().values().get(sid, range).execute();
-            
-            List<List<Object>> values = response.getValues();
-            
-            if(values != null && values.size() != 0)
-            {
-                for (List<Object> r : values) 
-                {
-                    String[] data = new String[10];
-                    data[CriticalRoleConstants.HP] =String.valueOf(r.get(0));
-                    data[CriticalRoleConstants.MAXHP] =String.valueOf(r.get(1));
-                    data[CriticalRoleConstants.TMPHP] =String.valueOf(r.get(2));
-                    data[CriticalRoleConstants.AC] =String.valueOf(r.get(3));
-                    data[CriticalRoleConstants.STR] =String.valueOf(r.get(5));
-                    data[CriticalRoleConstants.DEX] =String.valueOf(r.get(6));
-                    data[CriticalRoleConstants.CON] =String.valueOf(r.get(7));
-                    data[CriticalRoleConstants.INT] =String.valueOf(r.get(8));
-                    data[CriticalRoleConstants.WIS] =String.valueOf(r.get(9));
-                    data[CriticalRoleConstants.CHA] =String.valueOf(r.get(10));
-                    return data;
-                }
-            }
-            
-        } catch (IOException e) 
-        {
-            e.printStackTrace();
-        }
-        
-        return new String[10];
-    }
-    
     private void draw(MessageReceivedEvent event, CriticalRoleCharacter crc)
     {
         try
         {
-            
-            String[] data = getData(crc.getRow());
             
             BufferedImage image = new BufferedImage(CriticalRoleConstants.IMAGE_WIDTH, CriticalRoleConstants.IMAGE_HEIGHT, BufferedImage.TYPE_INT_ARGB);
             Graphics2D graphics = image.createGraphics();
@@ -120,25 +77,25 @@ public class CriticalRoleCommand extends GilmoreCommand
             graphics.drawString(crc.getTitle(), CriticalRoleConstants.TEXT_X, CriticalRoleConstants.TITLE_Y);
             
             graphics.setFont(new Font("COCOGOOSE", Font.PLAIN, CriticalRoleConstants.DATA_FONT_SIZE)); 
-            graphics.drawString(data[CriticalRoleConstants.STR],    CriticalRoleConstants.FIRST_COLUMN, CriticalRoleConstants.FIRST_ROW);
-            graphics.drawString(data[CriticalRoleConstants.DEX],    CriticalRoleConstants.FIRST_COLUMN, CriticalRoleConstants.SECOND_ROW);
-            graphics.drawString(data[CriticalRoleConstants.CON],    CriticalRoleConstants.FIRST_COLUMN, CriticalRoleConstants.THIRD_ROW);
-            graphics.drawString(data[CriticalRoleConstants.INT],    CriticalRoleConstants.SECOND_COLUMN, CriticalRoleConstants.FIRST_ROW);
-            graphics.drawString(data[CriticalRoleConstants.WIS],    CriticalRoleConstants.SECOND_COLUMN, CriticalRoleConstants.SECOND_ROW);
-            graphics.drawString(data[CriticalRoleConstants.CHA],    CriticalRoleConstants.SECOND_COLUMN, CriticalRoleConstants.THIRD_ROW);
-            graphics.drawString(data[CriticalRoleConstants.AC],     CriticalRoleConstants.THIRD_COLUMN, CriticalRoleConstants.FIRST_ROW);
-            graphics.drawString(data[CriticalRoleConstants.HP],     CriticalRoleConstants.THIRD_COLUMN, CriticalRoleConstants.SECOND_ROW);
-            graphics.drawString(data[CriticalRoleConstants.TMPHP],  CriticalRoleConstants.THIRD_COLUMN, CriticalRoleConstants.THIRD_ROW);
+            graphics.drawString(crc.getStrength(),    CriticalRoleConstants.FIRST_COLUMN, CriticalRoleConstants.FIRST_ROW);
+            graphics.drawString(crc.getDexerity(),    CriticalRoleConstants.FIRST_COLUMN, CriticalRoleConstants.SECOND_ROW);
+            graphics.drawString(crc.getConstitution(),    CriticalRoleConstants.FIRST_COLUMN, CriticalRoleConstants.THIRD_ROW);
+            graphics.drawString(crc.getIntelligence(),    CriticalRoleConstants.SECOND_COLUMN, CriticalRoleConstants.FIRST_ROW);
+            graphics.drawString(crc.getWisdom(),    CriticalRoleConstants.SECOND_COLUMN, CriticalRoleConstants.SECOND_ROW);
+            graphics.drawString(crc.getCharisma(),    CriticalRoleConstants.SECOND_COLUMN, CriticalRoleConstants.THIRD_ROW);
+            graphics.drawString(crc.getArmourClass(),     CriticalRoleConstants.THIRD_COLUMN, CriticalRoleConstants.FIRST_ROW);
+            graphics.drawString(crc.getCurrentHP(),     CriticalRoleConstants.THIRD_COLUMN, CriticalRoleConstants.SECOND_ROW);
+            graphics.drawString(crc.getTempHP(),  CriticalRoleConstants.THIRD_COLUMN, CriticalRoleConstants.THIRD_ROW);
             
-            float current = (data[CriticalRoleConstants.HP].equals("?")   ? 0 : Integer.parseInt(data[CriticalRoleConstants.HP]));
-            float max    = (data[CriticalRoleConstants.MAXHP].equals("?") ? 0 : Integer.parseInt(data[CriticalRoleConstants.MAXHP]));
+            float current = (crc.getCurrentHP().equals("?")   ? 0 : Integer.parseInt(crc.getCurrentHP()));
+            float max    = (crc.getMaxHP().equals("?") ? 0 : Integer.parseInt(crc.getMaxHP()));
             
             float n = ((float) CriticalRoleConstants.HP_BAR_WIDTH / 100);
             float m = (((float) current / (float) max) * 100);
 
             int bar = (int) Math.round(n * m);
             
-            graphics.setColor(Color.decode("0xE14040"));
+            graphics.setColor(CriticalRoleConstants.HP_BAR_COLOUR);
             graphics.fillRect(CriticalRoleConstants.HP_BAR_X, CriticalRoleConstants.HP_BAR_Y, bar, CriticalRoleConstants.HP_BAR_HEIGHT);
             
             File temp = new File(System.getProperty("user.home"), "temp.png");

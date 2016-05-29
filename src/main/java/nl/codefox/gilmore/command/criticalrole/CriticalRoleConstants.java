@@ -1,17 +1,28 @@
 package nl.codefox.gilmore.command.criticalrole;
 
+import java.awt.Color;
+
 public class CriticalRoleConstants 
 {
-    public static final int STR    = 0;
-    public static final int DEX    = 1;
-    public static final int CON    = 2;
-    public static final int INT    = 3;
-    public static final int WIS    = 4;
-    public static final int CHA    = 5;
-    public static final int AC     = 6;
-    public static final int HP     = 7;
-    public static final int TMPHP  = 8;
-    public static final int MAXHP  = 9;
+    public static final int NAME_COLUMN = 0;
+    public static final int CURRENT_HP_COLUMN = 1;
+    public static final int MAX_HP_COLUMN = 2;
+    public static final int TEMP_HP_COLUMN = 3;
+    public static final int ARMOUR_CLASS_COLUMN = 4;
+    public static final int STATUS_COLUMN = 5;
+    public static final int STRENGTH_COLUMN = 6;
+    public static final int DEXERITY_COLUMN = 7;
+    public static final int CONSTITUTION_COLUMN = 8;
+    public static final int INTELLIGENCE_COLUMN = 9;
+    public static final int WISDOM_COLUMN = 10;
+    public static final int CHARISMA_COLUMN = 11;
+    public static final int PRIMARY_CLASS_COLUMN = 12;
+    public static final int PRIMARY_LEVEL_COLUMN = 13;
+    public static final int SECONDARY_CLASS_COLUMN = 14;
+    public static final int SECONDARY_LEVEL_COLUMN = 15;
+    public static final int PLAYER_CHARACTER_COLUMN = 16;
+    public static final int RACE_COLUMN = 17;
+    public static final int ALIAS_COLUMN = 18;
     
     public static final int TEXT_X  = 470;
     public static final int NAME_Y  = 87;
@@ -37,7 +48,7 @@ public class CriticalRoleConstants
     public static final int HP_BAR_HEIGHT = 32;
     public static final int HP_BAR_X = 962;
     public static final int HP_BAR_Y = 47;
-    public static final String HP_BAR_COLOUR = "0xE14040";
+    public static final Color HP_BAR_COLOUR = Color.decode("0xE14040");
     
     public static final int IMAGE_WIDTH = 1331;
     public static final int IMAGE_HEIGHT = 450;

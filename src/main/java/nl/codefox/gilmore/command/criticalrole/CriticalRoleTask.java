@@ -1,17 +1,16 @@
 package nl.codefox.gilmore.command.criticalrole;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.ValueRange;
 
 import nl.codefox.gilmore.util.GoogleSheetsUtil;
-import nl.codefox.gilmore.util.StringUtil;
 
 public class CriticalRoleTask extends Thread
 {
-
+    
     public CriticalRoleTask()
     {
         this.start();
@@ -33,69 +32,56 @@ public class CriticalRoleTask extends Thread
                 ValueRange response = service.spreadsheets().values().get(sid, range).execute();
                 
                 List<List<Object>> values = response.getValues();
+                CriticalRoleCharacter.clear();
                 
                 if(values != null && values.size() != 0)
                 {
                     for (int i = 0; i < values.size(); i++) 
                     {
+                        
                         List<Object> row = values.get(i);
                         
-                        String name = "";
-                        String race = "";
-                        String type = "";
-                        String clas = "";
-                        List<String> aliasesList = new ArrayList<String>();
-                        
-                        if(row.size() == 19)
-                        {
-                            name = String.valueOf(row.get(0));
-                            race = String.valueOf(row.get(17));
-                            type = String.valueOf(row.get(16));   
-                            clas = String.valueOf(row.get(12));
-                        
-                            for(String string : String.valueOf(row.get(18)).toLowerCase().split(","))
-                            {
-                                aliasesList.add(string.trim());
-                            }
-                        }
-                        else if(row.size() == 18)
-                        {
-                            name = String.valueOf(row.get(0));
-                            race = String.valueOf(row.get(17));
-                            type = String.valueOf(row.get(16));   
-                            clas = String.valueOf(row.get(12));
-                        }
-                        else if(row.size() == 17)
-                        {
-                            name = String.valueOf(row.get(0));
-                            race = String.valueOf(row.get(15));
-                            type = String.valueOf(row.get(14));   
-                            clas = String.valueOf(row.get(12));
-                        
-                            for(String string : String.valueOf(row.get(16)).toLowerCase().split(","))
-                            {
-                                aliasesList.add(string.trim());
-                            }
-                        }
-                        else
+                        if(row.size() != 19)
                         {
                             continue;
                         }
                         
-                        String title = String.format("the %s %s", race, clas);
-                        String resource = String.format("http://gilmore.prscampbell.com/%s.png", name.toLowerCase());
-                        String[] aliases = StringUtil.listToString(aliasesList, ",").split(",");
-                        
-                        if(type.equals("y"))
+                        if(!((String) row.get(CriticalRoleConstants.PLAYER_CHARACTER_COLUMN)).equalsIgnoreCase("Y"))
                         {
-                            CriticalRoleCharacter.addCharacter(
-                                new CriticalRoleCharacter(resource, (i + 2), name, title, aliases)
-                            );
+                            continue;
                         }
+                        
+                        CriticalRoleCharacter crc = new CriticalRoleCharacter();
+                        
+                        crc.setName((String) row.get(CriticalRoleConstants.NAME_COLUMN));
+                        crc.setCurrentHP((String) row.get(CriticalRoleConstants.CURRENT_HP_COLUMN));
+                        crc.setMaxHP((String) row.get(CriticalRoleConstants.MAX_HP_COLUMN));
+                        crc.setTempHP((String) row.get(CriticalRoleConstants.TEMP_HP_COLUMN));
+                        crc.setArmourClass((String) row.get(CriticalRoleConstants.ARMOUR_CLASS_COLUMN));
+                        crc.setStatus((String) row.get(CriticalRoleConstants.STATUS_COLUMN));
+                        crc.setStrength((String) row.get(CriticalRoleConstants.STRENGTH_COLUMN));
+                        crc.setDexerity((String) row.get(CriticalRoleConstants.DEXERITY_COLUMN));
+                        crc.setConstitution((String) row.get(CriticalRoleConstants.CONSTITUTION_COLUMN));
+                        crc.setIntelligence((String) row.get(CriticalRoleConstants.INTELLIGENCE_COLUMN));
+                        crc.setWisdom((String) row.get(CriticalRoleConstants.WISDOM_COLUMN));
+                        crc.setCharisma((String) row.get(CriticalRoleConstants.CHARISMA_COLUMN));
+                        
+                        String title = String.format(
+                                            "the %s %s (Lv. %s)",
+                                            (String) row.get(CriticalRoleConstants.RACE_COLUMN),
+                                            (String) row.get(CriticalRoleConstants.PRIMARY_CLASS_COLUMN),
+                                            (String) row.get(CriticalRoleConstants.PRIMARY_LEVEL_COLUMN)
+                                       );
+                        
+                        crc.setTitle(title);
+                        crc.setResource(String.format("http://gilmore.prscampbell.com/%s.png", crc.getName().toLowerCase()));
+                        crc.setAliases(Arrays.asList(((String) row.get(CriticalRoleConstants.ALIAS_COLUMN)).split(",")));
+                        
+                        CriticalRoleCharacter.addCharacter(crc);
                     }
                 }
                 
-                Thread.sleep(10000L);
+                Thread.sleep(5000L);
             }
         }
         catch (Exception e)
