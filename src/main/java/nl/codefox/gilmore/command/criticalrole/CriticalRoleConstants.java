@@ -53,5 +53,5 @@ public class CriticalRoleConstants
     public static final int IMAGE_WIDTH = 1331;
     public static final int IMAGE_HEIGHT = 450;
     public static final String IMAGE_URL = "http://gilmore.prscampbell.com/default.png";
-    public static final String AVATAR_URL = "http://gilmore.prscampbell.com/default-avatar.png";
+    public static final String AVATAR_URL = "http://i.imgur.com/S1IFlyD.png";
 }
