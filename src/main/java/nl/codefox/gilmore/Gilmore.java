@@ -16,6 +16,8 @@ import nl.codefox.gilmore.listener.ConnectionListener;
 import nl.codefox.gilmore.util.Logging;
 
 import javax.security.auth.login.LoginException;
+import java.io.File;
+import java.io.IOException;
 
 public class Gilmore 
 {
@@ -31,6 +33,14 @@ public class Gilmore
         {
             Logging.info("Gilmore starting up!");
             GilmoreConfiguration config = GilmoreConfiguration.getInstance();
+
+            File logLocation = config.getLogLocation();
+            logLocation.mkdirs();
+            try {
+                logLocation.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         	
             JDABuilder builder = new JDABuilder();
     

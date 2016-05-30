@@ -29,7 +29,7 @@ public class GilmoreDatabase
             {
 
                 Logging.debug("[GilmoreDatabase] Attempting connection to database...");
-                Logging.debug("[GilmoreDatabase] \tdatabaseManagementSystem = " + config.getDatabaseManagmentSystem());
+                Logging.debug("[GilmoreDatabase] \tdatabaseManagementSystem = " + config.getDatabaseManagementSystem());
                 Logging.debug("[GilmoreDatabase] \tdatabaseHostname = " + config.getDatabaseHostname());
                 Logging.debug("[GilmoreDatabase] \tdatabasePort = " + config.getDatabasePort());
                 Logging.debug("[GilmoreDatabase] \tdatabaseName = " + config.getDatabaseName());
@@ -37,7 +37,7 @@ public class GilmoreDatabase
                 Logging.debug("[GilmoreDatabase] \tdatabasePassword = " + config.getDatabasePassword());
 
                 connection = DriverManager.getConnection(
-                        String.format("jdbc:%s://%s:%d/%s?useSSL=false", config.getDatabaseManagmentSystem(), config.getDatabaseHostname(),
+                        String.format("jdbc:%s://%s:%d/%s?useSSL=false", config.getDatabaseManagementSystem(), config.getDatabaseHostname(),
                                                                          config.getDatabasePort(), config.getDatabaseName()),
                         config.getDatabaseUsername(), config.getDatabasePassword()
                 );
