@@ -35,12 +35,12 @@ public class Gilmore
             GilmoreConfiguration config = GilmoreConfiguration.getInstance();
 
             File logLocation = config.getLogLocation();
-            logLocation.mkdirs();
-            try {
-                logLocation.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+			new File(logLocation.getParent()).mkdirs();
+			try {
+				logLocation.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
         	
             JDABuilder builder = new JDABuilder();
     
