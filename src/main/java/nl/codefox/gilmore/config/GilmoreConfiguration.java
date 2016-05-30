@@ -1,14 +1,17 @@
 package nl.codefox.gilmore.config;
 
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Properties;
 
 public class GilmoreConfiguration 
 {
 
-    private static final String CONFIGURATION_PATH = "~/conf/gilmore.conf";
+    private static final String CONFIGURATION_PATH = "conf/gilmore.conf";
     private static GilmoreConfiguration instance;
     
     private String databaseManagementSystem = "mysql";
@@ -139,9 +142,11 @@ public class GilmoreConfiguration
         
         try
         {
+			String home = System.getProperty("user.home");
+			File configurationFile = new File(home, CONFIGURATION_PATH);
             Properties properties = new Properties();
-            properties.load(new FileReader(CONFIGURATION_PATH));
-            
+            properties.load(new FileReader(configurationFile));
+
             for(Method method : GilmoreConfiguration.class.getMethods())
             {
                 if(method.isAnnotationPresent(GilmoreConfigurationItem.class))
@@ -174,7 +179,7 @@ public class GilmoreConfiguration
         }
         catch (FileNotFoundException ex)
         {
-            System.out.println(String.format("Configuration file '%s' not found, using default configuration values.", CONFIGURATION_PATH));
+			System.out.println(String.format("Configuration file '%s' not found, using default configuration values.", CONFIGURATION_PATH));
             ex.printStackTrace();
         }
         catch (Exception ex)
