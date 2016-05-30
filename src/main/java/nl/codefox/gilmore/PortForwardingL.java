@@ -30,10 +30,10 @@ public class PortForwardingL {
             String privateKey = "~/.ssh/id_rsa";
             jsch.addIdentity(privateKey);
 
-            Session session = jsch.getSession("josh", "192.168.1.100", 22);
+            Session session = jsch.getSession("josh", "192.168.0.23", 22);
 
             lport = 3307;
-            rhost = "localhost";
+            rhost = "192.168.0.23";
             rport = 3306;
 
             UserInfo ui = new MyUserInfo();

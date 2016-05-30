@@ -15,8 +15,8 @@ public class GilmoreConfiguration {
 	private String databaseManagementSystem = "mysql";
 	private String databaseHostname = "localhost";
 	private Integer databasePort = 3306;
-	private String databasePassword = "password";
-	private String databaseUsername = "username";
+	private String databasePassword = "OESGci2fPO9fuPa1FwpqbHXpRWIAKWZwxm8FbH9BTgw1pxaqQyu316Lr";
+	private String databaseUsername = "gilmore";
 	private String databaseName = "GILMORE";
 	private Boolean debug = false;
 	private String logPath = "logs/gilmore.log";
