@@ -6,8 +6,8 @@ import java.util.regex.Matcher;
 
 public class Lexer {
     public static enum TokenType {
-        COMMENT("\\[([^\\]]+)\\]"), REROLLONCE("ro<(\\d+)"), DIE("(\\d+)?[dD](\\d+)"), REROLL("r<(\\d+)"), EXPLODING("\\!"), KEEPHIGH("k(h?)(\\d+)"), 
-        KEEPLOW("kl(\\d+)"), MULTIPLICATION("\\*"), NEGATION("\\+?\\-"), ADDITION("\\+"), ATOMIC("(\\d+)"), GIBBERISH ("[a-zA-Z]+"), WHITESPACE("(\\s+)");
+        COMMENT("\\[([^\\]]+)\\]"), DIE("(\\d+)?[dD](\\d+)"), REROLLONCE("ro<(\\d+)"), REROLL("r<(\\d+)"), EXPLODING("\\!"), KEEPHIGH("k(h?)(\\d+)"), KEEPLOW("kl(\\d+)"),
+        CRITSUCCESS("cs>(\\d+)"), CRITFAIL("cf<(\\d+)"), MULTIPLICATION("\\*"), NEGATION("\\+?\\-"), ADDITION("\\+"), ATOMIC("(\\d+)"), GIBBERISH ("[a-zA-Z]+"), WHITESPACE("(\\s+)");
 
         public final String pattern;
 

@@ -21,9 +21,22 @@ public class Negation extends Expression {
         }
         
         if (!twoNegations) {
-            Atomic atomic = new Atomic (tokens);
-            value = atomic.value;
-            description = atomic.description;
+            // We don't know whether this term is a die roll or just a constant number
+            for (Lexer.Token token : tokens) {
+                if (token.type == Lexer.TokenType.ATOMIC) {
+                    Atomic atomic = new Atomic (tokens);
+                    value = atomic.value;
+                    description = atomic.description;
+                    break;
+                }
+                else if (token.type == Lexer.TokenType.DIE) {
+                    Die die = new Die (tokens);
+                    value = die.value;
+                    description = die.description;
+                    break;
+                } 
+            }
+            
         }
         
     }

@@ -2,73 +2,227 @@
 package nl.codefox.gilmore.command.dice.expressions;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import nl.codefox.gilmore.command.dice.Lexer;
 
 public class Die extends Expression {
+    
+    private int numberOfDice = 0;
+    private int numberOfFaces = 1;
+    private int keepNumber = 0;
+    private boolean keepHighest = false;
+    private boolean keepLowest = false;
+    private boolean exploding = false;
+    private int rerollNumber = 0;
+    private boolean rerollOnce = false;
+    private boolean reroll = false;
+    private int critSuccessNumber = numberOfFaces;
+    private int critFailNumber = 1;
 
+    /**
+     * Sets up a die with the selected options.
+     * Then roll the dice and add the explanation to the description.
+     * @param tokens 
+     */
     public Die(ArrayList<Lexer.Token> tokens) {
         super(tokens);
         
-        int numberOfDice = 0;
-        int numberOfFaces = 0;
-        int keepNumber = 0;
-        boolean keepHighest = false;
-        boolean keepLowest = false;
-        boolean exploding = false;
-        int rerollNumber = 0;
-        boolean rerollOnce = false;
-        boolean reroll = false;
-        
         for (int i = 0; i < tokens.size(); i ++) {
-            description += tokens.get(i).data;
+            Lexer.Token token = tokens.get(i);
+            description += token.data;
+            processTriggers (token);
+        }
+        
+        // The reroll cooldown. Only used for rerollOnce
+        boolean justRerolled = false;
+        
+        Random random = new Random();
+        List<Integer> rolls = new ArrayList<>();
+        List<String> rollDescriptions = new ArrayList<>();
+        // Roll the dice, add extra where necessary
+        for (int i = 0; i < numberOfDice; i ++) {
+            int roll = random.nextInt(numberOfFaces) + 1;
+            String rollDescription = String.valueOf(roll);
             
-            if (tokens.get(i).type == Lexer.TokenType.DIE) {
-                String data = tokens.get(i).data.toLowerCase();
+            // Roll explodes, add one more die
+            if (exploding && roll == numberOfFaces) {
+                numberOfDice ++;
+                rollDescription += "!";
+            }
+            
+            // Roll is crit success
+            if (roll >= critSuccessNumber) {
+                rollDescription = "**" + rollDescription + "**";
+            }
+            
+            // Roll is crit fail
+            if (roll <= critFailNumber) {
+                rollDescription = "*" + rollDescription + "*";
+            }
+            
+            // Roll under rerollOnceNumber
+            if (rerollOnce && roll <= rerollNumber && !justRerolled) {
+                numberOfDice ++;
+                justRerolled = true;
+                roll = 0;
+                rollDescription = "~~" + rollDescription + "~~";
+            }
+            // Reset the reroll cooldown
+            else if (rerollOnce && justRerolled) {
+                justRerolled = false;
+            }
+            
+            // Roll under rerollNumber
+            if (reroll && roll <= rerollNumber) {
+                numberOfDice ++;
+                roll = 0;
+                rollDescription = "~~" + rollDescription + "~~";
+            }
+            
+            rolls.add(roll);
+            rollDescriptions.add(rollDescription);
+        }
+        
+        // Drop the higher dice
+        if (keepLowest) {
+            for (int j = 0; j < rolls.size() - keepNumber; j ++) {
+                int highest = 1, highestIndex = 0;
+                // Find the highest die
+                for (int i = 0; i < rolls.size(); i ++) {
+                    if (highest < rolls.get(i) && rolls.get(i) > 0) {
+                        highest = rolls.get(i);
+                        highestIndex = i;
+                    }
+                }
+                // Destroy it
+                rolls.set(highestIndex, 0);
+                String desc = rollDescriptions.get(highestIndex);
+                if (desc.length() < 2 || !"~~".equals(desc.substring(0, 2))) {
+                    rollDescriptions.set(highestIndex, "~~" + desc + "~~");
+                }
+            }
+        }
+        
+        // Drop the lower dice
+        if (keepHighest) {
+            for (int j = 0; j < rolls.size() - keepNumber; j ++) {
+                int lowest = numberOfFaces, lowestIndex = 0;
+                // Find the lowest die
+                for (int i = 0; i < rolls.size(); i ++) {
+                    if (lowest > rolls.get(i) && rolls.get(i) > 0) {
+                        lowest = rolls.get(i);
+                        lowestIndex = i;
+                    }
+                }
+                // Destroy it
+                rolls.set(lowestIndex, 0);
+                String desc = rollDescriptions.get(lowestIndex);
+                if (desc.length() < 2 || !"~~".equals(desc.substring(0, 2))) {
+                    rollDescriptions.set(lowestIndex, "~~" + desc + "~~");
+                }
+            }
+        }
+        
+        // Construct the final variables (value and description)
+        value = 0;
+        for (int roll : rolls) {
+            value += roll;
+        }
+        
+        description += " (";
+        for (String desc : rollDescriptions) {
+            description += desc + ", ";
+        }
+        if (!rollDescriptions.isEmpty()) {
+            description = description.substring(0, description.length() - 2);
+        }
+        description = description + ")";
+        
+    }
+    
+    /**
+     * Convert all the options to variables.
+     * @param token 
+     */
+    private void processTriggers (Lexer.Token token) {
+        
+        switch(token.type) {
+            // This is the main part, define the type of dice being rolled
+            case DIE: {
+                String data = token.data.toLowerCase();
                 int firstD = data.indexOf('d');
+                
+                // Parse number of dice
                 if (firstD > 0) {
                     numberOfDice = Integer.parseInt(data.substring(0, firstD));
                 }
                 else {
                     numberOfDice = 1;
                 }
+                
+                // Parse type of die
                 numberOfFaces = Integer.parseInt(data.substring(firstD + 1));
+                // Prevent crash
+                if (numberOfFaces == 0) {
+                    numberOfFaces = 1;
+                }
+                critSuccessNumber = numberOfFaces;
+                break;
             }
-            
-            if (tokens.get(i).type == Lexer.TokenType.EXPLODING) {
+                
+            case EXPLODING: {
                 exploding = true;
+                break;
             }
-            
-            if (tokens.get(i).type == Lexer.TokenType.KEEPHIGH) {
+                
+            case KEEPHIGH: {
                 keepHighest = true;
                 keepLowest = false;
-                String data = tokens.get(i).data.toLowerCase();
+                String data = token.data.toLowerCase();
                 if (data.charAt(1) == 'h') {
                     keepNumber = Integer.parseInt(data.substring(2));
                 }
                 else {
                     keepNumber = Integer.parseInt(data.substring(1));
                 }
+                break;
             }
-            
-            if (tokens.get(i).type == Lexer.TokenType.KEEPLOW) {
+                
+            case KEEPLOW: {
                 keepHighest = false;
                 keepLowest = true;
-                String data = tokens.get(i).data.toLowerCase();
+                String data = token.data.toLowerCase();
                 keepNumber = Integer.parseInt(data.substring(2));
+                break;
             }
             
-            if (tokens.get(i).type == Lexer.TokenType.REROLL) {
+            case CRITSUCCESS: {
+                String data = token.data.toLowerCase();
+                critSuccessNumber = Integer.parseInt(data.substring(3));
+                break;
+            }
+            
+            case CRITFAIL: {
+                String data = token.data.toLowerCase();
+                critFailNumber = Integer.parseInt(data.substring(3));
+                break;
+            }
+                
+            case REROLL: {
                 reroll = true;
                 rerollOnce = false;
-                String data = tokens.get(i).data.toLowerCase();
+                String data = token.data.toLowerCase();
                 rerollNumber = Integer.parseInt(data.substring(2));
+                break;
             }
-            
-            if (tokens.get(i).type == Lexer.TokenType.REROLLONCE) {
+                
+            case REROLLONCE: {
                 reroll = false;
                 rerollOnce = true;
-                String data = tokens.get(i).data.toLowerCase();
+                String data = token.data.toLowerCase();
                 rerollNumber = Integer.parseInt(data.substring(3));
+                break;
             }
         }
     }
