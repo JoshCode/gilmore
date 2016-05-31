@@ -164,7 +164,7 @@ public class GilmoreDatabase
         Logging.debug("[GilmoreDatabase] Removing subscriber from database");
         try
         {
-            PreparedStatement subs = getConnection().prepareStatement(Resources.getSQL("DELETE_SUBSCRIBERS"));
+            PreparedStatement subs = getConnection().prepareStatement(Resources.getSQL("DELETE_SUBSCRIBER"));
             subs.setString(1, name);
             subs.setString(2, user);
             subs.executeUpdate();
