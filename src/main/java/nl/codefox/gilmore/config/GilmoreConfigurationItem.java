@@ -7,10 +7,10 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface GilmoreConfigurationItem
-{
-    
-   public String key();
-   public Class<?> type();
-   
+public @interface GilmoreConfigurationItem {
+
+    public String key();
+
+    public Class<?> type();
+
 }
