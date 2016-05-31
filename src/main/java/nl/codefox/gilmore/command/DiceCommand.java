@@ -15,11 +15,11 @@ public class DiceCommand extends GilmoreCommand
     public void run(String[] args, MessageReceivedEvent event) 
     {
         
-        String notation = args[1];
-        Dice dice = new Dice(notation);
+        String expression = args[1];
+        Dice dice = new Dice(expression);
         int result = dice.roll();
                 
-        event.getChannel().sendMessage(String.format("[%s] `You rolled '%d' %s with the dice notation '%s'`", event.getAuthor().getAsMention(), result, dice.getBreakdown(), notation));
+        event.getChannel().sendMessage(String.format("[%s] `You rolled '%d' %s with the dice notation '%s'`", event.getAuthor().getAsMention(), result, dice.getBreakdown(), expression));
         
     }
 
