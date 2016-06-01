@@ -42,7 +42,7 @@ public class Die extends Expression {
         List<Integer> rolls = new ArrayList<>();
         List<String> rollDescriptions = new ArrayList<>();
         // Roll the dice, add extra where necessary
-        for (int i = 0; i < numberOfDice; i ++) {
+        for (int i = 0; i < Math.min(numberOfDice, 1000); i ++) {
             int roll = random.nextInt(numberOfFaces) + 1;
             String rollDescription = String.valueOf(roll);
             
