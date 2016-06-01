@@ -1,13 +1,10 @@
 package nl.codefox.gilmore;/* -*-mode:java; c-basic-offset:2; indent-tabs-mode:nil -*- */
 /**
- * This program will demonstrate the port forwarding like option -L of
- * ssh command; the given port on the local host will be forwarded to
- * the given remote host and port on the remote side.
- * $ CLASSPATH=.:../build javac PortForwardingL.java
- * $ CLASSPATH=.:../build java PortForwardingL
- * You will be asked username, hostname, port:host:hostport and passwd.
- * If everything works fine, you will get the shell prompt.
- * Try the port on localhost.
+ * This program will demonstrate the port forwarding like option -L of ssh command; the given port
+ * on the local host will be forwarded to the given remote host and port on the remote side. $
+ * CLASSPATH=.:../build javac PortForwardingL.java $ CLASSPATH=.:../build java PortForwardingL You
+ * will be asked username, hostname, port:host:hostport and passwd. If everything works fine, you
+ * will get the shell prompt. Try the port on localhost.
  */
 
 import com.jcraft.jsch.JSch;
@@ -15,8 +12,9 @@ import com.jcraft.jsch.Session;
 import com.jcraft.jsch.UIKeyboardInteractive;
 import com.jcraft.jsch.UserInfo;
 
-import javax.swing.*;
 import java.awt.*;
+
+import javax.swing.*;
 
 public class PortForwardingL {
     public static void main(String[] arg) {
@@ -52,6 +50,15 @@ public class PortForwardingL {
     }
 
     public static class MyUserInfo implements UserInfo, UIKeyboardInteractive {
+        final GridBagConstraints gbc =
+                new GridBagConstraints(0, 0, 1, 1, 1, 1,
+                        GridBagConstraints.NORTHWEST,
+                        GridBagConstraints.NONE,
+                        new Insets(0, 0, 0, 0), 0, 0);
+        String passphrase;
+        JTextField passphraseField = (JTextField) new JPasswordField(20);
+        private Container panel;
+
         public String getPassword() {
             return null;
         }
@@ -66,9 +73,6 @@ public class PortForwardingL {
                     null, options, options[0]);
             return foo == 0;
         }
-
-        String passphrase;
-        JTextField passphraseField = (JTextField) new JPasswordField(20);
 
         public String getPassphrase() {
             return passphrase;
@@ -94,13 +98,6 @@ public class PortForwardingL {
         public void showMessage(String message) {
             JOptionPane.showMessageDialog(null, message);
         }
-
-        final GridBagConstraints gbc =
-                new GridBagConstraints(0, 0, 1, 1, 1, 1,
-                        GridBagConstraints.NORTHWEST,
-                        GridBagConstraints.NONE,
-                        new Insets(0, 0, 0, 0), 0, 0);
-        private Container panel;
 
         public String[] promptKeyboardInteractive(String destination,
                                                   String name,

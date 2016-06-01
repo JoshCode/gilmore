@@ -14,10 +14,10 @@ public class Dice
     public Dice(String str) 
     {
         tokens = Lexer.lex(str);
+
     }
-    
-    public String getBreakdown()
-    {
+
+    public String getBreakdown() {
         return breakdown;
     }
     
@@ -27,6 +27,4 @@ public class Dice
         breakdown = expr.description;
         return expr.value;
     }
-    
-    
 }

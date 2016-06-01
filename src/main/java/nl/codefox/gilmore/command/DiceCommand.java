@@ -1,13 +1,12 @@
 package nl.codefox.gilmore.command;
 
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
+
 import nl.codefox.gilmore.command.dice.Dice;
 
-public class DiceCommand extends GilmoreCommand 
-{
+public class DiceCommand extends GilmoreCommand {
 
-    public DiceCommand() 
-    {
+    public DiceCommand() {
         super("Rolls dice based on input", "Usage: ![roll|dice] [value]", 2, null, "!roll", "!dice");
     }
 
