@@ -15,7 +15,7 @@ public class DiceCommand extends GilmoreCommand {
                 + "2d20klX: keep the X lowest dice\n"
                 + "4d6r<X: reroll every die lower than X\n"
                 + "4d6ro<X: reroll every die lower than X, but only once\n"
-                + "1d10!: exploding die - every time you roll a crit, add an extra die", 2, null, "!roll", "!dice");
+                + "1d10!: exploding die - every time you roll a crit, add an extra die", 2, 1000, null, "!roll", "!dice");
     }
 
     @Override
