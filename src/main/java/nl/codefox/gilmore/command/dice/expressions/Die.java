@@ -19,6 +19,7 @@ public class Die extends Expression {
     private boolean reroll = false;
     private int critSuccessNumber = numberOfFaces;
     private int critFailNumber = 1;
+    private int rerolledDice = 0;
 
     /**
      * Sets up a die with the selected options.
@@ -64,6 +65,7 @@ public class Die extends Expression {
             // Roll under rerollOnceNumber
             if (rerollOnce && roll <= rerollNumber && !justRerolled) {
                 numberOfDice ++;
+                rerolledDice ++;
                 justRerolled = true;
                 roll = 0;
                 rollDescription = "~~" + rollDescription + "~~";
@@ -76,6 +78,7 @@ public class Die extends Expression {
             // Roll under rerollNumber
             if (reroll && roll <= rerollNumber) {
                 numberOfDice ++;
+                rerolledDice ++;
                 roll = 0;
                 rollDescription = "~~" + rollDescription + "~~";
             }
@@ -86,7 +89,7 @@ public class Die extends Expression {
         
         // Drop the higher dice
         if (keepLowest) {
-            for (int j = 0; j < rolls.size() - keepNumber; j ++) {
+            for (int j = 0; j < rolls.size() - keepNumber - rerolledDice; j ++) {
                 int highest = 1, highestIndex = 0;
                 // Find the highest die
                 for (int i = 0; i < rolls.size(); i ++) {
@@ -106,7 +109,7 @@ public class Die extends Expression {
         
         // Drop the lower dice
         if (keepHighest) {
-            for (int j = 0; j < rolls.size() - keepNumber; j ++) {
+            for (int j = 0; j < rolls.size() - keepNumber - rerolledDice; j ++) {
                 int lowest = numberOfFaces, lowestIndex = 0;
                 // Find the lowest die
                 for (int i = 0; i < rolls.size(); i ++) {
