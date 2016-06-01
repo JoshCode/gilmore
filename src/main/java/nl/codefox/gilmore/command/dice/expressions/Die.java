@@ -46,7 +46,7 @@ public class Die extends Expression {
             String rollDescription = String.valueOf(roll);
             
             // Roll explodes, add one more die
-            if (exploding && roll == numberOfFaces) {
+            if (exploding && roll >= critSuccessNumber) {
                 numberOfDice ++;
                 rollDescription += "!";
             }

@@ -59,7 +59,7 @@ public class Lexer {
     }
 
     public static void main(String[] args) {
-        String input = "1d2 1D2";
+        String input = args[1];
         System.out.println(input);
         
         ArrayList<Token> tokens = lex(input);
