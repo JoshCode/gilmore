@@ -9,12 +9,12 @@ public class DiceCommand extends GilmoreCommand {
     public DiceCommand() 
     {
         super("Rolls dice based on input", "Usage: ![roll|dice] [expression]\n"
-                + "for example: !roll 1d20 + 5 [to hit]"
-                + "[comment]: this is ignored"
-                + "2d20khX: keep the X highest dice"
-                + "2d20klX: keep the X lowest dice"
-                + "4d6r<X: reroll every die lower than X"
-                + "4d6ro<X: reroll every die lower than X, but only once"
+                + "for example: !roll 1d20 + 5 [to hit]\n"
+                + "[comment]: this is ignored\n"
+                + "2d20khX: keep the X highest dice\n"
+                + "2d20klX: keep the X lowest dice\n"
+                + "4d6r<X: reroll every die lower than X\n"
+                + "4d6ro<X: reroll every die lower than X, but only once\n"
                 + "1d10!: exploding die - every time you roll a crit, add an extra die", 2, null, "!roll", "!dice");
     }
 
