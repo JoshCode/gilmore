@@ -31,7 +31,7 @@ public class DiceCommand extends GilmoreCommand {
         Dice dice = new Dice(expression);
         int result = dice.roll();
                 
-        event.getChannel().sendMessage(String.format("[%s] `You rolled '%d' %s with the dice notation '%s'`", event.getAuthor().getAsMention(), result, dice.getBreakdown(), expression));
+        event.getChannel().sendMessage(String.format("[%s] %s = %d", event.getAuthor().getAsMention(), dice.getBreakdown(), result));
         
     }
 
