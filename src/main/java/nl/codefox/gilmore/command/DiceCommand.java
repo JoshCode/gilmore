@@ -2,6 +2,9 @@ package nl.codefox.gilmore.command;
 
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import nl.codefox.gilmore.command.dice.Dice;
 
 public class DiceCommand extends GilmoreCommand {
@@ -30,8 +33,18 @@ public class DiceCommand extends GilmoreCommand {
         
         Dice dice = new Dice(expression);
         int result = dice.roll();
-                
-        event.getChannel().sendMessage(String.format("[%s] %s = %d", event.getAuthor().getAsMention(), dice.getBreakdown(), result));
+
+        String message = String.format("[%s] %s = %d", event.getAuthor().getAsMention(), dice.getBreakdown(), result);
+        List<String> messageList = new ArrayList<>();
+        int i;
+        for (i = 0; i < message.length() - 1990; i += 1990) {
+            messageList.add(message.substring(i, i + 1990));
+        }
+        messageList.add(message.substring(i));
+
+        for (String m : messageList) {
+            event.getChannel().sendMessage(m);
+        }
         
     }
 
