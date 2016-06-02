@@ -1,5 +1,7 @@
 package nl.codefox.gilmore.command.game;
 
+import net.dv8tion.jda.entities.TextChannel;
+import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 
 import nl.codefox.gilmore.command.GameCommand;
@@ -8,12 +10,12 @@ import nl.codefox.gilmore.command.GilmoreCommand;
 public class GameListCommand extends GilmoreCommand {
 
     public GameListCommand() {
-        super("", "!game list", 2, null, "!game list");
+        super("", "!game list", 1, null, "!game list");
     }
 
     @Override
-    public void run(String[] args, MessageReceivedEvent event) {
-        StringBuilder builder = new StringBuilder(String.format("[%s] `Here is a list of all available games`\n", event.getAuthor().getAsMention()));
+    public void process(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
+        StringBuilder builder = new StringBuilder(String.format("[%s] `Here is a list of all available games`\n", author.getAsMention()));
 
         builder.append("```");
 
@@ -27,7 +29,7 @@ public class GameListCommand extends GilmoreCommand {
 
         builder.append("```");
 
-        event.getChannel().sendMessage(builder.toString());
+        channel.sendMessage(builder.toString());
     }
 
 }
