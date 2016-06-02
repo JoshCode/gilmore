@@ -1,6 +1,8 @@
 package nl.codefox.gilmore.command.custom;
 
 import net.dv8tion.jda.Permission;
+import net.dv8tion.jda.entities.TextChannel;
+import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 
 import nl.codefox.gilmore.command.CustomCommand;
@@ -10,19 +12,19 @@ import nl.codefox.gilmore.database.GilmoreDatabase;
 public class DeleteCustomCommand extends GilmoreCommand {
 
     public DeleteCustomCommand() {
-        super("Delete a custom command", "Usage: !custom delete [command]", 3, Permission.MANAGE_SERVER, "!custom delete");
+        super("Delete a custom command", "Usage: !custom delete [command]", 2, Permission.MANAGE_SERVER, "!custom delete");
     }
 
     @Override
-    public void run(String[] args, MessageReceivedEvent event) {
-        String label = (args[2].contains("!") ? args[2] : "!" + args[2]);
+    public void process(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
+        String label = (args[1].contains("!") ? args[1] : "!" + args[1]);
 
         if (CustomCommand.commandExists(label)) {
             GilmoreDatabase.deleteCommand(label);
             CustomCommand.deleteCommand(label);
-            event.getChannel().sendMessage(String.format("[%s] `The command '%s' has been deleted`", event.getAuthor().getAsMention(), label));
+            channel.sendMessage(String.format("[%s] `The command '%s' has been deleted`", author.getAsMention(), label));
         } else {
-            event.getChannel().sendMessage(String.format("[%s] `This command doesn't exist, please create the command '!%s', first`", event.getAuthor().getAsMention(), args[2]));
+            channel.sendMessage(String.format("[%s] `This command doesn't exist, please create the command '%s', first`", author.getAsMention(), label));
         }
     }
 }

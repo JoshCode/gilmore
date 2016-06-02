@@ -1,5 +1,7 @@
 package nl.codefox.gilmore.command.game;
 
+import net.dv8tion.jda.entities.TextChannel;
+import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 
 import nl.codefox.gilmore.command.GameCommand;
@@ -10,23 +12,21 @@ import nl.codefox.gilmore.util.StringUtil;
 public class GameCreateCommand extends GilmoreCommand {
 
     public GameCreateCommand() {
-        super("", "Usage: !game create [name]", 3, 100, null, "!game create");
+        super("", "Usage: !game create [name]", 2, 100, null, "!game create");
     }
 
     @Override
-    public void run(String[] args, MessageReceivedEvent event) {
-
-        String name = StringUtil.arrayToString(args, 2, " ");
+    public void process(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
+        String name = StringUtil.arrayToString(args, 1, " ");
 
         if (GameCommand.gameExists(name)) {
-            event.getChannel().sendMessage(String.format("[%s] `This game already exists, try !game subscribe " + name + "`", event.getAuthor().getAsMention(), name));
+            channel.sendMessage(String.format("[%s] `This game already exists, try !game subscribe " + name + "`", author.getAsMention(), name));
         } else {
 
             GilmoreDatabase.addGame(name);
-            GilmoreDatabase.addSubscriber(name, event.getAuthor().getId());
-            GameCommand.addGame(new Game(name, event.getAuthor().getId()));
-            event.getChannel().sendMessage(String.format("[%s] `The game '%s' has been created and you are subscribed to it.`", event.getAuthor().getAsMention(), name));
-
+            GilmoreDatabase.addSubscriber(name, author.getId());
+            GameCommand.addGame(new Game(name, author.getId()));
+            channel.sendMessage(String.format("[%s] `The game '%s' has been created and you are subscribed to it.`", author.getAsMention(), name));
         }
 
     }

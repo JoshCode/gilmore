@@ -1,6 +1,8 @@
 package nl.codefox.gilmore.command;
 
 import net.dv8tion.jda.Permission;
+import net.dv8tion.jda.entities.TextChannel;
+import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 
 import nl.codefox.gilmore.command.custom.CreateCustomCommand;
@@ -16,7 +18,7 @@ public class CustomCommand extends GilmoreCommand {
     private static Map<String, String> commands;
 
     public CustomCommand() {
-        super("Allows you to make custom commands", "Usage: !custom [create|edit|delete|list]", 2, 100, Permission.MANAGE_SERVER, "!custom");
+        super("Allows you to make custom commands", "Usage: !custom [create|edit|delete|list]", 1, 100, Permission.MANAGE_SERVER, "!custom");
         load();
     }
 
@@ -41,24 +43,24 @@ public class CustomCommand extends GilmoreCommand {
     }
 
     @Override
-    public void run(String[] args, MessageReceivedEvent event) {
-        String verb = args[1];
+    public void process(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
+        String verb = args[0];
 
         switch (verb) {
             case "create":
-                new CreateCustomCommand().process(args, event);
+                new CreateCustomCommand().runCommand(command, args, channel, author, event);
                 break;
             case "edit":
-                new EditCustomCommand().process(args, event);
+                new EditCustomCommand().runCommand(command, args, channel, author, event);
                 break;
             case "delete":
-                new DeleteCustomCommand().process(args, event);
+                new DeleteCustomCommand().runCommand(command, args, channel, author, event);
                 break;
             case "list":
-                new ListCustomCommands().process(args, event);
+                new ListCustomCommands().runCommand(command, args, channel, author, event);
                 break;
             default:
-                usage(event, event.getAuthor());
+                invalidUsage(command, args, channel, author, event);
                 break;
         }
     }

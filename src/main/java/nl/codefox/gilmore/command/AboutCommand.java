@@ -1,15 +1,17 @@
 package nl.codefox.gilmore.command;
 
+import net.dv8tion.jda.entities.TextChannel;
+import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 
 public class AboutCommand extends GilmoreCommand {
 
     public AboutCommand() {
-        super("Shows information about this bot", "Usage: !about", 1, null, "!about");
+        super("Shows information about this bot", "Usage: !about", 0, null, "!about");
     }
 
     @Override
-    public void run(String[] args, MessageReceivedEvent event) {
+    public void process(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
         StringBuilder sb = new StringBuilder();
 
         sb.append("```");
@@ -17,8 +19,7 @@ public class AboutCommand extends GilmoreCommand {
         sb.append("Github  : ").append("https://github.com/joshcode/gilmore");
         sb.append("```");
 
-        event.getChannel().sendMessage(sb.toString());
-
+        channel.sendMessage(sb.toString());
     }
 
 }

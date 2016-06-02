@@ -1,5 +1,7 @@
 package nl.codefox.gilmore.command;
 
+import net.dv8tion.jda.entities.TextChannel;
+import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 
 import nl.codefox.gilmore.command.game.Game;
@@ -19,7 +21,7 @@ public class GameCommand extends GilmoreCommand {
     private static ArrayList<Game> games = new ArrayList<>();
 
     public GameCommand() {
-        super("", "Usage: !game [list|create|remove|host|subscribe|unsubscribe]", 2, 100, null, "!game");
+        super("", "Usage: !game [list|create|remove|host|subscribe|unsubscribe]", 1, 100, null, "!game");
         load();
     }
 
@@ -66,58 +68,34 @@ public class GameCommand extends GilmoreCommand {
     }
 
     @Override
-    public void run(String[] args, MessageReceivedEvent event) {
+    public void process(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
 
-        String verb = args[1];
+        String verb = args[0];
 
-        switch (verb) {
+        switch(verb) {
             case "list":
-                runList(args, event);
+                new GameListCommand().runCommand(command, args, channel, author, event);
                 break;
             case "create":
-                runCreate(args, event);
+                new GameCreateCommand().runCommand(command, args, channel, author, event);
                 break;
             case "remove":
-                runRemove(args, event);
+                new GameRemoveCommand().runCommand(command, args, channel, author, event);
                 break;
             case "host":
-                runHost(args, event);
+                new GameHostCommand().runCommand(command, args, channel, author, event);
                 break;
             case "subscribe":
-                runSubscribe(args, event);
+                new GameSubscribeCommand().runCommand(command, args, channel, author, event);
                 break;
             case "unsubscribe":
-                runUnsubscribe(args, event);
+                new GameUnsubscribeCommand().runCommand(command, args, channel, author, event);
                 break;
             default:
-                usage(event, event.getAuthor());
+                invalidUsage(command, args, channel, author, event);
                 break;
         }
 
-    }
-
-    private void runList(String[] args, MessageReceivedEvent event) {
-        new GameListCommand().process(args, event);
-    }
-
-    private void runCreate(String[] args, MessageReceivedEvent event) {
-        new GameCreateCommand().process(args, event);
-    }
-
-    private void runRemove(String[] args, MessageReceivedEvent event) {
-        new GameRemoveCommand().process(args, event);
-    }
-
-    private void runHost(String[] args, MessageReceivedEvent event) {
-        new GameHostCommand().process(args, event);
-    }
-
-    private void runSubscribe(String[] args, MessageReceivedEvent event) {
-        new GameSubscribeCommand().process(args, event);
-    }
-
-    private void runUnsubscribe(String[] args, MessageReceivedEvent event) {
-        new GameUnsubscribeCommand().process(args, event);
     }
 
 }

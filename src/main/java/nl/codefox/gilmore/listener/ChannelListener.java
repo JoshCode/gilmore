@@ -1,18 +1,21 @@
 package nl.codefox.gilmore.listener;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
+import net.dv8tion.jda.entities.TextChannel;
+import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.hooks.ListenerAdapter;
-
 import nl.codefox.gilmore.Gilmore;
 import nl.codefox.gilmore.command.CustomCommand;
 import nl.codefox.gilmore.command.GilmoreCommand;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ChannelListener extends ListenerAdapter {
 
-    private List<GilmoreCommand> commands = new ArrayList<GilmoreCommand>();
+    private List<GilmoreCommand> commands = new ArrayList<>();
 
     public ChannelListener registerCommand(GilmoreCommand command) {
         commands.add(command);
@@ -26,26 +29,33 @@ public class ChannelListener extends ListenerAdapter {
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
 
-        if (!event.getMessage().getContent().startsWith("!")) {
+        User author = event.getAuthor();
+        String message = event.getMessage().getRawContent();
+
+        if (!message.startsWith("!")) {
             return;
         }
 
-        if (event.getAuthor() != Gilmore.getJDA().getSelfInfo()) {
-            String[] args = event.getMessage().getRawContent().split(" ");
+        if (author != Gilmore.getJDA().getSelfInfo()) {
+            String[] args = message.split(" ");
+            String command = args[0];
+            String[] finalArgs = Arrays.copyOfRange(args, 1, args.length);
+            TextChannel channel = event.getTextChannel();
+            Optional<GilmoreCommand> c = commands.stream().filter(cc -> cc.getAliases().contains(command)).findFirst();
 
-            GilmoreCommand command = null;
-            for (GilmoreCommand c : commands) {
-                if (c.getAliases().contains(args[0])) {
-                    command = c;
-                    break;
-                }
-            }
+            if (c.isPresent()) {
+                GilmoreCommand cc = c.get();
 
-            if (command != null) {
-                command.process(args, event);
-            } else if (CustomCommand.commandExists(args[0])) {
-                String commandDesc = CustomCommand.getCommand(args[0]);
-                event.getChannel().sendMessage(String.format("[%s] %s", event.getAuthor().getAsMention(), commandDesc));
+                new Thread() {
+                    @Override
+                    public void run() {
+                        cc.runCommand(command, finalArgs, channel, author, event);
+                        interrupt();
+                    }
+                }.start();
+            } else if (CustomCommand.commandExists(command)) {
+                String commandDesc = CustomCommand.getCommand(command);
+                channel.sendMessage(String.format("[%s] %s", author.getAsMention(), commandDesc));
             }
         }
     }
