@@ -35,8 +35,8 @@ public class DiceCommand extends GilmoreCommand {
         int result = dice.roll();
 
         String message = String.format("[%s] %s = %d", event.getAuthor().getAsMention(), dice.getBreakdown(), result);
-        if (message.length() > 1999) {
-            message = message.substring(0,1940);
+        if (message.length() > 500) {
+            message = message.substring(0,500);
             message += "[This message got cut off because it is too long.]";
         }
 
