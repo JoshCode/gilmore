@@ -1,5 +1,7 @@
 package nl.codefox.gilmore.command;
 
+import net.dv8tion.jda.entities.TextChannel;
+import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 
 import java.util.ArrayList;
@@ -9,8 +11,7 @@ import nl.codefox.gilmore.command.dice.Dice;
 
 public class DiceCommand extends GilmoreCommand {
 
-    public DiceCommand() 
-    {
+    public DiceCommand() {
         super("Rolls dice based on input", "Usage: ![roll|dice] [expression]\n"
                 + "for example: !roll 1d20 + 5 [to hit]\n"
                 + "[comment]: this is ignored\n"
@@ -22,26 +23,24 @@ public class DiceCommand extends GilmoreCommand {
     }
 
     @Override
-    public void run(String[] args, MessageReceivedEvent event) 
-    {
+    public void process(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
         
         String expression = "";
         for (int i = 1; i < args.length; i ++) {
             expression += " " + args[i];
         }
         expression = expression.substring(1);
-        
+
         Dice dice = new Dice(expression);
         int result = dice.roll();
 
-        String message = String.format("[%s] %s = %d", event.getAuthor().getAsMention(), dice.getBreakdown(), result);
+        String message = String.format("[%s] %s = %d", author.getAsMention(), dice.getBreakdown(), result);
         if (message.length() > 500) {
             message = message.substring(0,500);
             message += "[This message got cut off because it is too long.]";
         }
 
-        event.getChannel().sendMessage(message);
-        
+        channel.sendMessage(message);
     }
 
 }

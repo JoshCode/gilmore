@@ -1,5 +1,7 @@
 package nl.codefox.gilmore.command.game;
 
+import net.dv8tion.jda.entities.TextChannel;
+import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 
 import nl.codefox.gilmore.command.GameCommand;
@@ -10,28 +12,27 @@ import nl.codefox.gilmore.util.StringUtil;
 public class GameSubscribeCommand extends GilmoreCommand {
 
     public GameSubscribeCommand() {
-        super("", "Usage: !game subscribe [name]", 3, 100, null, "!game subscribe");
+        super("", "Usage: !game subscribe [name]", 2, 100, null, "!game subscribe");
     }
 
     @Override
-    public void run(String[] args, MessageReceivedEvent event) {
+    public void process(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
 
-        String name = StringUtil.arrayToString(args, 2, " ");
+        String name = StringUtil.arrayToString(args, 1, " ");
 
         if (!GameCommand.gameExists(name)) {
-            event.getChannel().sendMessage(String.format("[%s] `This game doesn't exist, but it could. Try !game create '%s'`", event.getAuthor().getAsMention(), name));
+            channel.sendMessage(String.format("[%s] `This game doesn't exist, but it could. Try !game create '%s'`", author.getAsMention(), name));
         } else {
             Game game = GameCommand.getGame(name);
 
-            if (game.getInterestedUsers().contains(event.getAuthor().getId())) {
-                event.getChannel().sendMessage(String.format("[%s] `You are already subscribed to the game '%s'`", event.getAuthor().getAsMention(), name));
+            if (game.getInterestedUsers().contains(author.getId())) {
+                channel.sendMessage(String.format("[%s] `You are already subscribed to the game '%s'`", author.getAsMention(), name));
                 return;
             }
 
-            game.addUser(event.getAuthor().getId());
-            GilmoreDatabase.addSubscriber(name, event.getAuthor().getId());
-            event.getChannel().sendMessage(String.format("[%s] `You are now subscribed to the game '%s'`", event.getAuthor().getAsMention(), name));
-
+            game.addUser(author.getId());
+            GilmoreDatabase.addSubscriber(name, author.getId());
+            channel.sendMessage(String.format("[%s] `You are now subscribed to the game '%s'`", author.getAsMention(), name));
         }
 
     }
