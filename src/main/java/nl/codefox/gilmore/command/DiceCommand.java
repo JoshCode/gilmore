@@ -35,17 +35,12 @@ public class DiceCommand extends GilmoreCommand {
         int result = dice.roll();
 
         String message = String.format("[%s] %s = %d", author.getAsMention(), dice.getBreakdown(), result);
-        List<String> messageList = new ArrayList<>();
-        int i;
-        for (i = 0; i < message.length() - 1990; i += 1990) {
-            messageList.add(message.substring(i, i + 1990));
-        }
-        messageList.add(message.substring(i));
-
-        for (String m : messageList) {
-            channel.sendMessage(m);
+        if (message.length() > 500) {
+            message = message.substring(0,500);
+            message += "[This message got cut off because it is too long.]";
         }
 
+        channel.sendMessage(message);
     }
 
 }
