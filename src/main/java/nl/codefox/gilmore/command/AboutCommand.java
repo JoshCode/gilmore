@@ -16,7 +16,7 @@ public class AboutCommand extends GilmoreCommand {
 
         sb.append("```");
         sb.append("Version : ").append("v1.0.0-SNAPSHOT").append("\n");
-        sb.append("Github  : ").append("https://github.com/joshcode/gilmore");
+        sb.append("GitHub  : ").append("https://github.com/joshcode/gilmore");
         sb.append("```");
 
         channel.sendMessage(sb.toString());

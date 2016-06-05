@@ -24,8 +24,7 @@ public class CriticalRoleCommand extends GilmoreCommand {
     }
 
     @Override
-    public void process(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event)
-    {
+    public void process(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
         String character = args[0].toLowerCase();
         if (CriticalRoleCharacter.getCharacter(character) != null) {
             Message message = channel.sendMessage(String.format("[%s] `Preparing that for you now - one moment...`", author.getAsMention()));

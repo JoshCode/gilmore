@@ -72,7 +72,7 @@ public class GameCommand extends GilmoreCommand {
 
         String verb = args[0];
 
-        switch(verb) {
+        switch (verb) {
             case "list":
                 new GameListCommand().runCommand(command, args, channel, author, event);
                 break;

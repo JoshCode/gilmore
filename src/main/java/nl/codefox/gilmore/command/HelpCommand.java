@@ -21,7 +21,7 @@ public class HelpCommand extends GilmoreCommand {
         if (args.length == 0) {
             builder.append(String.format("[%s] ```Here is a list of all avaliable commands;\n", author.getAsMention()));
 
-            for(GilmoreCommand c : Gilmore.getCommandListener().getCommands()) {
+            for (GilmoreCommand c : Gilmore.getCommandListener().getCommands()) {
                 builder.append("> " + c.getAliases().get(0) + "\n");
                 builder.append("\tDescription : " + c.getDescription() + "\n\n");
             }
@@ -32,7 +32,7 @@ public class HelpCommand extends GilmoreCommand {
 
             builder.append(String.format("[%s] ```Here's more information about the '%s' command;\n", author.getAsMention(), label));
 
-            for(GilmoreCommand c : Gilmore.getCommandListener().getCommands()) {
+            for (GilmoreCommand c : Gilmore.getCommandListener().getCommands()) {
                 if (c.getAliases().contains(label)) {
                     builder.append("> " + label + "\n");
                     builder.append("\tAliases     : " + StringUtil.listToString(c.getAliases(), ", ") + "\n");

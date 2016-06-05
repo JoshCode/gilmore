@@ -1,13 +1,13 @@
 package nl.codefox.gilmore.command;
 
-import java.util.Arrays;
-import java.util.List;
-
 import net.dv8tion.jda.Permission;
 import net.dv8tion.jda.entities.Role;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
+
+import java.util.Arrays;
+import java.util.List;
 
 public abstract class GilmoreCommand {
 
@@ -33,7 +33,7 @@ public abstract class GilmoreCommand {
     public GilmoreCommand(String description, String usage, int min, int max, Permission permission, String... aliases) {
         this.description = description;
         this.usage = usage;
-        this.min  = min;
+        this.min = min;
         this.max = max;
         this.permission = permission;
         this.aliases = Arrays.asList(aliases);
@@ -81,7 +81,7 @@ public abstract class GilmoreCommand {
         if (getPermission() == null)
             return true;
         else
-            for(Role role : event.getGuild().getRolesForUser(author))
+            for (Role role : event.getGuild().getRolesForUser(author))
                 if (role.getPermissions().contains(getPermission()))
                     return true;
 

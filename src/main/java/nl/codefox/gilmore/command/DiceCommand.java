@@ -4,9 +4,6 @@ import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import nl.codefox.gilmore.command.dice.Dice;
 
 public class DiceCommand extends GilmoreCommand {
@@ -24,9 +21,9 @@ public class DiceCommand extends GilmoreCommand {
 
     @Override
     public void process(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
-        
+
         String expression = "";
-        for (int i = 1; i < args.length; i ++) {
+        for (int i = 1; i < args.length; i++) {
             expression += " " + args[i];
         }
         expression = expression.substring(1);
@@ -36,7 +33,7 @@ public class DiceCommand extends GilmoreCommand {
 
         String message = String.format("[%s] %s = %d", author.getAsMention(), dice.getBreakdown(), result);
         if (message.length() > 500) {
-            message = message.substring(0,500);
+            message = message.substring(0, 500);
             message += "[This message got cut off because it is too long.]";
         }
 
