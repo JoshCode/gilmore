@@ -1,8 +1,11 @@
 package nl.codefox.gilmore.command;
 
+import net.dv8tion.jda.entities.Message;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
+
+import nl.codefox.gilmore.util.MessageDeleter;
 
 public class AboutCommand extends GilmoreCommand {
 
@@ -19,7 +22,8 @@ public class AboutCommand extends GilmoreCommand {
         sb.append("GitHub  : ").append("https://github.com/joshcode/gilmore");
         sb.append("```");
 
-        channel.sendMessage(sb.toString());
+        Message message = channel.sendMessage(sb.toString());
+        new MessageDeleter(message);
     }
 
 }

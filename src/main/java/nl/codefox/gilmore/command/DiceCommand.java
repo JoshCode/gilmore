@@ -1,10 +1,12 @@
 package nl.codefox.gilmore.command;
 
+import net.dv8tion.jda.entities.Message;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 
 import nl.codefox.gilmore.command.dice.Dice;
+import nl.codefox.gilmore.util.MessageDeleter;
 
 public class DiceCommand extends GilmoreCommand {
 
@@ -31,13 +33,14 @@ public class DiceCommand extends GilmoreCommand {
         Dice dice = new Dice(expression);
         int result = dice.roll();
 
-        String message = String.format("[%s] %s = %d", author.getAsMention(), dice.getBreakdown(), result);
-        if (message.length() > 500) {
-            message = message.substring(0, 500);
-            message += "[This message got cut off because it is too long.]";
+        String msg = String.format("[%s] %s = %d", author.getAsMention(), dice.getBreakdown(), result);
+        if (msg.length() > 500) {
+            msg = msg.substring(0, 500);
+            msg += "[This message got cut off because it is too long.]";
         }
 
-        channel.sendMessage(message);
+        Message message = channel.sendMessage(msg);
+        new MessageDeleter(message);
     }
 
 }

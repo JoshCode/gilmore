@@ -1,6 +1,7 @@
 package nl.codefox.gilmore.command;
 
 import net.dv8tion.jda.Permission;
+import net.dv8tion.jda.entities.Message;
 import net.dv8tion.jda.entities.Role;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
@@ -8,6 +9,7 @@ import net.dv8tion.jda.events.message.MessageReceivedEvent;
 
 import nl.codefox.gilmore.Gilmore;
 import nl.codefox.gilmore.util.Logging;
+import nl.codefox.gilmore.util.MessageDeleter;
 
 public class MuteCommand extends GilmoreCommand {
 
@@ -32,14 +34,17 @@ public class MuteCommand extends GilmoreCommand {
             User user = event.getJDA().getUsersByName(args[0]).get(0);
 
             if (event.getGuild().getRolesForUser(user).contains(role)) {
-                channel.sendMessage(String.format("[%s] `'%s' has already been muted`", author.getAsMention(), args[0]));
+                Message message = channel.sendMessage(String.format("[%s] `'%s' has already been muted`", author.getAsMention(), args[0]));
+                new MessageDeleter(message);
                 return;
             }
 
             event.getGuild().getManager().addRoleToUser(user, role).update();
-            channel.sendMessage(String.format("[%s] `'%s' has been muted`", author.getAsMention(), args[0]));
+            Message message = channel.sendMessage(String.format("[%s] `'%s' has been muted`", author.getAsMention(), args[0]));
+            new MessageDeleter(message);
         } catch (Exception ex) {
-            channel.sendMessage(String.format("[%s] `Could not mute user '%s'`", author.getAsMention(), args[0]));
+            Message message = channel.sendMessage(String.format("[%s] `Could not mute user '%s'`", author.getAsMention(), args[0]));
+            new MessageDeleter(message);
             Logging.log(ex);
         }
 

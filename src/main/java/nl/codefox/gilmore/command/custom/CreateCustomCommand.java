@@ -1,6 +1,7 @@
 package nl.codefox.gilmore.command.custom;
 
 import net.dv8tion.jda.Permission;
+import net.dv8tion.jda.entities.Message;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
@@ -8,6 +9,7 @@ import net.dv8tion.jda.events.message.MessageReceivedEvent;
 import nl.codefox.gilmore.command.CustomCommand;
 import nl.codefox.gilmore.command.GilmoreCommand;
 import nl.codefox.gilmore.database.GilmoreDatabase;
+import nl.codefox.gilmore.util.MessageDeleter;
 import nl.codefox.gilmore.util.StringUtil;
 
 public class CreateCustomCommand extends GilmoreCommand {
@@ -22,11 +24,13 @@ public class CreateCustomCommand extends GilmoreCommand {
         String label = (args[1].contains("!") ? args[1] : "!" + args[1]);
 
         if (CustomCommand.commandExists(label)) {
-            channel.sendMessage(String.format("[%s] `This command already exists, to edit use !custom edit %s [description]`", author.getAsMention(), label));
+            Message message = channel.sendMessage(String.format("[%s] `This command already exists, to edit use !custom edit %s [description]`", author.getAsMention(), label));
+            new MessageDeleter(message);
         } else {
             GilmoreDatabase.addCommand(label, desc);
             CustomCommand.editCommand(label, desc);
-            channel.sendMessage(String.format("[%s] `The command '%s' has been created`", author.getAsMention(), label));
+            Message message = channel.sendMessage(String.format("[%s] `The command '%s' has been created`", author.getAsMention(), label));
+            new MessageDeleter(message);
         }
     }
 }
