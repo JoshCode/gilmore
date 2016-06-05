@@ -1,10 +1,13 @@
 package nl.codefox.gilmore.command;
 
 import net.dv8tion.jda.Permission;
+import net.dv8tion.jda.entities.Message;
 import net.dv8tion.jda.entities.Role;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
+
+import nl.codefox.gilmore.util.MessageDeleter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -94,11 +97,13 @@ public abstract class GilmoreCommand {
     public abstract void process(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event);
 
     public void invalidPermissions(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
-        channel.sendMessage(String.format(MISSING_PERMISSION, author.getAsMention()));
+        Message message = channel.sendMessage(String.format(MISSING_PERMISSION, author.getAsMention()));
+        new MessageDeleter(message);
     }
 
     public void invalidUsage(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
-        channel.sendMessage(String.format(INVALID_USAGE, author.getAsMention(), getUsage()));
+        Message message = channel.sendMessage(String.format(INVALID_USAGE, author.getAsMention(), getUsage()));
+        new MessageDeleter(message);
     }
 
     public boolean isValidUsage(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {

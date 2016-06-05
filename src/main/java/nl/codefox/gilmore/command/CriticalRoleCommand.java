@@ -9,6 +9,7 @@ import net.dv8tion.jda.events.message.MessageReceivedEvent;
 import nl.codefox.gilmore.command.criticalrole.CriticalRoleCharacter;
 import nl.codefox.gilmore.command.criticalrole.CriticalRoleConstants;
 import nl.codefox.gilmore.command.criticalrole.CriticalRoleTask;
+import nl.codefox.gilmore.util.MessageDeleter;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -32,7 +33,8 @@ public class CriticalRoleCommand extends GilmoreCommand {
             draw(channel, CriticalRoleCharacter.getCharacter(character));
             message.deleteMessage();
         } else {
-            channel.sendMessage(String.format("[%s] `'%s' isn't a valid character name`", author.getAsMention(), character));
+            Message message = channel.sendMessage(String.format("[%s] `'%s' isn't a valid character name`", author.getAsMention(), character));
+            new MessageDeleter(message);
         }
 
     }
@@ -85,7 +87,8 @@ public class CriticalRoleCommand extends GilmoreCommand {
             File temp = new File(System.getProperty("user.home"), "temp.png");
             ImageIO.write(image, "png", temp);
 
-            channel.sendFile(temp, null);
+            Message message = channel.sendFile(temp, null);
+            new MessageDeleter(message, 120_000);
             temp.delete();
 
         } catch (Exception ex) {

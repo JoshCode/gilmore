@@ -1,11 +1,13 @@
 package nl.codefox.gilmore.command;
 
 import net.dv8tion.jda.Permission;
+import net.dv8tion.jda.entities.Message;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 
 import nl.codefox.gilmore.Gilmore;
+import nl.codefox.gilmore.util.MessageDeleter;
 import nl.codefox.gilmore.util.StringUtil;
 
 public class HelpCommand extends GilmoreCommand {
@@ -46,7 +48,8 @@ public class HelpCommand extends GilmoreCommand {
 
             builder.append("```");
         }
-        channel.sendMessage(builder.toString());
+        Message message = channel.sendMessage(builder.toString());
+        new MessageDeleter(message, 10_000);
     }
 
 }
