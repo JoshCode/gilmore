@@ -1,6 +1,5 @@
 package nl.codefox.gilmore.command;
 
-import net.dv8tion.jda.Permission;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
@@ -11,6 +10,8 @@ import nl.codefox.gilmore.command.custom.EditCustomCommand;
 import nl.codefox.gilmore.command.custom.ListCustomCommands;
 import nl.codefox.gilmore.database.GilmoreDatabase;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
 
@@ -18,7 +19,8 @@ public class CustomCommand extends GilmoreCommand {
     private static Map<String, String> commands;
 
     public CustomCommand() {
-        super("Allows you to make custom commands", "Usage: !custom [create|edit|delete|list]", 1, 100, Permission.MANAGE_SERVER, "!custom");
+        super("Allows you to make custom commands", "Usage: !custom [create|edit|delete|list]", 1, 100, new ArrayList<>(
+                Arrays.asList("Administrator", "Server Owner")), "!custom");
         load();
     }
 

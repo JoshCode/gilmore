@@ -1,5 +1,6 @@
 package nl.codefox.gilmore.command;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,6 +19,12 @@ public abstract class GilmoreCommand {
     private final String usage;
     private final int min;
     private final int max;
+
+    public ArrayList<String> getRolenames() {
+        return rolenames;
+    }
+
+    private final ArrayList<String> rolenames;
     private final Permission permission;
     private final List<String> aliases;
 
@@ -27,6 +34,7 @@ public abstract class GilmoreCommand {
         this.min = args;
         this.max = args;
         this.permission = permission;
+        this.rolenames = null;
         this.aliases = Arrays.asList(aliases);
     }
 
@@ -36,6 +44,17 @@ public abstract class GilmoreCommand {
         this.min  = min;
         this.max = max;
         this.permission = permission;
+        this.rolenames = null;
+        this.aliases = Arrays.asList(aliases);
+    }
+
+    public GilmoreCommand(String description, String usage, int min, int max, ArrayList<String> rolenames, String... aliases) {
+        this.description = description;
+        this.usage = usage;
+        this.min  = min;
+        this.max = max;
+        this.permission = null;
+        this.rolenames = rolenames;
         this.aliases = Arrays.asList(aliases);
     }
 
@@ -78,11 +97,24 @@ public abstract class GilmoreCommand {
     }
 
     public boolean hasPermission(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
-        if (getPermission() == null)
-            return true;
+        if (getPermission() == null) {
+            return hasRole(command, args, channel, author, event);
+        }
         else
             for(Role role : event.getGuild().getRolesForUser(author))
                 if (role.getPermissions().contains(getPermission()))
+                    return true;
+
+        return false;
+    }
+
+    public boolean hasRole(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
+        if (getRolenames() == null) {
+            return true;
+        }
+        else
+            for(Role role : event.getGuild().getRolesForUser(author))
+                if (rolenames.contains(role.getName()))
                     return true;
 
         return false;
