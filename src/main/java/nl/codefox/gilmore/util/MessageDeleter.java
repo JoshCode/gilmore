@@ -41,5 +41,6 @@ public class MessageDeleter implements Runnable {
                 e.printStackTrace();
             }
         }
+        Thread.currentThread().interrupt();
     }
 }
