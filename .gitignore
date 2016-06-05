@@ -18,6 +18,7 @@ conf
 
 # Ignore NetBeans files and folders
 **/nbproject
+**/nb-configuration.xml
 
 # Ignore Maven files and folders
 **/target

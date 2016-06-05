@@ -1,13 +1,13 @@
-
 package nl.codefox.gilmore.command.dice.expressions;
+
+import nl.codefox.gilmore.command.dice.Lexer;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import nl.codefox.gilmore.command.dice.Lexer;
 
 public class Die extends Expression {
-    
+
     private int numberOfDice = 0;
     private int numberOfFaces = 1;
     private int keepNumber = 0;
@@ -22,50 +22,49 @@ public class Die extends Expression {
     private int rerolledDice = 0;
 
     /**
-     * Sets up a die with the selected options.
-     * Then roll the dice and add the explanation to the description.
-     * @param tokens 
+     * Sets up a die with the selected options. Then roll the dice and add the explanation to the
+     * description.
      */
     public Die(ArrayList<Lexer.Token> tokens) {
         super(tokens);
-        
-        for (int i = 0; i < tokens.size(); i ++) {
+
+        for (int i = 0; i < tokens.size(); i++) {
             Lexer.Token token = tokens.get(i);
             description += token.data;
-            processTriggers (token);
+            processTriggers(token);
         }
-        
+
         // The reroll cooldown. Only used for rerollOnce
         boolean justRerolled = false;
-        
+
         Random random = new Random();
         List<Integer> rolls = new ArrayList<>();
         List<String> rollDescriptions = new ArrayList<>();
         // Roll the dice, add extra where necessary
-        for (int i = 0; i < Math.min(numberOfDice, 1000); i ++) {
+        for (int i = 0; i < Math.min(numberOfDice, 1000); i++) {
             int roll = random.nextInt(numberOfFaces) + 1;
             String rollDescription = String.valueOf(roll);
-            
+
             // Roll explodes, add one more die
             if (exploding && roll >= critSuccessNumber) {
-                numberOfDice ++;
+                numberOfDice++;
                 rollDescription += "!";
             }
-            
+
             // Roll is crit success
             if (roll >= critSuccessNumber) {
                 rollDescription = "**" + rollDescription + "**";
             }
-            
+
             // Roll is crit fail
             if (roll <= critFailNumber) {
                 rollDescription = "*" + rollDescription + "*";
             }
-            
+
             // Roll under rerollOnceNumber
             if (rerollOnce && roll <= rerollNumber && !justRerolled) {
-                numberOfDice ++;
-                rerolledDice ++;
+                numberOfDice++;
+                rerolledDice++;
                 justRerolled = true;
                 roll = 0;
                 rollDescription = "~~" + rollDescription + "~~";
@@ -74,25 +73,25 @@ public class Die extends Expression {
             else if (rerollOnce && justRerolled) {
                 justRerolled = false;
             }
-            
+
             // Roll under rerollNumber
             if (reroll && roll <= rerollNumber) {
-                numberOfDice ++;
-                rerolledDice ++;
+                numberOfDice++;
+                rerolledDice++;
                 roll = 0;
                 rollDescription = "~~" + rollDescription + "~~";
             }
-            
+
             rolls.add(roll);
             rollDescriptions.add(rollDescription);
         }
-        
+
         // Drop the higher dice
         if (keepLowest) {
-            for (int j = 0; j < rolls.size() - keepNumber - rerolledDice; j ++) {
+            for (int j = 0; j < rolls.size() - keepNumber - rerolledDice; j++) {
                 int highest = 1, highestIndex = 0;
                 // Find the highest die
-                for (int i = 0; i < rolls.size(); i ++) {
+                for (int i = 0; i < rolls.size(); i++) {
                     if (highest < rolls.get(i) && rolls.get(i) > 0) {
                         highest = rolls.get(i);
                         highestIndex = i;
@@ -106,13 +105,13 @@ public class Die extends Expression {
                 }
             }
         }
-        
+
         // Drop the lower dice
         if (keepHighest) {
-            for (int j = 0; j < rolls.size() - keepNumber - rerolledDice; j ++) {
+            for (int j = 0; j < rolls.size() - keepNumber - rerolledDice; j++) {
                 int lowest = numberOfFaces, lowestIndex = 0;
                 // Find the lowest die
-                for (int i = 0; i < rolls.size(); i ++) {
+                for (int i = 0; i < rolls.size(); i++) {
                     if (lowest > rolls.get(i) && rolls.get(i) > 0) {
                         lowest = rolls.get(i);
                         lowestIndex = i;
@@ -126,13 +125,13 @@ public class Die extends Expression {
                 }
             }
         }
-        
+
         // Construct the final variables (value and description)
         value = 0;
         for (int roll : rolls) {
             value += roll;
         }
-        
+
         description += " (";
         for (String desc : rollDescriptions) {
             description += desc + ", ";
@@ -141,29 +140,27 @@ public class Die extends Expression {
             description = description.substring(0, description.length() - 2);
         }
         description = description + ")";
-        
+
     }
-    
+
     /**
      * Convert all the options to variables.
-     * @param token 
      */
-    private void processTriggers (Lexer.Token token) {
-        
-        switch(token.type) {
+    private void processTriggers(Lexer.Token token) {
+
+        switch (token.type) {
             // This is the main part, define the type of dice being rolled
             case DIE: {
                 String data = token.data.toLowerCase();
                 int firstD = data.indexOf('d');
-                
+
                 // Parse number of dice
                 if (firstD > 0) {
                     numberOfDice = Integer.parseInt(data.substring(0, firstD));
-                }
-                else {
+                } else {
                     numberOfDice = 1;
                 }
-                
+
                 // Parse type of die
                 numberOfFaces = Integer.parseInt(data.substring(firstD + 1));
                 // Prevent crash
@@ -173,25 +170,24 @@ public class Die extends Expression {
                 critSuccessNumber = numberOfFaces;
                 break;
             }
-                
+
             case EXPLODING: {
                 exploding = true;
                 break;
             }
-                
+
             case KEEPHIGH: {
                 keepHighest = true;
                 keepLowest = false;
                 String data = token.data.toLowerCase();
                 if (data.charAt(1) == 'h') {
                     keepNumber = Integer.parseInt(data.substring(2));
-                }
-                else {
+                } else {
                     keepNumber = Integer.parseInt(data.substring(1));
                 }
                 break;
             }
-                
+
             case KEEPLOW: {
                 keepHighest = false;
                 keepLowest = true;
@@ -199,19 +195,19 @@ public class Die extends Expression {
                 keepNumber = Integer.parseInt(data.substring(2));
                 break;
             }
-            
+
             case CRITSUCCESS: {
                 String data = token.data.toLowerCase();
                 critSuccessNumber = Integer.parseInt(data.substring(3));
                 break;
             }
-            
+
             case CRITFAIL: {
                 String data = token.data.toLowerCase();
                 critFailNumber = Integer.parseInt(data.substring(3));
                 break;
             }
-                
+
             case REROLL: {
                 reroll = true;
                 rerollOnce = false;
@@ -219,7 +215,7 @@ public class Die extends Expression {
                 rerollNumber = Integer.parseInt(data.substring(2));
                 break;
             }
-                
+
             case REROLLONCE: {
                 reroll = false;
                 rerollOnce = true;
