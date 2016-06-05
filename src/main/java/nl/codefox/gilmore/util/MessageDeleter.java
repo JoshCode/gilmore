@@ -13,7 +13,7 @@ public class MessageDeleter implements Runnable {
 
     public MessageDeleter(Message message) {
         this.message = message;
-        this.milis = 5000;
+        this.milis = 10_000;
         targetTime = System.nanoTime() / 1_000_000 + milis;
 
         new Thread(this).start();
