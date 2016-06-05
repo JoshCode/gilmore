@@ -9,10 +9,13 @@ import nl.codefox.gilmore.command.CustomCommand;
 import nl.codefox.gilmore.command.GilmoreCommand;
 import nl.codefox.gilmore.database.GilmoreDatabase;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class DeleteCustomCommand extends GilmoreCommand {
 
     public DeleteCustomCommand() {
-        super("Delete a custom command", "Usage: !custom delete [command]", 2, Permission.MANAGE_SERVER, "!custom delete");
+        super("Delete a custom command", "Usage: !custom delete [command]", 2, new ArrayList<String>(Arrays.asList("Administrator", "Server Owner")), "!custom delete");
     }
 
     @Override

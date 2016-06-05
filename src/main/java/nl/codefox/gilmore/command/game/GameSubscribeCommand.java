@@ -1,5 +1,6 @@
 package nl.codefox.gilmore.command.game;
 
+import net.dv8tion.jda.Permission;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
@@ -12,7 +13,7 @@ import nl.codefox.gilmore.util.StringUtil;
 public class GameSubscribeCommand extends GilmoreCommand {
 
     public GameSubscribeCommand() {
-        super("", "Usage: !game subscribe [name]", 2, 100, null, "!game subscribe");
+        super("", "Usage: !game subscribe [name]", 2, 100, (Permission) null, "!game subscribe");
     }
 
     @Override

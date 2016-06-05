@@ -199,7 +199,7 @@ public class GilmoreDatabase {
     public static void deleteCommand(String command) {
         Logging.debug("[GilmoreDatabase] Deleting command from database");
         try {
-            PreparedStatement subs = getConnection().prepareStatement(Resources.getSQL("DELETE_SUBSCRIBERS"));
+            PreparedStatement subs = getConnection().prepareStatement(Resources.getSQL("DELETE_COMMAND"));
             subs.setString(1, command);
             subs.executeUpdate();
 
