@@ -1,5 +1,6 @@
 package nl.codefox.gilmore.command.game;
 
+import net.dv8tion.jda.Permission;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
@@ -12,7 +13,7 @@ import nl.codefox.gilmore.util.StringUtil;
 public class GameCreateCommand extends GilmoreCommand {
 
     public GameCreateCommand() {
-        super("", "Usage: !game create [name]", 2, 100, null, "!game create");
+        super("", "Usage: !game create [name]", 2, 100, Permission.MANAGE_SERVER, "!game create");
     }
 
     @Override

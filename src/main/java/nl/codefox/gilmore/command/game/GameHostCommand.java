@@ -22,7 +22,7 @@ public class GameHostCommand extends GilmoreCommand {
         if (!GameCommand.gameExists(name)) {
             channel.sendMessage(String.format("[%s] `This game doesn't exist, but it could. Try !game create " + name + "`", author.getAsMention(), name));
         } else {
-            GameCommand.getGame(name).notifyUsers(author.getId());
+            GameCommand.getGame(name).notifyUsers(author.getId(), event);
         }
 
     }
