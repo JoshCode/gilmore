@@ -10,10 +10,14 @@ import nl.codefox.gilmore.command.GilmoreCommand;
 import nl.codefox.gilmore.database.GilmoreDatabase;
 import nl.codefox.gilmore.util.StringUtil;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class EditCustomCommand extends GilmoreCommand {
 
     public EditCustomCommand() {
-        super("Edit a custom command", "Usage: !custom edit [command] [new description]", 3, 100, Permission.MANAGE_SERVER, "!custom edit");
+        super("Edit a custom command", "Usage: !custom edit [command] [new description]", 3, 100, new ArrayList<>(
+                Arrays.asList("Administrator", "Server Owner")), "!custom edit");
     }
 
     @Override

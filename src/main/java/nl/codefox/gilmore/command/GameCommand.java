@@ -1,5 +1,6 @@
 package nl.codefox.gilmore.command;
 
+import net.dv8tion.jda.Permission;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
@@ -21,7 +22,7 @@ public class GameCommand extends GilmoreCommand {
     private static ArrayList<Game> games = new ArrayList<>();
 
     public GameCommand() {
-        super("", "Usage: !game [list|create|remove|host|subscribe|unsubscribe]", 1, 100, null, "!game");
+        super("", "Usage: !game [list|create|remove|host|subscribe|unsubscribe]", 1, 100, (Permission) null, "!game");
         load();
     }
 

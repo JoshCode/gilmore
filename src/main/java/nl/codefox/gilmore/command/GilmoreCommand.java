@@ -25,9 +25,9 @@ public abstract class GilmoreCommand {
     }
 
     private final ArrayList<String> rolenames;
+
     private final Permission permission;
     private final List<String> aliases;
-
     public GilmoreCommand(String description, String usage, int args, Permission permission, String... aliases) {
         this.description = description;
         this.usage = usage;
@@ -45,6 +45,16 @@ public abstract class GilmoreCommand {
         this.max = max;
         this.permission = permission;
         this.rolenames = null;
+        this.aliases = Arrays.asList(aliases);
+    }
+
+    public GilmoreCommand(String description, String usage, int args, ArrayList<String> rolenames, String... aliases) {
+        this.description = description;
+        this.usage = usage;
+        this.min = args;
+        this.max = args;
+        this.permission = null;
+        this.rolenames = rolenames;
         this.aliases = Arrays.asList(aliases);
     }
 
