@@ -42,7 +42,7 @@ public class Game {
         StringBuilder mentions = new StringBuilder();
         for (String uid : users) {
             User user = Gilmore.getJDA().getUserById(uid);
-            if(mentions.length() != 0)
+            if (mentions.length() != 0)
                 mentions.append(", ");
             mentions.append(user.getAsMention());
 

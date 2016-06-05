@@ -1,14 +1,12 @@
 package nl.codefox.gilmore.command;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import net.dv8tion.jda.Permission;
 import net.dv8tion.jda.entities.Role;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,15 +19,10 @@ public abstract class GilmoreCommand {
     private final String usage;
     private final int min;
     private final int max;
-
-    public ArrayList<String> getRolenames() {
-        return rolenames;
-    }
-
     private final ArrayList<String> rolenames;
-
     private final Permission permission;
     private final List<String> aliases;
+
     public GilmoreCommand(String description, String usage, int args, Permission permission, String... aliases) {
         this.description = description;
         this.usage = usage;
@@ -63,11 +56,15 @@ public abstract class GilmoreCommand {
     public GilmoreCommand(String description, String usage, int min, int max, ArrayList<String> rolenames, String... aliases) {
         this.description = description;
         this.usage = usage;
-        this.min  = min;
+        this.min = min;
         this.max = max;
         this.permission = null;
         this.rolenames = rolenames;
         this.aliases = Arrays.asList(aliases);
+    }
+
+    public ArrayList<String> getRolenames() {
+        return rolenames;
     }
 
     public String getDescription() {
@@ -111,8 +108,7 @@ public abstract class GilmoreCommand {
     public boolean hasPermission(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
         if (getPermission() == null) {
             return hasRole(command, args, channel, author, event);
-        }
-        else
+        } else
             for (Role role : event.getGuild().getRolesForUser(author))
                 if (role.getPermissions().contains(getPermission()))
                     return true;
@@ -123,9 +119,8 @@ public abstract class GilmoreCommand {
     public boolean hasRole(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
         if (getRolenames() == null) {
             return true;
-        }
-        else
-            for(Role role : event.getGuild().getRolesForUser(author))
+        } else
+            for (Role role : event.getGuild().getRolesForUser(author))
                 if (rolenames.contains(role.getName()))
                     return true;
 
