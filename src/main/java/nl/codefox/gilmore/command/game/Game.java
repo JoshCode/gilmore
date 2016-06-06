@@ -56,8 +56,8 @@ public class Game {
 
         event.getChannel().sendMessage(
                 String.format(
-                        "[%s] `You're hosting a game of '%s'. Notifying interested users.\n%s\nTo stop receiving messages about this game type '!game unsubscribe %s'`",
-                        host.getUsername(), name, mentions.toString(), name
+                        "[%s] `You're hosting a game of '%s'. Notifying interested users.`\n%s\n`To stop receiving messages about this game type '!game unsubscribe %s'`",
+                        host.getAsMention(), name, mentions.toString(), name
                 ));
     }
 
