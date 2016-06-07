@@ -19,22 +19,14 @@ public class DiceCommand extends GilmoreCommand {
                 + "2d20klX: keep the X lowest dice\n"
                 + "4d6r<X: reroll every die lower than X\n"
                 + "4d6ro<X: reroll every die lower than X, but only once\n"
-<<<<<<< Updated upstream
-                + "1d10!: exploding die - every time you roll a crit, add an extra die", 2, 1000, (Permission) null, "!roll", "!dice");
-=======
-                + "1d10!: exploding die - every time you roll a crit, add an extra die", 1, 1000, null, "!roll", "!dice");
->>>>>>> Stashed changes
+                + "1d10!: exploding die - every time you roll a crit, add an extra die", 1, 1000, (Permission) null, "!roll", "!dice");
     }
 
     @Override
     public void process(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
-
         String expression = "";
-<<<<<<< Updated upstream
-        for (int i = 1; i < args.length; i++) {
-=======
-        for (int i = 0; i < args.length; i ++) {
->>>>>>> Stashed changes
+
+        for (int i = 0; i < args.length; i++) {
             expression += " " + args[i];
         }
         expression = expression.substring(1);
