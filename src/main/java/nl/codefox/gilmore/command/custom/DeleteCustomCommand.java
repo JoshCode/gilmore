@@ -1,6 +1,7 @@
 package nl.codefox.gilmore.command.custom;
 
 import net.dv8tion.jda.entities.Message;
+import net.dv8tion.jda.Permission;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
@@ -10,18 +11,15 @@ import nl.codefox.gilmore.command.GilmoreCommand;
 import nl.codefox.gilmore.database.GilmoreDatabase;
 import nl.codefox.gilmore.util.MessageDeleter;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 public class DeleteCustomCommand extends GilmoreCommand {
 
     public DeleteCustomCommand() {
-        super("Delete a custom command", "Usage: !custom delete [command]", 2, new ArrayList<String>(Arrays.asList("Administrator", "Server Owner")), "!custom delete");
+        super("Delete a custom command", "Usage: !custom delete [command]", 1, Permission.MANAGE_SERVER, "!custom delete");
     }
 
     @Override
     public void process(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
-        String label = (args[1].contains("!") ? args[1] : "!" + args[1]);
+        String label = (args[0].contains("!") ? args[0] : "!" + args[0]);
 
         if (CustomCommand.commandExists(label)) {
             GilmoreDatabase.deleteCommand(label);

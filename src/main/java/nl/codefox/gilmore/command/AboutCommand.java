@@ -1,6 +1,5 @@
 package nl.codefox.gilmore.command;
 
-import net.dv8tion.jda.Permission;
 import net.dv8tion.jda.entities.Message;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
@@ -11,7 +10,7 @@ import nl.codefox.gilmore.util.MessageDeleter;
 public class AboutCommand extends GilmoreCommand {
 
     public AboutCommand() {
-        super("Shows information about this bot", "Usage: !about", 0, (Permission) null, "!about");
+        super("Shows information about this bot", "Usage: !about", 0, null, "!about");
     }
 
     @Override

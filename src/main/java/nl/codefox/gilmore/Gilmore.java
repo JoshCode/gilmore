@@ -11,6 +11,7 @@ import nl.codefox.gilmore.command.GameCommand;
 import nl.codefox.gilmore.command.HelpCommand;
 import nl.codefox.gilmore.command.MuteCommand;
 import nl.codefox.gilmore.command.UnmuteCommand;
+import nl.codefox.gilmore.command.PermissionsCommand;
 import nl.codefox.gilmore.config.GilmoreConfiguration;
 import nl.codefox.gilmore.listener.ChannelListener;
 import nl.codefox.gilmore.listener.ConnectionListener;
@@ -54,7 +55,8 @@ public class Gilmore {
                     .registerCommand(new UnmuteCommand())
                     .registerCommand(new HelpCommand())
                     .registerCommand(new CustomCommand())
-                    .registerCommand(new CriticalRoleCommand());
+                    .registerCommand(new CriticalRoleCommand())
+                    .registerCommand(new PermissionsCommand());
 
             connectionListener = new ConnectionListener();
 

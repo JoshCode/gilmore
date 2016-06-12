@@ -4,7 +4,6 @@ import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.hooks.ListenerAdapter;
-
 import nl.codefox.gilmore.Gilmore;
 import nl.codefox.gilmore.command.CustomCommand;
 import nl.codefox.gilmore.command.GilmoreCommand;
@@ -25,6 +24,14 @@ public class ChannelListener extends ListenerAdapter {
 
     public List<GilmoreCommand> getCommands() {
         return commands;
+    }
+
+    public boolean commandExists(String command) {
+        for (GilmoreCommand gilmoreCommand : Gilmore.getCommandListener().getCommands())
+            if (gilmoreCommand.getAliases().contains(command))
+                return true;
+
+        return false;
     }
 
     @Override

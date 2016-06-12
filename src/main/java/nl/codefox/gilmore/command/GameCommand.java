@@ -1,6 +1,5 @@
 package nl.codefox.gilmore.command;
 
-import net.dv8tion.jda.Permission;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
@@ -15,6 +14,7 @@ import nl.codefox.gilmore.command.game.GameUnsubscribeCommand;
 import nl.codefox.gilmore.database.GilmoreDatabase;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class GameCommand extends GilmoreCommand {
@@ -22,7 +22,7 @@ public class GameCommand extends GilmoreCommand {
     private static ArrayList<Game> games = new ArrayList<>();
 
     public GameCommand() {
-        super("", "Usage: !game [list|create|remove|host|subscribe|unsubscribe]", 1, 100, (Permission) null, "!game");
+        super("", "Usage: !game [list|create|remove|host|subscribe|unsubscribe]", 1, 100, null, "!game");
         load();
     }
 
@@ -69,11 +69,12 @@ public class GameCommand extends GilmoreCommand {
     }
 
     @Override
-    public void process(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
+    public void process(String oldCommand, String[] oldArgs, TextChannel channel, User author, MessageReceivedEvent event) {
+        String verb = oldArgs[0];
+        String command = oldCommand + " " + verb;
+        String[] args = Arrays.copyOfRange(oldArgs, 1, oldArgs.length);
 
-        String verb = args[0];
-
-        switch (verb) {
+        switch(verb) {
             case "list":
                 new GameListCommand().runCommand(command, args, channel, author, event);
                 break;
@@ -93,7 +94,7 @@ public class GameCommand extends GilmoreCommand {
                 new GameUnsubscribeCommand().runCommand(command, args, channel, author, event);
                 break;
             default:
-                invalidUsage(command, args, channel, author, event);
+                invalidUsage(oldCommand, oldArgs, channel, author, event);
                 break;
         }
 

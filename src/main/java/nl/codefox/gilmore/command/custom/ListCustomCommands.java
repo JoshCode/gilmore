@@ -1,6 +1,5 @@
 package nl.codefox.gilmore.command.custom;
 
-import net.dv8tion.jda.Permission;
 import net.dv8tion.jda.entities.Message;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
@@ -13,7 +12,7 @@ import nl.codefox.gilmore.util.MessageDeleter;
 public class ListCustomCommands extends GilmoreCommand {
 
     public ListCustomCommands() {
-        super("Lists custom command", "Usage: !custom list", 1, (Permission) null, "!custom list");
+        super("Lists custom command", "Usage: !custom list", 0, null, "!custom list");
     }
 
     @Override

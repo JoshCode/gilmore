@@ -1,6 +1,5 @@
 package nl.codefox.gilmore.command;
 
-import net.dv8tion.jda.Permission;
 import net.dv8tion.jda.entities.Message;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
@@ -13,7 +12,7 @@ import nl.codefox.gilmore.util.StringUtil;
 public class HelpCommand extends GilmoreCommand {
 
     public HelpCommand() {
-        super("Shows a description of all available commands", "Usage: !help", 0, 1, (Permission) null, "!help");
+        super("Shows a description of all available commands", "Usage: !help", 0, 1, null, "!help");
     }
 
     @Override

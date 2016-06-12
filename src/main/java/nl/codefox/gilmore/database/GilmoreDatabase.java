@@ -1,5 +1,6 @@
 package nl.codefox.gilmore.database;
 
+import net.dv8tion.jda.entities.Role;
 import nl.codefox.gilmore.command.game.Game;
 import nl.codefox.gilmore.config.GilmoreConfiguration;
 import nl.codefox.gilmore.util.Logging;
@@ -206,6 +207,63 @@ public class GilmoreDatabase {
             Logging.debug("[GilmoreDatabase] Finished deleting command from database");
         } catch (Exception ex) {
             Logging.error("[GilmoreDatabase] Could not delete the custom command from the database");
+            Logging.log(ex);
+        }
+    }
+
+    public static Map<String,List<String>> getCommandPermissions() {
+        Map<String, List<String>> commandPermissions = new HashMap<>();
+        Logging.debug("[GilmoreDatabase] Getting command permissions from database");
+
+        try {
+            PreparedStatement stmt = getConnection().prepareStatement(Resources.getSQL("SELECT_COMMAND_PERMISSIONS"));
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                String command = rs.getString(1);
+                String role = rs.getString(2);
+                List<String> permissions = commandPermissions.get(command);
+                if(permissions == null){
+                    permissions = commandPermissions.put(command, new ArrayList<>());
+                }
+                permissions.add(role);
+            }
+            Logging.debug("[GilmoreDatabase] Done getting command permissions from database");
+        } catch (Exception ex) {
+            Logging.error("[GilmoreDatabase] Could not get command permissions from the database");
+            Logging.log(ex);
+        }
+        return commandPermissions;
+    }
+
+    public static void addCommandPermissions(String command, Role role) {
+        Logging.debug("[GilmoreDatabase] Adding command permissions to the database");
+
+        try {
+            PreparedStatement stmt = getConnection().prepareStatement(Resources.getSQL("INSERT_COMMAND_PERMISSIONS"));
+            stmt.setString(1, command);
+            stmt.setString(2, role.getId());
+            stmt.executeUpdate();
+
+            Logging.debug("[GilmoreDatabase] Finished adding command permissions to the database");
+        } catch (Exception ex) {
+            Logging.error("[GilmoreDatabase] Could not add command permissions to the database");
+            Logging.log(ex);
+        }
+    }
+
+    public static void removeCommandPermissions(String command, Role role) {
+        Logging.debug("[GilmoreDatabase] Removing command permissions to the database");
+
+        try {
+            PreparedStatement stmt = getConnection().prepareStatement(Resources.getSQL("DELETE_COMMAND_PERMISSIONS"));
+            stmt.setString(1, command);
+            stmt.setString(2, role.getId());
+            stmt.executeUpdate();
+
+            Logging.debug("[GilmoreDatabase] Finished removing command permissions to the database");
+        } catch (Exception ex) {
+            Logging.error("[GilmoreDatabase] Could not remove command permissions to the database");
             Logging.log(ex);
         }
     }

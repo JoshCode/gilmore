@@ -21,7 +21,7 @@ import javax.imageio.ImageIO;
 public class CriticalRoleCommand extends GilmoreCommand {
 
     public CriticalRoleCommand() {
-        super("Shows information about the main characters from Critical Role", "Usage: !criticalrole [character]", 1, (Permission) null, "!criticalrole", "!critrole", "!cr");
+        super("Shows information about the main characters from Critical Role", "Usage: !criticalrole [character]", 1, null, "!criticalrole", "!critrole", "!cr");
         new CriticalRoleTask();
     }
 

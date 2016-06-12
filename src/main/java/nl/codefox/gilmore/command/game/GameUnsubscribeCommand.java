@@ -1,6 +1,5 @@
 package nl.codefox.gilmore.command.game;
 
-import net.dv8tion.jda.Permission;
 import net.dv8tion.jda.entities.Message;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
@@ -15,13 +14,13 @@ import nl.codefox.gilmore.util.StringUtil;
 public class GameUnsubscribeCommand extends GilmoreCommand {
 
     public GameUnsubscribeCommand() {
-        super("", "Usage: !game unsubscribe [name]", 2, 100, (Permission) null, "!game unsubscribe");
+        super("", "Usage: !game unsubscribe [name]", 1, 100, null, "!game unsubscribe");
     }
 
     @Override
     public void process(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
 
-        String name = StringUtil.arrayToString(args, 1, " ");
+        String name = StringUtil.arrayToString(args, 0, " ");
 
         if (!GameCommand.gameExists(name)) {
             Message message = channel.sendMessage(String.format("[%s] `This game doesn't exist. Try !game list to get a list of available games", author.getAsMention(), name));

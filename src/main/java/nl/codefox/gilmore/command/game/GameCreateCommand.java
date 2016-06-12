@@ -1,6 +1,5 @@
 package nl.codefox.gilmore.command.game;
 
-import net.dv8tion.jda.Permission;
 import net.dv8tion.jda.entities.Message;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
@@ -15,12 +14,12 @@ import nl.codefox.gilmore.util.StringUtil;
 public class GameCreateCommand extends GilmoreCommand {
 
     public GameCreateCommand() {
-        super("", "Usage: !game create [name]", 2, 100, Permission.MANAGE_SERVER, "!game create");
+        super("", "Usage: !game create [name]", 1, 100, null, "!game create");
     }
 
     @Override
     public void process(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
-        String name = StringUtil.arrayToString(args, 1, " ");
+        String name = StringUtil.arrayToString(args, 0, " ");
 
         if (GameCommand.gameExists(name)) {
             Message message = channel.sendMessage(String.format("[%s] `This game already exists, try !game subscribe " + name + "`", author.getAsMention(), name));

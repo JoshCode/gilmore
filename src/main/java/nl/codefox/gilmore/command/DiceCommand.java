@@ -1,6 +1,5 @@
 package nl.codefox.gilmore.command;
 
-import net.dv8tion.jda.Permission;
 import net.dv8tion.jda.entities.Message;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
@@ -19,15 +18,15 @@ public class DiceCommand extends GilmoreCommand {
                 + "2d20klX: keep the X lowest dice\n"
                 + "4d6r<X: reroll every die lower than X\n"
                 + "4d6ro<X: reroll every die lower than X, but only once\n"
-                + "1d10!: exploding die - every time you roll a crit, add an extra die", 1, 1000, (Permission) null, "!roll", "!dice");
+                + "1d10!: exploding die - every time you roll a crit, add an extra die", 1, 1000, null, "!roll", "!dice");
     }
 
     @Override
     public void process(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
         String expression = "";
 
-        for (int i = 0; i < args.length; i++) {
-            expression += " " + args[i];
+        for (String arg : args) {
+            expression += " " + arg;
         }
         expression = expression.substring(1);
 
