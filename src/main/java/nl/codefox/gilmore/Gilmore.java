@@ -47,12 +47,11 @@ public class Gilmore {
 
             commandListener = new ChannelListener()
                     .registerCommand(new AboutCommand())
+                    .registerCommand(new HelpCommand())
                     .registerCommand(new GameCommand())
                     .registerCommand(new DiceCommand())
-                    .registerCommand(new HelpCommand())
                     .registerCommand(new MuteCommand())
                     .registerCommand(new UnmuteCommand())
-                    .registerCommand(new HelpCommand())
                     .registerCommand(new CustomCommand())
                     .registerCommand(new CriticalRoleCommand());
 
