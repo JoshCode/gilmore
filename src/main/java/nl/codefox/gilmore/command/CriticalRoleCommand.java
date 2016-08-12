@@ -46,6 +46,8 @@ public class CriticalRoleCommand extends GilmoreCommand {
             BufferedImage image = new BufferedImage(CriticalRoleConstants.IMAGE_WIDTH, CriticalRoleConstants.IMAGE_HEIGHT, BufferedImage.TYPE_INT_ARGB);
             Graphics2D graphics = image.createGraphics();
 
+            graphics.drawImage(ImageIO.read(Gilmore.class.getResourceAsStream(CriticalRoleConstants.IMAGE_URI)), 0, 0, null);
+
             try {
                 graphics.drawImage(ImageIO.read(Gilmore.class.getResourceAsStream(crc.getResource())), 0, 0, null);
             } catch (Exception ex) {

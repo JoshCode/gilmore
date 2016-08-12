@@ -1,5 +1,7 @@
 package nl.codefox.gilmore.util;
 
+import nl.codefox.gilmore.Gilmore;
+
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,7 +15,7 @@ import java.util.regex.Pattern;
 
 public class Resources {
 
-    private static final String FONT_URL = "https://stats.gilmore.in/resources/cocogoose.otf";
+    private static final String FONT_URI = "/cocogoose.otf";
     private static Map<String, String> SQL = new HashMap<String, String>();
     private static Font font;
 
@@ -82,10 +84,9 @@ public class Resources {
     }
 
     private static void loadFont() {
-        Logging.debug("[Resources] Getting font from '" + FONT_URL + "'");
+        Logging.debug("[Resources] Getting font from '" + FONT_URI + "'");
         try {
-            URL fontUrl = new URL(FONT_URL);
-            font = Font.createFont(Font.TRUETYPE_FONT, fontUrl.openStream());
+            font = Font.createFont(Font.TRUETYPE_FONT, Gilmore.class.getResourceAsStream(FONT_URI));
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(font);
             Logging.debug("[Resources] Font loaded!");

@@ -52,5 +52,5 @@ public class CriticalRoleConstants {
     public static final int IMAGE_WIDTH = 1331;
     public static final int IMAGE_HEIGHT = 450;
     public static final String IMAGE_URI = "/images/default.png";
-    public static final String AVATAR_URI = "/images/default.png";
+    public static final String AVATAR_URI = "/images/avatar.png";
 }
