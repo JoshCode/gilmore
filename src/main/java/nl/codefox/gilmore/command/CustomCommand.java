@@ -20,7 +20,7 @@ public class CustomCommand extends GilmoreCommand {
     private static Map<String, String> commands;
 
     public CustomCommand() {
-        super("Allows you to make custom commands", "Usage: !custom [create|edit|delete|list]", 1, 100, new ArrayList<>(
+        super("Allows you to make custom commands", "Usage: !custom [create|edit|raw|delete|list]", 1, 100, new ArrayList<>(
                 Arrays.asList("Administrator", "Server Owner")), "!custom");
         load();
     }

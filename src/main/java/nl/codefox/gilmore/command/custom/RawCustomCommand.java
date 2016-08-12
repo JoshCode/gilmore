@@ -34,7 +34,7 @@ public class RawCustomCommand extends GilmoreCommand {
             sb.append("```");
 
             Message message = channel.sendMessage(String.format("[%s] `The command '%s' has the following message:`\n%s", author.getAsMention(), label, sb.toString()));
-            new MessageDeleter(message);
+            new MessageDeleter(message, 10_000);
         } else {
             Message message = channel.sendMessage(String.format("[%s] `This command doesn't exist, please create the command %s, first`", author.getAsMention(), label));
             new MessageDeleter(message);
