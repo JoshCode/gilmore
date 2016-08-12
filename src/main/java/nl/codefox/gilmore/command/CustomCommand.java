@@ -8,6 +8,7 @@ import nl.codefox.gilmore.command.custom.CreateCustomCommand;
 import nl.codefox.gilmore.command.custom.DeleteCustomCommand;
 import nl.codefox.gilmore.command.custom.EditCustomCommand;
 import nl.codefox.gilmore.command.custom.ListCustomCommands;
+import nl.codefox.gilmore.command.custom.RawCustomCommand;
 import nl.codefox.gilmore.database.GilmoreDatabase;
 
 import java.util.ArrayList;
@@ -60,6 +61,9 @@ public class CustomCommand extends GilmoreCommand {
                 break;
             case "list":
                 new ListCustomCommands().runCommand(command, args, channel, author, event);
+                break;
+            case "raw":
+                new RawCustomCommand().runCommand(command, args, channel, author, event);
                 break;
             default:
                 invalidUsage(command, args, channel, author, event);
