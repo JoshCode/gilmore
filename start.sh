@@ -9,8 +9,25 @@ if [ -f ~/logs/gilmore.pid ]; then
     # Test if PID is still running
     ps -p $gilmore_old_pid &> /dev/null
     if [ $? == 0 ]; then
+
+        # Test operating system
+        uname | grep 'MINGW' &> /dev/null
+        if [ $? == 0 ]; then
+            operating_system="Windows"
+        fi
+
+        uname | grep 'Linux' &> /dev/null
+        if [ $? == 0 ]; then
+            operating_system="Linux"
+        fi
+
         # Test if PID is a java process
-        ps -p $gilmore_old_pid -o comm= | grep 'java' &> /dev/null
+        if [ $operating_system == "Windows" ]; then
+            ps -p $gilmore_old_pid | grep 'java' &> /dev/null
+        elif [ $operating_system == "Linux" ]; then
+            ps -p $gilmore_old_pid -o comm= | grep 'java' &> /dev/null
+        fi
+
         if [ $? == 0 ]; then
             kill $gilmore_old_pid
             echo "[start.sh] Killed former gilmore process $gilmore_old_pid"
