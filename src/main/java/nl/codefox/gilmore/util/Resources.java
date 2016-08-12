@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 
 public class Resources {
 
-    private static final String FONT_URL = "http://gilmore.prscampbell.com/cocogoose.otf";
+    private static final String FONT_URL = "https://stats.gilmore.in/resources/cocogoose.otf";
     private static Map<String, String> SQL = new HashMap<String, String>();
     private static Font font;
 

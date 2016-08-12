@@ -65,7 +65,7 @@ public class CriticalRoleTask extends Thread {
                         );
 
                         crc.setTitle(title);
-                        crc.setResource(String.format("http://gilmore.prscampbell.com/%s.png", crc.getName().toLowerCase()));
+                        crc.setResource(String.format("/images/%s.png", crc.getName().toLowerCase()));
                         crc.setAliases(Arrays.asList(((String) row.get(CriticalRoleConstants.ALIAS_COLUMN)).split(",")));
 
                         CriticalRoleCharacter.addCharacter(crc);

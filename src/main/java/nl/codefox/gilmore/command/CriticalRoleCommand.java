@@ -6,6 +6,7 @@ import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 
+import nl.codefox.gilmore.Gilmore;
 import nl.codefox.gilmore.command.criticalrole.CriticalRoleCharacter;
 import nl.codefox.gilmore.command.criticalrole.CriticalRoleConstants;
 import nl.codefox.gilmore.command.criticalrole.CriticalRoleTask;
@@ -45,12 +46,10 @@ public class CriticalRoleCommand extends GilmoreCommand {
             BufferedImage image = new BufferedImage(CriticalRoleConstants.IMAGE_WIDTH, CriticalRoleConstants.IMAGE_HEIGHT, BufferedImage.TYPE_INT_ARGB);
             Graphics2D graphics = image.createGraphics();
 
-            graphics.drawImage(ImageIO.read(new URL(CriticalRoleConstants.IMAGE_URL)), 0, 0, null);
-
             try {
-                graphics.drawImage(ImageIO.read(new URL(crc.getResource())), 0, 0, null);
+                graphics.drawImage(ImageIO.read(Gilmore.class.getResourceAsStream(crc.getResource())), 0, 0, null);
             } catch (Exception ex) {
-                graphics.drawImage(ImageIO.read(new URL(CriticalRoleConstants.AVATAR_URL)), 0, 0, null);
+                graphics.drawImage(ImageIO.read(Gilmore.class.getResourceAsStream(CriticalRoleConstants.AVATAR_URI)), 0, 0, null);
             }
 
             graphics.setColor(Color.BLACK);
