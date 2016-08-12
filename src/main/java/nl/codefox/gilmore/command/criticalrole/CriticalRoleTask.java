@@ -57,12 +57,18 @@ public class CriticalRoleTask extends Thread {
                         crc.setWisdom((String) row.get(CriticalRoleConstants.WISDOM_COLUMN));
                         crc.setCharisma((String) row.get(CriticalRoleConstants.CHARISMA_COLUMN));
 
-                        String title = String.format(
-                                "the %s %s (Lv. %s)",
-                                (String) row.get(CriticalRoleConstants.RACE_COLUMN),
-                                (String) row.get(CriticalRoleConstants.PRIMARY_CLASS_COLUMN),
-                                (String) row.get(CriticalRoleConstants.PRIMARY_LEVEL_COLUMN)
-                        );
+                        StringBuilder sbTitle = new StringBuilder();
+                        sbTitle.append("the ");
+                        sbTitle.append(row.get(CriticalRoleConstants.RACE_COLUMN)).append(" ");
+                        sbTitle.append(row.get(CriticalRoleConstants.PRIMARY_CLASS_COLUMN)).append(" ");
+                        sbTitle.append("(Lv. ").append(row.get(CriticalRoleConstants.PRIMARY_LEVEL_COLUMN)).append(")");
+
+                        if (!row.get(CriticalRoleConstants.SECONDARY_CLASS_COLUMN).equals("")) {
+                            sbTitle.append(", ");
+                            sbTitle.append(row.get(CriticalRoleConstants.SECONDARY_CLASS_COLUMN)).append(" ");
+                            sbTitle.append("(Lv. ").append(row.get(CriticalRoleConstants.SECONDARY_LEVEL_COLUMN)).append(")");
+                        }
+                        String title = sbTitle.toString();
 
                         crc.setTitle(title);
                         crc.setResource(String.format("/images/%s.png", crc.getName().toLowerCase()));
