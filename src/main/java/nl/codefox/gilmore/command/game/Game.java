@@ -63,7 +63,7 @@ public class Game {
             } else {
                 mention = user.getAsMention();
 
-                if (currentMessage.length() + mentions.length() + mention.length() >= 300) {
+                if (currentMessage.length() + mentions.length() + mention.length() >= 2_000) {
                     currentMessage.append(mentions.toString());
                     responses.add(currentMessage.toString());
 
