@@ -2,8 +2,10 @@ package nl.codefox.gilmore.command.game;
 
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.utils.SimpleLog;
 
 import nl.codefox.gilmore.Gilmore;
+import nl.codefox.gilmore.util.Logging;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,8 +53,12 @@ public class Game {
         StringBuilder mentions = new StringBuilder();
         for (String uid : users) {
             User user = Gilmore.getJDA().getUserById(uid);
-            String mention = user.getAsMention();
-
+            String mention = "";
+            if (user == null) {
+                Logging.error("UserID '" + uid + "' not found on this server");
+            } else {
+                mention = user.getAsMention();
+            }
 
             if (currentMessage.length() + mentions.length() + mention.length() >= 2_000) {
                 rotateMessage(currentMessage, mentions, responses, host);
