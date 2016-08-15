@@ -1,11 +1,15 @@
 package nl.codefox.gilmore.command.game;
 
+import net.dv8tion.jda.entities.Message;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.utils.SimpleLog;
 
 import nl.codefox.gilmore.Gilmore;
+import nl.codefox.gilmore.command.GameCommand;
+import nl.codefox.gilmore.database.GilmoreDatabase;
 import nl.codefox.gilmore.util.Logging;
+import nl.codefox.gilmore.util.MessageDeleter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,9 +57,13 @@ public class Game {
         StringBuilder mentions = new StringBuilder();
         for (String uid : users) {
             User user = Gilmore.getJDA().getUserById(uid);
-            String mention = "";
+            String mention;
             if (user == null) {
-                Logging.error("UserID '" + uid + "' not found on this server");
+                Logging.error("UserID '" + uid + "' not found on this server, removing from subscribers");
+                Game game = GameCommand.getGame(name);
+                game.removeUser(user.getId());
+                GilmoreDatabase.removeSubscriber(name, user.getId());
+                break;
             } else {
                 mention = user.getAsMention();
             }
