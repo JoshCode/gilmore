@@ -60,7 +60,7 @@ public class Game {
                 mention = user.getAsMention();
             }
 
-            if (currentMessage.length() + mentions.length() + mention.length() >= 2_000) {
+            if (currentMessage.length() + mentions.length() + mention.length() >= 300) {
                 rotateMessage(currentMessage, mentions, responses, host);
             }
 
