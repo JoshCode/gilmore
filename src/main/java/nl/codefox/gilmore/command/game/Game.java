@@ -58,8 +58,8 @@ public class Game {
             if (user == null) {
                 Logging.error("UserID '" + uid + "' not found on this server, removing from subscribers");
                 Game game = GameCommand.getGame(name);
-                game.removeUser(user.getId());
-                GilmoreDatabase.removeSubscriber(name, user.getId());
+                game.removeUser(uid);
+                GilmoreDatabase.removeSubscriber(name, uid);
             } else {
                 mention = user.getAsMention();
 
