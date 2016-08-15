@@ -1,15 +1,12 @@
 package nl.codefox.gilmore.command.game;
 
-import net.dv8tion.jda.entities.Message;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.utils.SimpleLog;
 
 import nl.codefox.gilmore.Gilmore;
 import nl.codefox.gilmore.command.GameCommand;
 import nl.codefox.gilmore.database.GilmoreDatabase;
 import nl.codefox.gilmore.util.Logging;
-import nl.codefox.gilmore.util.MessageDeleter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -63,27 +60,25 @@ public class Game {
                 Game game = GameCommand.getGame(name);
                 game.removeUser(user.getId());
                 GilmoreDatabase.removeSubscriber(name, user.getId());
-                break;
             } else {
                 mention = user.getAsMention();
-            }
 
-            if (currentMessage.length() + mentions.length() + mention.length() >= 300) {
-                currentMessage.append(mentions.toString());
-                responses.add(currentMessage.toString());
+                if (currentMessage.length() + mentions.length() + mention.length() >= 300) {
+                    currentMessage.append(mentions.toString());
+                    responses.add(currentMessage.toString());
 
-                currentMessage = new StringBuilder();
-                mentions = new StringBuilder();
-                currentMessage.append(
-                        String.format(
-                                "[%s] `You're hosting a game of '%s'. Notifying interested users.`\n",
-                                host.getAsMention(), name
-                        ));
-            }
+                    currentMessage = new StringBuilder();
+                    mentions = new StringBuilder();
+                    currentMessage.append(
+                            String.format(
+                                    "[%s] `You're hosting a game of '%s'. Notifying interested users.`\n",
+                                    host.getAsMention(), name
+                            ));
+                }
 
-            if (mentions.length() != 0)
-                mentions.append(", ");
-            mentions.append(mention);
+                if (mentions.length() != 0)
+                    mentions.append(", ");
+                mentions.append(mention);
 
 //            user.getPrivateChannel().sendMessage(
 //                    String.format(
@@ -91,6 +86,7 @@ public class Game {
 //                            user.getAsMention(), host.getUsername(), name, name
 //                    )
 //            );
+            }
         }
         currentMessage.append(mentions.toString());
 
