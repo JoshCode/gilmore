@@ -69,6 +69,7 @@ public class Game {
 //                    )
 //            );
         }
+        currentMessage.append(mentions.toString());
 
         String end = String.format(
                 "\n`To stop receiving messages about this game type '!game unsubscribe %s'`", name
@@ -80,6 +81,7 @@ public class Game {
                     "`To stop receiving messages about this game type '!game unsubscribe %s'`", name
             );
         }
+
 
         currentMessage.append(end);
         responses.add(currentMessage.toString());
