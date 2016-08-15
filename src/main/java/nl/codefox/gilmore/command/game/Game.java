@@ -61,7 +61,16 @@ public class Game {
             }
 
             if (currentMessage.length() + mentions.length() + mention.length() >= 300) {
-                rotateMessage(currentMessage, mentions, responses, host);
+                currentMessage.append(mentions.toString());
+                responses.add(currentMessage.toString());
+
+                currentMessage = new StringBuilder();
+                mentions = new StringBuilder();
+                currentMessage.append(
+                        String.format(
+                                "[%s] `You're hosting a game of '%s'. Notifying interested users.`\n",
+                                host.getAsMention(), name
+                        ));
             }
 
             if (mentions.length() != 0)
@@ -82,7 +91,9 @@ public class Game {
         );
 
         if (currentMessage.length() + end.length() >= 2_000) {
-            rotateMessage(currentMessage, mentions, responses, host);
+            responses.add(currentMessage.toString());
+
+            currentMessage = new StringBuilder();
             end = String.format(
                     "`To stop receiving messages about this game type '!game unsubscribe %s'`", name
             );
@@ -111,19 +122,6 @@ public class Game {
         sb.append(this.getName()).append(" ");
         sb.append("(").append(users.size()).append(" interested").append(")");
         return sb.toString();
-    }
-
-    private void rotateMessage(StringBuilder currentMessage, StringBuilder mentions, List<String> responses, User host) {
-        currentMessage.append(mentions.toString());
-        responses.add(currentMessage.toString());
-
-        currentMessage = new StringBuilder();
-        mentions = new StringBuilder();
-        currentMessage.append(
-                String.format(
-                        "[%s] `You're hosting a game of '%s'. Notifying interested users.`\n",
-                        host.getAsMention(), name
-                ));
     }
 
 }
