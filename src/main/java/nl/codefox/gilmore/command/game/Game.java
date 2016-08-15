@@ -34,17 +34,33 @@ public class Game {
     }
 
     public void notifyUsers(String hid, MessageReceivedEvent event) {
+        // TODO: Make the implementation of messages longer than 2000 characters better
+
         if (users.isEmpty()) {
             return;
         }
 
         User host = Gilmore.getJDA().getUserById(hid);
+        ArrayList<String> responses = new ArrayList<>();
+        StringBuilder currentMessage = new StringBuilder();
+        currentMessage.append(
+                String.format(
+                        "[%s] `You're hosting a game of '%s'. Notifying interested users.`\n",
+                        host.getAsMention(), name
+                ));
         StringBuilder mentions = new StringBuilder();
         for (String uid : users) {
             User user = Gilmore.getJDA().getUserById(uid);
+            String mention = user.getAsMention();
+
+
+            if (currentMessage.length() + mentions.length() + mention.length() >= 2_000) {
+                rotateMessage(currentMessage, mentions, responses, host);
+            }
+
             if (mentions.length() != 0)
                 mentions.append(", ");
-            mentions.append(user.getAsMention());
+            mentions.append(mention);
 
 //            user.getPrivateChannel().sendMessage(
 //                    String.format(
@@ -54,11 +70,28 @@ public class Game {
 //            );
         }
 
-        event.getChannel().sendMessage(
-                String.format(
-                        "[%s] `You're hosting a game of '%s'. Notifying interested users.`\n%s\n`To stop receiving messages about this game type '!game unsubscribe %s'`",
-                        host.getAsMention(), name, mentions.toString(), name
-                ));
+        String end = String.format(
+                "\n`To stop receiving messages about this game type '!game unsubscribe %s'`", name
+        );
+
+        if (currentMessage.length() + end.length() >= 2_000) {
+            rotateMessage(currentMessage, mentions, responses, host);
+            end = String.format(
+                    "`To stop receiving messages about this game type '!game unsubscribe %s'`", name
+            );
+        }
+
+        currentMessage.append(end);
+        responses.add(currentMessage.toString());
+
+        for (String response : responses) {
+            event.getChannel().sendMessage(response);
+
+//            String.format(
+//                    "[%s] `You're hosting a game of '%s'. Notifying interested users.`\n%s\n`To stop receiving messages about this game type '!game unsubscribe %s'`",
+//                    host.getAsMention(), name, mentions.toString(), name
+//            )
+        }
     }
 
     public String getName() {
@@ -71,4 +104,18 @@ public class Game {
         sb.append("(").append(users.size()).append(" interested").append(")");
         return sb.toString();
     }
+
+    private void rotateMessage(StringBuilder currentMessage, StringBuilder mentions, List<String> responses, User host) {
+        currentMessage.append(mentions.toString());
+        responses.add(currentMessage.toString());
+
+        currentMessage = new StringBuilder();
+        mentions = new StringBuilder();
+        currentMessage.append(
+                String.format(
+                        "[%s] `You're hosting a game of '%s'. Notifying interested users.`\n",
+                        host.getAsMention(), name
+                ));
+    }
+
 }
