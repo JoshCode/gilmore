@@ -98,12 +98,10 @@ public abstract class GilmoreCommand {
 
     public void invalidPermissions(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
         Message message = channel.sendMessage(String.format(MISSING_PERMISSION, author.getAsMention()));
-        new MessageDeleter(message);
     }
 
     public void invalidUsage(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
         Message message = channel.sendMessage(String.format(INVALID_USAGE, author.getAsMention(), getUsage()));
-        new MessageDeleter(message);
     }
 
     public boolean isValidUsage(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {

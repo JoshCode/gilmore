@@ -35,16 +35,13 @@ public class MuteCommand extends GilmoreCommand {
 
             if (event.getGuild().getRolesForUser(user).contains(role)) {
                 Message message = channel.sendMessage(String.format("[%s] `'%s' has already been muted`", author.getAsMention(), args[0]));
-                new MessageDeleter(message);
                 return;
             }
 
             event.getGuild().getManager().addRoleToUser(user, role).update();
             Message message = channel.sendMessage(String.format("[%s] `'%s' has been muted`", author.getAsMention(), args[0]));
-            new MessageDeleter(message);
         } catch (Exception ex) {
             Message message = channel.sendMessage(String.format("[%s] `Could not mute user '%s'`", author.getAsMention(), args[0]));
-            new MessageDeleter(message);
             Logging.log(ex);
         }
 

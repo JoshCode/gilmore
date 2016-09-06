@@ -25,12 +25,10 @@ public class GameRemoveCommand extends GilmoreCommand {
 
         if (!GameCommand.gameExists(name)) {
             Message message = channel.sendMessage(String.format("[%s] `The game '%s' doesn't exist. Use !game list to see all available games", author.getAsMention(), name));
-            new MessageDeleter(message);
         } else {
             GilmoreDatabase.removeGame(name);
             GameCommand.removeGame(GameCommand.getGame(name));
             Message message = channel.sendMessage(String.format("[%s] `The game '%s' has been removed.`", author.getAsMention(), name));
-            new MessageDeleter(message);
         }
 
     }

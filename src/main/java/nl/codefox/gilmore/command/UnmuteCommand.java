@@ -25,16 +25,13 @@ public class UnmuteCommand extends GilmoreCommand {
 
             if (!event.getGuild().getRolesForUser(user).contains(role)) {
                 Message message = channel.sendMessage(String.format("[%s] `'%s' isn't currently muted`", author.getAsMention(), args[0]));
-                new MessageDeleter(message);
                 return;
             }
 
             event.getGuild().getManager().removeRoleFromUser(user, role).update();
             Message message = channel.sendMessage(String.format("[%s] `'%s' has been unmuted`", author.getAsMention(), args[0]));
-            new MessageDeleter(message);
         } catch (Exception ex) {
             Message message = channel.sendMessage(String.format("[%s] `Could not unmute user '%s'`", author.getAsMention(), args[0]));
-            new MessageDeleter(message);
             Logging.log(ex);
         }
 
