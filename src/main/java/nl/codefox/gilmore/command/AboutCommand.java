@@ -24,7 +24,6 @@ public class AboutCommand extends GilmoreCommand {
         sb.append("```");
 
         Message message = channel.sendMessage(sb.toString());
-        new MessageDeleter(message);
     }
 
 }

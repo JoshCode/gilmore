@@ -30,10 +30,8 @@ public class EditCustomCommand extends GilmoreCommand {
             GilmoreDatabase.editCommand(label, desc);
             CustomCommand.editCommand(label, desc);
             Message message = channel.sendMessage(String.format("[%s] `The command '%s' has been edited`", author.getAsMention(), label));
-            new MessageDeleter(message);
         } else {
             Message message = channel.sendMessage(String.format("[%s] `This command doesn't exist, please create the command %s, first`", author.getAsMention(), label));
-            new MessageDeleter(message);
         }
     }
 }

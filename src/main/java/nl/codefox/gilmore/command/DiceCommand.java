@@ -41,7 +41,6 @@ public class DiceCommand extends GilmoreCommand {
         }
 
         Message message = channel.sendMessage(msg);
-        new MessageDeleter(message, 30_000);
     }
 
 }

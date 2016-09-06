@@ -35,7 +35,6 @@ public class CriticalRoleCommand extends GilmoreCommand {
             message.deleteMessage();
         } else {
             Message message = channel.sendMessage(String.format("[%s] `'%s' isn't a valid character name`", author.getAsMention(), character));
-            new MessageDeleter(message);
         }
 
     }
@@ -89,7 +88,6 @@ public class CriticalRoleCommand extends GilmoreCommand {
             ImageIO.write(image, "png", temp);
 
             Message message = channel.sendFile(temp, null);
-            new MessageDeleter(message, 120_000);
             temp.delete();
 
         } catch (Exception ex) {

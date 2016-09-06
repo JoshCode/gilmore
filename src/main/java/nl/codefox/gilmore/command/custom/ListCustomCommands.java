@@ -33,6 +33,5 @@ public class ListCustomCommands extends GilmoreCommand {
         builder.append("```");
 
         Message message = channel.sendMessage(builder.toString());
-        new MessageDeleter(message);
     }
 }

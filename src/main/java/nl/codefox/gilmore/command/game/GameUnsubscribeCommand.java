@@ -25,20 +25,17 @@ public class GameUnsubscribeCommand extends GilmoreCommand {
 
         if (!GameCommand.gameExists(name)) {
             Message message = channel.sendMessage(String.format("[%s] `This game doesn't exist. Try !game list to get a list of available games", author.getAsMention(), name));
-            new MessageDeleter(message);
         } else {
             Game game = GameCommand.getGame(name);
 
             if (!game.getInterestedUsers().contains(author.getId())) {
                 Message message = channel.sendMessage(String.format("[%s] `You are not subscribed to the game '%s'`", author.getAsMention(), name));
-                new MessageDeleter(message);
                 return;
             }
 
             game.removeUser(author.getId());
             GilmoreDatabase.removeSubscriber(name, author.getId());
             Message message = channel.sendMessage(String.format("[%s] `You are now unsubscribed from the game '%s'`", author.getAsMention(), name));
-            new MessageDeleter(message);
         }
 
     }

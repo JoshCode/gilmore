@@ -27,10 +27,8 @@ public class DeleteCustomCommand extends GilmoreCommand {
             GilmoreDatabase.deleteCommand(label);
             CustomCommand.deleteCommand(label);
             Message message = channel.sendMessage(String.format("[%s] `The command '%s' has been deleted`", author.getAsMention(), label));
-            new MessageDeleter(message);
         } else {
             Message message = channel.sendMessage(String.format("[%s] `This command doesn't exist, please create the command '%s', first`", author.getAsMention(), label));
-            new MessageDeleter(message);
         }
     }
 }

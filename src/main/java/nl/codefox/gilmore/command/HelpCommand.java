@@ -49,7 +49,7 @@ public class HelpCommand extends GilmoreCommand {
             builder.append("```");
         }
         Message message = channel.sendMessage(builder.toString());
-        new MessageDeleter(message, 10_000);
+        new MessageDeleter(message, 60_000);
     }
 
 }

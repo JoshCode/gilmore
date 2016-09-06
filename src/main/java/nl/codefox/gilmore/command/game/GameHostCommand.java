@@ -24,7 +24,6 @@ public class GameHostCommand extends GilmoreCommand {
 
         if (!GameCommand.gameExists(name)) {
             Message message = channel.sendMessage(String.format("[%s] `This game doesn't exist, but it could. Try !game create " + name + "`", author.getAsMention(), name));
-            new MessageDeleter(message);
         } else {
             GameCommand.getGame(name).notifyUsers(author.getId(), event);
         }

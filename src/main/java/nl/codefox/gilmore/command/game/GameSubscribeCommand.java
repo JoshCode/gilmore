@@ -25,20 +25,17 @@ public class GameSubscribeCommand extends GilmoreCommand {
 
         if (!GameCommand.gameExists(name)) {
             Message message = channel.sendMessage(String.format("[%s] `This game doesn't exist, but it could. Try !game create '%s'`", author.getAsMention(), name));
-            new MessageDeleter(message);
         } else {
             Game game = GameCommand.getGame(name);
 
             if (game.getInterestedUsers().contains(author.getId())) {
                 Message message = channel.sendMessage(String.format("[%s] `You are already subscribed to the game '%s'`", author.getAsMention(), name));
-                new MessageDeleter(message);
                 return;
             }
 
             game.addUser(author.getId());
             GilmoreDatabase.addSubscriber(name, author.getId());
             Message message = channel.sendMessage(String.format("[%s] `You are now subscribed to the game '%s'`", author.getAsMention(), name));
-            new MessageDeleter(message);
         }
 
     }
