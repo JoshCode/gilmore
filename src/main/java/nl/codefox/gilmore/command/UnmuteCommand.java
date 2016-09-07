@@ -8,10 +8,39 @@ import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 import nl.codefox.gilmore.util.Logging;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class UnmuteCommand extends GilmoreCommand {
 
-    public UnmuteCommand() {
-        super("Allows a muted to typing into chat", "Usage: !unmute [username]", 1, Permission.VOICE_MUTE_OTHERS, "!unmute");
+    @Override
+    public String getUsage() {
+        return "Usage: !unmute [username]";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Unmutes a users allowing them to type in channels!";
+    }
+
+    @Override
+    public List<String> getAliases() {
+        return Arrays.asList("!unmute");
+    }
+
+    @Override
+    public int getMinimumArguments() {
+        return 1;
+    }
+
+    @Override
+    public int getMaximumArguments() {
+        return 1;
+    }
+
+    @Override
+    public List<String> getRolePermission() {
+        return Arrays.asList("Administrator", "Server Owner");
     }
 
     @Override

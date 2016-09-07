@@ -1,5 +1,6 @@
 package nl.codefox.gilmore.command.custom;
 
+import net.dv8tion.jda.Permission;
 import net.dv8tion.jda.entities.Message;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
@@ -7,22 +8,47 @@ import net.dv8tion.jda.events.message.MessageReceivedEvent;
 import nl.codefox.gilmore.command.CustomCommand;
 import nl.codefox.gilmore.command.GilmoreCommand;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Joshua Slik
  */
 public class RawCustomCommand extends GilmoreCommand {
 
-    public RawCustomCommand() {
-        super("Get the raw data for a custom command", "Usage: !custom raw [command]", 2, new ArrayList<>(
-                Arrays.asList("Administrator", "Server Owner")), "!custom raw");
+    @Override
+    public String getDescription() {
+        return "Get the raw data for a custom command";
+    }
+
+    @Override
+    public String getUsage() {
+        return "Usage: !custom raw [command]";
+    }
+
+    @Override
+    public List<String> getAliases() {
+        return Arrays.asList("!custom raw");
+    }
+
+    @Override
+    public int getMinimumArguments() {
+        return 1;
+    }
+
+    @Override
+    public int getMaximumArguments() {
+        return 1;
+    }
+
+    @Override
+    public List<String> getRolePermission() {
+        return Arrays.asList("Administrator", "Server Owner");
     }
 
     @Override
     public void process(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
-        String label = (args[1].contains("!") ? args[1] : "!" + args[1]);
+        String label = (args[0].contains("!") ? args[0] : "!" + args[0]);
 
         if (CustomCommand.commandExists(label)) {
             StringBuilder sb = new StringBuilder();

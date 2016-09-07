@@ -1,15 +1,23 @@
 package nl.codefox.gilmore.command;
 
-import net.dv8tion.jda.Permission;
 import net.dv8tion.jda.entities.Message;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class AboutCommand extends GilmoreCommand {
 
-    public AboutCommand() {
-        super("Shows information about this bot", "Usage: !about", 0, (Permission) null, "!about");
+    @Override
+    public String getDescription() {
+        return "Shows information about this bot";
+    }
+
+    @Override
+    public List<String> getAliases() {
+        return Arrays.asList("!about");
     }
 
     @Override

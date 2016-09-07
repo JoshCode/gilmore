@@ -1,6 +1,5 @@
 package nl.codefox.gilmore.command.custom;
 
-import net.dv8tion.jda.Permission;
 import net.dv8tion.jda.entities.Message;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
@@ -8,10 +7,19 @@ import net.dv8tion.jda.events.message.MessageReceivedEvent;
 import nl.codefox.gilmore.command.CustomCommand;
 import nl.codefox.gilmore.command.GilmoreCommand;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class ListCustomCommands extends GilmoreCommand {
 
-    public ListCustomCommands() {
-        super("Lists custom command", "Usage: !custom list", 1, (Permission) null, "!custom list");
+    @Override
+    public String getDescription() {
+        return "Lists custom command";
+    }
+
+    @Override
+    public List<String> getAliases() {
+        return Arrays.asList("!custom list");
     }
 
     @Override

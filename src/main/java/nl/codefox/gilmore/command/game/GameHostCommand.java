@@ -1,6 +1,5 @@
 package nl.codefox.gilmore.command.game;
 
-import net.dv8tion.jda.Permission;
 import net.dv8tion.jda.entities.Message;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
@@ -9,16 +8,35 @@ import nl.codefox.gilmore.command.GameCommand;
 import nl.codefox.gilmore.command.GilmoreCommand;
 import nl.codefox.gilmore.util.StringUtil;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class GameHostCommand extends GilmoreCommand {
 
-    public GameHostCommand() {
-        super("", "Usage: !game host [name]", 2, 100, (Permission) null, "!game host");
+    @Override
+    public String getDescription() {
+        return null;
+    }
+
+    @Override
+    public List<String> getAliases() {
+        return Arrays.asList("!game host");
+    }
+
+    @Override
+    public int getMinimumArguments() {
+        return 1;
+    }
+
+    @Override
+    public int getMaximumArguments() {
+        return 100;
     }
 
     @Override
     public void process(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
 
-        String name = StringUtil.arrayToString(args, 1, " ");
+        String name = StringUtil.arrayToString(args, 0, " ");
 
         if (!GameCommand.gameExists(name)) {
             Message message = channel.sendMessage(String.format("[%s] `This game doesn't exist, but it could. Try !game create " + name + "`", author.getAsMention(), name));
