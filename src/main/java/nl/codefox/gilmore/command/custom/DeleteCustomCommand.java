@@ -8,7 +8,6 @@ import net.dv8tion.jda.events.message.MessageReceivedEvent;
 import nl.codefox.gilmore.command.CustomCommand;
 import nl.codefox.gilmore.command.GilmoreCommand;
 import nl.codefox.gilmore.database.GilmoreDatabase;
-import nl.codefox.gilmore.util.MessageDeleter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,7 +15,8 @@ import java.util.Arrays;
 public class DeleteCustomCommand extends GilmoreCommand {
 
     public DeleteCustomCommand() {
-        super("Delete a custom command", "Usage: !custom delete [command]", 2, new ArrayList<String>(Arrays.asList("Administrator", "Server Owner")), "!custom delete");
+        super("Delete a custom command", "Usage: !custom delete [command]", 2,
+                new ArrayList<>(Arrays.asList("Administrator", "Server Owner")), "!custom delete");
     }
 
     @Override
