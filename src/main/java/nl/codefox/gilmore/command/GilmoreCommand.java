@@ -7,8 +7,6 @@ import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 
-import nl.codefox.gilmore.util.MessageDeleter;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

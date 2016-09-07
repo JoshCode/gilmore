@@ -2,24 +2,15 @@ package nl.codefox.gilmore;
 
 import net.dv8tion.jda.JDA;
 import net.dv8tion.jda.JDABuilder;
-
-import nl.codefox.gilmore.command.AboutCommand;
-import nl.codefox.gilmore.command.CriticalRoleCommand;
-import nl.codefox.gilmore.command.CustomCommand;
-import nl.codefox.gilmore.command.DiceCommand;
-import nl.codefox.gilmore.command.GameCommand;
-import nl.codefox.gilmore.command.HelpCommand;
-import nl.codefox.gilmore.command.MuteCommand;
-import nl.codefox.gilmore.command.UnmuteCommand;
+import nl.codefox.gilmore.command.*;
 import nl.codefox.gilmore.config.GilmoreConfiguration;
 import nl.codefox.gilmore.listener.ChannelListener;
 import nl.codefox.gilmore.listener.ConnectionListener;
 import nl.codefox.gilmore.util.Logging;
 
+import javax.security.auth.login.LoginException;
 import java.io.File;
 import java.io.IOException;
-
-import javax.security.auth.login.LoginException;
 
 public class Gilmore {
 

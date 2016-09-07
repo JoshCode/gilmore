@@ -12,9 +12,8 @@ import com.jcraft.jsch.Session;
 import com.jcraft.jsch.UIKeyboardInteractive;
 import com.jcraft.jsch.UserInfo;
 
-import java.awt.*;
-
 import javax.swing.*;
+import java.awt.*;
 
 public class PortForwardingL {
     public static void main(String[] arg) {

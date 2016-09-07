@@ -4,14 +4,7 @@ import net.dv8tion.jda.Permission;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
-
-import nl.codefox.gilmore.command.game.Game;
-import nl.codefox.gilmore.command.game.GameCreateCommand;
-import nl.codefox.gilmore.command.game.GameHostCommand;
-import nl.codefox.gilmore.command.game.GameListCommand;
-import nl.codefox.gilmore.command.game.GameRemoveCommand;
-import nl.codefox.gilmore.command.game.GameSubscribeCommand;
-import nl.codefox.gilmore.command.game.GameUnsubscribeCommand;
+import nl.codefox.gilmore.command.game.*;
 import nl.codefox.gilmore.database.GilmoreDatabase;
 
 import java.util.ArrayList;

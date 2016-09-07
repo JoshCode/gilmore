@@ -5,9 +5,7 @@ import net.dv8tion.jda.entities.Message;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
-
 import nl.codefox.gilmore.command.dice.Dice;
-import nl.codefox.gilmore.util.MessageDeleter;
 
 public class DiceCommand extends GilmoreCommand {
 

@@ -6,9 +6,7 @@ import net.dv8tion.jda.entities.Role;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
-
 import nl.codefox.gilmore.util.Logging;
-import nl.codefox.gilmore.util.MessageDeleter;
 
 public class UnmuteCommand extends GilmoreCommand {
 
