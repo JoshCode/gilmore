@@ -15,7 +15,7 @@ import nl.codefox.gilmore.util.StringUtil;
 public class GameCreateCommand extends GilmoreCommand {
 
     public GameCreateCommand() {
-        super("", "Usage: !game create [name]", 2, 100, Permission.MANAGE_SERVER, "!game create");
+        super("", "Usage: !game create [name]", 2, 100, Permission.Kick_Members, "!game create");
     }
 
     @Override
