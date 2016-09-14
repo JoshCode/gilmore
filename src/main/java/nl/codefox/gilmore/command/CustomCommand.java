@@ -1,7 +1,10 @@
 package nl.codefox.gilmore.command;
 
-import net.dv8tion.jda.Permission;
-import nl.codefox.gilmore.command.custom.*;
+import nl.codefox.gilmore.command.custom.CreateCustomCommand;
+import nl.codefox.gilmore.command.custom.DeleteCustomCommand;
+import nl.codefox.gilmore.command.custom.EditCustomCommand;
+import nl.codefox.gilmore.command.custom.ListCustomCommands;
+import nl.codefox.gilmore.command.custom.RawCustomCommand;
 import nl.codefox.gilmore.database.GilmoreDatabase;
 
 import java.util.Arrays;
