@@ -15,6 +15,11 @@ import java.util.List;
 public class GameUnsubscribeCommand extends GilmoreCommand {
 
     @Override
+    public String getUsage() {
+        return "Usage: !game unsubscribe [game]";
+    }
+
+    @Override
     public String getDescription() {
         return null;
     }
@@ -53,7 +58,5 @@ public class GameUnsubscribeCommand extends GilmoreCommand {
             GilmoreDatabase.removeSubscriber(name, author.getId());
             Message message = channel.sendMessage(String.format("[%s] `You are now unsubscribed from the game '%s'`", author.getAsMention(), name));
         }
-
     }
-
 }

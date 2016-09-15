@@ -15,6 +15,11 @@ import java.util.List;
 public class GameCreateCommand extends GilmoreCommand {
 
     @Override
+    public String getUsage() {
+        return "Usage: !game create [game]";
+    }
+
+    @Override
     public String getDescription() {
         return null;
     }

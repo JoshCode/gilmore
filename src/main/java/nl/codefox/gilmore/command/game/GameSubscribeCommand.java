@@ -14,6 +14,12 @@ import java.util.List;
 
 public class GameSubscribeCommand extends GilmoreCommand {
 
+
+    @Override
+    public String getUsage() {
+        return "Usage: !game subscribe [game]";
+    }
+
     @Override
     public String getDescription() {
         return null;

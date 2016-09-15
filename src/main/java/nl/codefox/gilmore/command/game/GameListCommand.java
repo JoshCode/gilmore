@@ -12,6 +12,7 @@ import java.util.List;
 
 public class GameListCommand extends GilmoreCommand {
 
+
     @Override
     public String getDescription() {
         return "";

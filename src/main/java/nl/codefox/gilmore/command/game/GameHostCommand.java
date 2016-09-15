@@ -14,6 +14,11 @@ import java.util.List;
 public class GameHostCommand extends GilmoreCommand {
 
     @Override
+    public String getUsage() {
+        return "Usage: !game host [game]";
+    }
+
+    @Override
     public String getDescription() {
         return null;
     }

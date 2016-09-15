@@ -15,6 +15,11 @@ import java.util.List;
 public class GameRemoveCommand extends GilmoreCommand {
 
     @Override
+    public String getUsage() {
+        return "Usage: !game remove [game]";
+    }
+
+    @Override
     public String getDescription() {
         return null;
     }
@@ -51,7 +56,5 @@ public class GameRemoveCommand extends GilmoreCommand {
             GameCommand.removeGame(GameCommand.getGame(name));
             Message message = channel.sendMessage(String.format("[%s] `The game '%s' has been removed.`", author.getAsMention(), name));
         }
-
     }
-
 }
