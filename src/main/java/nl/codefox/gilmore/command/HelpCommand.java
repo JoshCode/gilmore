@@ -45,7 +45,7 @@ public class HelpCommand extends GilmoreCommand {
                 if (c.getSubCommands().size() > 0) {
                     List<String> subCommands = c.getSubCommands().stream().map(sub -> sub.getAliases().get(0).replace(c.getAliases().get(0) + " ", "")).collect(Collectors.toList());
 
-                    builder.append("> " + c.getAliases().get(0) + "[");
+                    builder.append("> " + c.getAliases().get(0) + " [");
                     builder.append(StringUtil.listToString(subCommands, ", "));
                     builder.append("]\n");
                 } else {
