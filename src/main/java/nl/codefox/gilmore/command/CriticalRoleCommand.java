@@ -38,12 +38,7 @@ public class CriticalRoleCommand extends GilmoreCommand {
     }
 
     @Override
-    public int getMinimumArguments() {
-        return 1;
-    }
-
-    @Override
-    public int getMaximumArguments() {
+    public int getRequiredArguments() {
         return 1;
     }
 

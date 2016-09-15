@@ -20,14 +20,21 @@ public abstract class GilmoreCommand {
     private final String INVALID_USAGE = "[%s] `Sorry, I cannot run that command without the correct arguments. %s`";
     private List<GilmoreCommand> subCommands = new ArrayList<>();
 
-
-    public abstract String getDescription();
-
     public String getUsage() {
         if (getAliases().size() > 1)
             return String.format("Usage ![%s]", StringUtil.listToString(getAliases(), ", ")).replace("!!", "!");
         else
             return String.format("Usage !%s", getAliases().get(0)).replace("!!", "!");
+    }
+
+    public abstract String getDescription();
+
+    /**
+     * Used if minimum arguments and maximum arguments are the same. Default -1 to use minimum and maximum checks.
+     * @return The amount of required args for the command
+     */
+    public int getRequiredArguments() {
+        return -1;
     }
 
     public int getMinimumArguments() {
@@ -68,6 +75,9 @@ public abstract class GilmoreCommand {
     }
 
     public boolean isValidUsage(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
+        if (getRequiredArguments() != -1)
+            return getRequiredArguments() == args.length;
+
         return args.length >= getMinimumArguments() && args.length <= getMaximumArguments();
     }
 
@@ -103,18 +113,22 @@ public abstract class GilmoreCommand {
             invalidUsage(command, args, channel, author, event);
             return;
         }
-        if (subCommands.size() == 0) {
-            process(command, args, channel, author, event);
-        } else {
+
+        if (subCommands.size() > 0 && args.length > 0) {
             String subCommand = command + " " + args[0];
             String[] newArgs = Arrays.copyOfRange(args, 1, args.length);
             List<GilmoreCommand> subCommandList = getSubCommands().stream().filter(gilmoreCommand -> gilmoreCommand.getAliases().contains(subCommand)).collect(Collectors.toList());
             if (subCommandList.size() == 0) {
                 invalidUsage(command, args, channel, author, event);
+                return;
             } else {
-                for (GilmoreCommand gilmoreCommand : subCommandList)
+                for (GilmoreCommand gilmoreCommand : subCommandList) {
                     gilmoreCommand.runCommand(subCommand, newArgs, channel, author, event);
+                }
+                return;
             }
         }
+
+        process(command, args, channel, author, event);
     }
 }

@@ -28,13 +28,9 @@ public class MuteCommand extends GilmoreCommand {
         return Arrays.asList("!mute");
     }
 
-    @Override
-    public int getMinimumArguments() {
-        return 1;
-    }
 
     @Override
-    public int getMaximumArguments() {
+    public int getRequiredArguments() {
         return 1;
     }
 
