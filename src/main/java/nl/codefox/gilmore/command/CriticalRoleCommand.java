@@ -4,17 +4,19 @@ import net.dv8tion.jda.entities.Message;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
+
 import nl.codefox.gilmore.Gilmore;
 import nl.codefox.gilmore.command.criticalrole.CriticalRoleCharacter;
 import nl.codefox.gilmore.command.criticalrole.CriticalRoleConstants;
 import nl.codefox.gilmore.command.criticalrole.CriticalRoleTask;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 public class CriticalRoleCommand extends GilmoreCommand {
 

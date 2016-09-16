@@ -2,6 +2,7 @@ package nl.codefox.gilmore.command.game;
 
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
+
 import nl.codefox.gilmore.Gilmore;
 import nl.codefox.gilmore.command.GameCommand;
 import nl.codefox.gilmore.database.GilmoreDatabase;

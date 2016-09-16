@@ -6,6 +6,7 @@ import net.dv8tion.jda.entities.Role;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
+
 import nl.codefox.gilmore.util.StringUtil;
 
 import java.util.ArrayList;
@@ -30,7 +31,9 @@ public abstract class GilmoreCommand {
     public abstract String getDescription();
 
     /**
-     * Used if minimum arguments and maximum arguments are the same. Default -1 to use minimum and maximum checks.
+     * Used if minimum arguments and maximum arguments are the same. Default -1 to use minimum and
+     * maximum checks.
+     *
      * @return The amount of required args for the command
      */
     public int getRequiredArguments() {
