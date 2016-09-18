@@ -1,25 +1,47 @@
 package nl.codefox.gilmore.command;
 
-import net.dv8tion.jda.Permission;
 import net.dv8tion.jda.entities.Message;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 
 import nl.codefox.gilmore.command.dice.Dice;
-import nl.codefox.gilmore.util.MessageDeleter;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class DiceCommand extends GilmoreCommand {
 
-    public DiceCommand() {
-        super("Rolls dice based on input", "Usage: ![roll|dice] [expression]\n"
+    @Override
+    public String getDescription() {
+        return "Rolls dice based on input";
+    }
+
+    @Override
+    public String getUsage() {
+        return "Usage: ![roll|dice] [expression]\n"
                 + "for example: !roll 1d20 + 5 [to hit]\n"
                 + "[comment]: this is ignored\n"
                 + "2d20khX: keep the X highest dice\n"
                 + "2d20klX: keep the X lowest dice\n"
                 + "4d6r<X: reroll every die lower than X\n"
                 + "4d6ro<X: reroll every die lower than X, but only once\n"
-                + "1d10!: exploding die - every time you roll a crit, add an extra die", 1, 1000, (Permission) null, "!roll", "!dice");
+                + "1d10!: exploding die - every time you roll a crit, add an extra die";
+    }
+
+    @Override
+    public List<String> getAliases() {
+        return Arrays.asList("!roll", "!dice");
+    }
+
+    @Override
+    public int getMinimumArguments() {
+        return 1;
+    }
+
+    @Override
+    public int getMaximumArguments() {
+        return 100;
     }
 
     @Override
@@ -42,5 +64,4 @@ public class DiceCommand extends GilmoreCommand {
 
         Message message = channel.sendMessage(msg);
     }
-
 }

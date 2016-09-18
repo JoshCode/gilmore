@@ -9,19 +9,44 @@ import nl.codefox.gilmore.command.CustomCommand;
 import nl.codefox.gilmore.command.GilmoreCommand;
 import nl.codefox.gilmore.database.GilmoreDatabase;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class DeleteCustomCommand extends GilmoreCommand {
 
-    public DeleteCustomCommand() {
-        super("Delete a custom command", "Usage: !custom delete [command]", 2,
-                new ArrayList<>(Arrays.asList("Administrator", "Server Owner")), "!custom delete");
+    @Override
+    public String getDescription() {
+        return "Delete a custom command";
+    }
+
+    @Override
+    public String getUsage() {
+        return "Usage: !custom delete [command]";
+    }
+
+    @Override
+    public List<String> getAliases() {
+        return Arrays.asList("!custom delete");
+    }
+
+    @Override
+    public int getMinimumArguments() {
+        return 1;
+    }
+
+    @Override
+    public int getMaximumArguments() {
+        return 1;
+    }
+
+    @Override
+    public List<String> getRolePermission() {
+        return Arrays.asList("Administrator", "Server Owner");
     }
 
     @Override
     public void process(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
-        String label = (args[1].contains("!") ? args[1] : "!" + args[1]);
+        String label = (args[0].contains("!") ? args[0] : "!" + args[0]);
 
         if (CustomCommand.commandExists(label)) {
             GilmoreDatabase.deleteCommand(label);

@@ -39,7 +39,10 @@ public class CriticalRoleConstants {
     public static final int TITLE_FONT_SIZE = 28;
     public static final int DATA_FONT_SIZE = 39;
 
-    public static final String SPREADSHEET_ID = "1uiweTErWOdoTuQThS6rt7V42YV4oRm9kVVzVBQsDCGI";
+    // DuckOfDuckness' copy
+    public static final String SPREADSHEET_ID = "1Pm8eLIYggq1vDMrR3EUjDOPlHqwC1owPbZj6rEgvm9M";
+    // Dexcuracy's copy
+    // public static final String SPREADSHEET_ID = "1uiweTErWOdoTuQThS6rt7V42YV4oRm9kVVzVBQsDCGI";
     public static final String SPREADSHEET_RANGE = "Data!B%d:S%d";
     public static final String SPREADSHEET_CHARACTER_RANGE = "Data!A2:S19";
 

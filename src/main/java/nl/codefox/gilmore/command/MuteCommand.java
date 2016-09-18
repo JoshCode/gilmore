@@ -1,6 +1,5 @@
 package nl.codefox.gilmore.command;
 
-import net.dv8tion.jda.Permission;
 import net.dv8tion.jda.entities.Message;
 import net.dv8tion.jda.entities.Role;
 import net.dv8tion.jda.entities.TextChannel;
@@ -9,21 +8,36 @@ import net.dv8tion.jda.events.message.MessageReceivedEvent;
 
 import nl.codefox.gilmore.Gilmore;
 import nl.codefox.gilmore.util.Logging;
-import nl.codefox.gilmore.util.MessageDeleter;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class MuteCommand extends GilmoreCommand {
 
-    public MuteCommand() {
-        super("Stops a user from typing anything in chat", "Usage: !mute [username]", 1, Permission.VOICE_MUTE_OTHERS, "!mute");
+    @Override
+    public String getUsage() {
+        return "Usage: !mute [username]";
     }
 
-    public static Role getMuteRole() {
-        for (Role role : Gilmore.getJDA().getGuilds().get(0).getRoles()) {
-            if (role.getName().equals("Muted")) {
-                return role;
-            }
-        }
-        return null;
+    @Override
+    public String getDescription() {
+        return "Stops a user from typing anything in chat";
+    }
+
+    @Override
+    public List<String> getAliases() {
+        return Arrays.asList("!mute");
+    }
+
+
+    @Override
+    public int getRequiredArguments() {
+        return 1;
+    }
+
+    @Override
+    public List<String> getRolePermission() {
+        return Arrays.asList("Administrator", "Server Owner");
     }
 
     @Override
@@ -44,8 +58,14 @@ public class MuteCommand extends GilmoreCommand {
             Message message = channel.sendMessage(String.format("[%s] `Could not mute user '%s'`", author.getAsMention(), args[0]));
             Logging.log(ex);
         }
-
     }
 
-
+    public static Role getMuteRole() {
+        for (Role role : Gilmore.getJDA().getGuilds().get(0).getRoles()) {
+            if (role.getName().equals("Muted")) {
+                return role;
+            }
+        }
+        return null;
+    }
 }

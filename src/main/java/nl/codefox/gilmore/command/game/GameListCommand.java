@@ -1,6 +1,5 @@
 package nl.codefox.gilmore.command.game;
 
-import net.dv8tion.jda.Permission;
 import net.dv8tion.jda.entities.Message;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
@@ -8,12 +7,21 @@ import net.dv8tion.jda.events.message.MessageReceivedEvent;
 
 import nl.codefox.gilmore.command.GameCommand;
 import nl.codefox.gilmore.command.GilmoreCommand;
-import nl.codefox.gilmore.util.MessageDeleter;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class GameListCommand extends GilmoreCommand {
 
-    public GameListCommand() {
-        super("", "!game list", 1, (Permission) null, "!game list");
+
+    @Override
+    public String getDescription() {
+        return "";
+    }
+
+    @Override
+    public List<String> getAliases() {
+        return Arrays.asList("!game list");
     }
 
     @Override

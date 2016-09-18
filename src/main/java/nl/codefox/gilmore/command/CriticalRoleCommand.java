@@ -1,6 +1,5 @@
 package nl.codefox.gilmore.command;
 
-import net.dv8tion.jda.Permission;
 import net.dv8tion.jda.entities.Message;
 import net.dv8tion.jda.entities.TextChannel;
 import net.dv8tion.jda.entities.User;
@@ -10,20 +9,39 @@ import nl.codefox.gilmore.Gilmore;
 import nl.codefox.gilmore.command.criticalrole.CriticalRoleCharacter;
 import nl.codefox.gilmore.command.criticalrole.CriticalRoleConstants;
 import nl.codefox.gilmore.command.criticalrole.CriticalRoleTask;
-import nl.codefox.gilmore.util.MessageDeleter;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
 public class CriticalRoleCommand extends GilmoreCommand {
 
     public CriticalRoleCommand() {
-        super("Shows information about the main characters from Critical Role", "Usage: !criticalrole [character]", 1, (Permission) null, "!criticalrole", "!critrole", "!cr");
         new CriticalRoleTask();
+    }
+
+    @Override
+    public String getDescription() {
+        return "Shows information about the main characters from Critical Role";
+    }
+
+    @Override
+    public String getUsage() {
+        return "Usage: !criticalrole [character]";
+    }
+
+    @Override
+    public List<String> getAliases() {
+        return Arrays.asList("!criticalrole", "!critrole", "!cr");
+    }
+
+    @Override
+    public int getRequiredArguments() {
+        return 1;
     }
 
     @Override
