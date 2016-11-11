@@ -74,7 +74,7 @@ public class GameCommand extends GilmoreCommand {
 
     public static Game getGame(String name) {
         for (Game game : getGames()) {
-            if (game.getName().equals(name)) {
+            if (game.getName().toLowerCase().equals(name.toLowerCase())) {
                 return game;
             }
         }
@@ -87,7 +87,7 @@ public class GameCommand extends GilmoreCommand {
         }
 
         for (Game game : getGames()) {
-            if (game.getName().equals(name)) {
+            if (game.getName().toLowerCase().equals(name.toLowerCase())) {
                 return true;
             }
         }

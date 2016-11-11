@@ -45,6 +45,7 @@ public class Gilmore {
 
             builder.setBotToken(config.getBotToken());
 
+
             commandListener = new ChannelListener()
                     .registerCommand(new AboutCommand())
                     .registerCommand(new HelpCommand())

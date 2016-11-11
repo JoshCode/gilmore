@@ -8,6 +8,8 @@ import java.util.Properties;
 
 public class GilmoreConfiguration {
 
+    public static final boolean TESTING = true;
+
     private static final String CONFIGURATION_PATH = "conf/gilmore.conf";
     private static GilmoreConfiguration instance;
 
@@ -21,6 +23,7 @@ public class GilmoreConfiguration {
     private String logPath = "logs/gilmore.log";
     private File logLocation;
     private String botToken = "token";
+    private String botTokenTesting = "testingtoken";
 
     private GilmoreConfiguration() {
         String home = System.getProperty("user.home");
@@ -109,12 +112,19 @@ public class GilmoreConfiguration {
     }
 
     public String getBotToken() {
+        if(TESTING)
+            return botTokenTesting;
         return botToken;
     }
 
     @GilmoreConfigurationItem(key = "bot_token", type = String.class)
     public void setBotToken(String botToken) {
         this.botToken = botToken;
+    }
+
+    @GilmoreConfigurationItem(key = "bot_token_testing", type = String.class)
+    public void setBotTokenTesting(String botToken) {
+        this.botTokenTesting = botToken;
     }
 
     public void load() {
