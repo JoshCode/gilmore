@@ -8,7 +8,7 @@ import java.util.Properties;
 
 public class GilmoreConfiguration {
 
-    public static final boolean TESTING = true;
+    public static final boolean TESTING = false;
 
     private static final String CONFIGURATION_PATH = "conf/gilmore.conf";
     private static GilmoreConfiguration instance;
