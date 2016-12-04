@@ -55,6 +55,12 @@ public class HelpCommand extends GilmoreCommand {
                 builder.append("\tDescription : " + c.getDescription() + "\n\n");
             }
 
+            if(!CustomCommand.getCommands().isEmpty())
+                builder.append("\n*** Custom commands ***\n");
+            for (String c : CustomCommand.getCommands()) {
+                builder.append("> " + c + "\n");
+            }
+
             builder.append("```");
         } else {
             String label = StringUtil.arrayToString(args, 0, " ");
