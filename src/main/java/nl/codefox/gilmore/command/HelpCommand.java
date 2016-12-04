@@ -52,7 +52,7 @@ public class HelpCommand extends GilmoreCommand {
                 } else {
                     builder.append("> " + c.getAliases().get(0) + "\n");
                 }
-                builder.append("\tDescription : " + c.getDescription() + "\n\n");
+                builder.append("\tDescription : " + c.getDescription() + "\n");
             }
 
             if(!CustomCommand.getCommands().isEmpty())
