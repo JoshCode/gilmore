@@ -3,7 +3,6 @@ package nl.codefox.gilmore.command;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-
 import nl.codefox.gilmore.Gilmore;
 import nl.codefox.gilmore.util.StringUtil;
 
@@ -83,7 +82,7 @@ public class HelpCommand extends GilmoreCommand {
                 builder.append("\tAliases     : " + StringUtil.listToString(c.getAliases(), ", ") + "\n");
                 builder.append("\tDescription : " + c.getDescription() + "\n");
                 builder.append("\tUsage       : " + c.getUsage() + "\n");
-                builder.append("\tPermission  : " + (c.getPermission() == null ? "None" : c.getPermission().name()) + "\n\n");
+                builder.append("\tPermission  : " + (c.getRolePermission() == null ? "None" : c.getRolePermission().toString()).replace("[", "").replace("]", "") + "\n\n");
                 return true;
             } else {
                 if (getUsage(label, c.getSubCommands(), builder)) {

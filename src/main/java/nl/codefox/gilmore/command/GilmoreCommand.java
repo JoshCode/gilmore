@@ -49,10 +49,6 @@ public abstract class GilmoreCommand {
 
     public abstract List<String> getAliases();
 
-    public Permission getPermission() {
-        return null;
-    }
-
     public List<String> getRolePermission() {
         return null;
     }
@@ -83,17 +79,6 @@ public abstract class GilmoreCommand {
         return args.length >= getMinimumArguments() && args.length <= getMaximumArguments();
     }
 
-    public boolean hasPermission(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
-        if (getPermission() == null) {
-            return hasRole(command, args, channel, author, event);
-        } else
-            for (Role role : event.getGuild().getMember(author).getRoles())
-                if (role.getPermissions().contains(getPermission()))
-                    return true;
-
-        return false;
-    }
-
     public boolean hasRole(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
         if (getRolePermission() == null) {
             return true;
@@ -106,7 +91,7 @@ public abstract class GilmoreCommand {
     }
 
     public void runCommand(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
-        if (!hasPermission(command, args, channel, author, event)) {
+        if (!hasRole(command, args, channel, author, event)) {
             invalidPermissions(command, args, channel, author, event);
             return;
         }
