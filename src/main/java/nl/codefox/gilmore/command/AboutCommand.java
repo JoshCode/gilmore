@@ -1,9 +1,8 @@
 package nl.codefox.gilmore.command;
 
-import net.dv8tion.jda.entities.Message;
-import net.dv8tion.jda.entities.TextChannel;
-import net.dv8tion.jda.entities.User;
-import net.dv8tion.jda.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.util.Arrays;
 import java.util.List;
@@ -29,7 +28,7 @@ public class AboutCommand extends GilmoreCommand {
         sb.append("GitHub  : ").append("https://github.com/joshcode/gilmore");
         sb.append("```");
 
-        Message message = channel.sendMessage(sb.toString());
+        channel.sendMessage(sb.toString()).queue();
     }
 
 }

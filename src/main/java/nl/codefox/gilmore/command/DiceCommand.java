@@ -1,9 +1,8 @@
 package nl.codefox.gilmore.command;
 
-import net.dv8tion.jda.entities.Message;
-import net.dv8tion.jda.entities.TextChannel;
-import net.dv8tion.jda.entities.User;
-import net.dv8tion.jda.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import nl.codefox.gilmore.command.dice.Dice;
 
@@ -62,6 +61,6 @@ public class DiceCommand extends GilmoreCommand {
             msg += "[This message got cut off because it is too long.]";
         }
 
-        Message message = channel.sendMessage(msg);
+        channel.sendMessage(msg).queue();
     }
 }

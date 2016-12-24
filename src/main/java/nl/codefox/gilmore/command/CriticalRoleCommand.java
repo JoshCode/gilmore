@@ -1,9 +1,10 @@
 package nl.codefox.gilmore.command;
 
-import net.dv8tion.jda.entities.Message;
-import net.dv8tion.jda.entities.TextChannel;
-import net.dv8tion.jda.entities.User;
-import net.dv8tion.jda.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.entities.Message;
+import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.requests.RestAction;
 
 import nl.codefox.gilmore.Gilmore;
 import nl.codefox.gilmore.command.criticalrole.CriticalRoleCharacter;
@@ -48,16 +49,17 @@ public class CriticalRoleCommand extends GilmoreCommand {
     public void process(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
         String character = args[0].toLowerCase();
         if (CriticalRoleCharacter.getCharacter(character) != null) {
-            Message message = channel.sendMessage(String.format("[%s] `Preparing that for you now - one moment...`", author.getAsMention()));
-            draw(channel, CriticalRoleCharacter.getCharacter(character));
-            message.deleteMessage();
+            RestAction<Message> m = channel.sendMessage(String.format("[%s] `Preparing that for you now - one moment...`", author.getAsMention()));
+            m.queue(message -> {
+                draw(channel, CriticalRoleCharacter.getCharacter(character), message);
+            });
         } else {
-            Message message = channel.sendMessage(String.format("[%s] `'%s' isn't a valid character name`", author.getAsMention(), character));
+            channel.sendMessage(String.format("[%s] `'%s' isn't a valid character name`", author.getAsMention(), character)).queue();
         }
 
     }
 
-    private void draw(TextChannel channel, CriticalRoleCharacter crc) {
+    private void draw(TextChannel channel, CriticalRoleCharacter crc, Message message) {
         try {
 
             BufferedImage image = new BufferedImage(CriticalRoleConstants.IMAGE_WIDTH, CriticalRoleConstants.IMAGE_HEIGHT, BufferedImage.TYPE_INT_ARGB);
@@ -105,7 +107,7 @@ public class CriticalRoleCommand extends GilmoreCommand {
             File temp = new File(System.getProperty("user.home"), "temp.png");
             ImageIO.write(image, "png", temp);
 
-            Message message = channel.sendFile(temp, null);
+            channel.sendFile(temp, null).queue(m1 -> message.deleteMessage().queue());
             temp.delete();
 
         } catch (Exception ex) {

@@ -1,8 +1,10 @@
 package nl.codefox.gilmore;
 
-import net.dv8tion.jda.JDA;
-import net.dv8tion.jda.JDABuilder;
-
+import net.dv8tion.jda.core.AccountType;
+import net.dv8tion.jda.core.JDA;
+import net.dv8tion.jda.core.JDABuilder;
+import net.dv8tion.jda.core.entities.Game;
+import net.dv8tion.jda.core.exceptions.RateLimitedException;
 import nl.codefox.gilmore.command.AboutCommand;
 import nl.codefox.gilmore.command.CriticalRoleCommand;
 import nl.codefox.gilmore.command.CustomCommand;
@@ -23,7 +25,7 @@ import javax.security.auth.login.LoginException;
 
 public class Gilmore {
 
-    private static JDA JDA;
+    private static JDA JDA_INSTANCE;
     private static ChannelListener commandListener;
     private static ConnectionListener connectionListener;
 
@@ -41,10 +43,9 @@ public class Gilmore {
                 e.printStackTrace();
             }
 
-            JDABuilder builder = new JDABuilder();
+            JDABuilder builder = new JDABuilder(AccountType.BOT);
 
-            builder.setBotToken(config.getBotToken());
-
+            builder.setToken(config.getBotToken());
 
             commandListener = new ChannelListener()
                     .registerCommand(new AboutCommand())
@@ -61,20 +62,22 @@ public class Gilmore {
             builder.addListener(commandListener);
             builder.addListener(connectionListener);
 
-            JDA = builder.buildBlocking();
+            JDA_INSTANCE = builder.buildBlocking();
 
-            JDA.getAccountManager().setGame("with your hearts");
+            JDA_INSTANCE.getPresence().setGame(Game.of("with your hearts"));
 
         } catch (LoginException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (RateLimitedException e) {
             e.printStackTrace();
         }
 
     }
 
     public static JDA getJDA() {
-        return JDA;
+        return JDA_INSTANCE;
     }
 
     public static ChannelListener getCommandListener() {

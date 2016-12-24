@@ -1,9 +1,8 @@
 package nl.codefox.gilmore.command.game;
 
-import net.dv8tion.jda.entities.Message;
-import net.dv8tion.jda.entities.TextChannel;
-import net.dv8tion.jda.entities.User;
-import net.dv8tion.jda.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import nl.codefox.gilmore.command.GameCommand;
 import nl.codefox.gilmore.command.GilmoreCommand;
@@ -51,11 +50,11 @@ public class GameRemoveCommand extends GilmoreCommand {
         String name = StringUtil.arrayToString(args, 0, " ");
 
         if (!GameCommand.gameExists(name)) {
-            Message message = channel.sendMessage(String.format("[%s] `The game '%s' doesn't exist. Use !game list to see all available games", author.getAsMention(), name));
+            channel.sendMessage(String.format("[%s] `The game '%s' doesn't exist. Use !game list to see all available games", author.getAsMention(), name)).queue();
         } else {
             GilmoreDatabase.removeGame(name);
             GameCommand.removeGame(GameCommand.getGame(name));
-            Message message = channel.sendMessage(String.format("[%s] `The game '%s' has been removed.`", author.getAsMention(), name));
+            channel.sendMessage(String.format("[%s] `The game '%s' has been removed.`", author.getAsMention(), name)).queue();
         }
     }
 }

@@ -1,9 +1,9 @@
 package nl.codefox.gilmore.listener;
 
-import net.dv8tion.jda.entities.TextChannel;
-import net.dv8tion.jda.entities.User;
-import net.dv8tion.jda.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.hooks.ListenerAdapter;
+import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 import nl.codefox.gilmore.Gilmore;
 import nl.codefox.gilmore.command.CustomCommand;
@@ -37,7 +37,7 @@ public class ChannelListener extends ListenerAdapter {
             return;
         }
 
-        if (author != Gilmore.getJDA().getSelfInfo()) {
+        if (author != Gilmore.getJDA().getSelfUser()) {
             String[] args = message.split(" ");
             String command = args[0];
             String[] finalArgs = Arrays.copyOfRange(args, 1, args.length);
