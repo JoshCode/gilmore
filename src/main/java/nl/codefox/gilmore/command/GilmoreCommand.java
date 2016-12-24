@@ -1,11 +1,10 @@
 package nl.codefox.gilmore.command;
 
-import net.dv8tion.jda.Permission;
-import net.dv8tion.jda.entities.Message;
-import net.dv8tion.jda.entities.Role;
-import net.dv8tion.jda.entities.TextChannel;
-import net.dv8tion.jda.entities.User;
-import net.dv8tion.jda.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.Permission;
+import net.dv8tion.jda.core.entities.Role;
+import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import nl.codefox.gilmore.util.StringUtil;
 
@@ -50,10 +49,6 @@ public abstract class GilmoreCommand {
 
     public abstract List<String> getAliases();
 
-    public Permission getPermission() {
-        return null;
-    }
-
     public List<String> getRolePermission() {
         return null;
     }
@@ -70,11 +65,11 @@ public abstract class GilmoreCommand {
     }
 
     public void invalidPermissions(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
-        Message message = channel.sendMessage(String.format(MISSING_PERMISSION, author.getAsMention()));
+        channel.sendMessage(String.format(MISSING_PERMISSION, author.getAsMention())).queue();
     }
 
     public void invalidUsage(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
-        Message message = channel.sendMessage(String.format(INVALID_USAGE, author.getAsMention(), getUsage()));
+        channel.sendMessage(String.format(INVALID_USAGE, author.getAsMention(), getUsage())).queue();
     }
 
     public boolean isValidUsage(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
@@ -84,22 +79,11 @@ public abstract class GilmoreCommand {
         return args.length >= getMinimumArguments() && args.length <= getMaximumArguments();
     }
 
-    public boolean hasPermission(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
-        if (getPermission() == null) {
-            return hasRole(command, args, channel, author, event);
-        } else
-            for (Role role : event.getGuild().getRolesForUser(author))
-                if (role.getPermissions().contains(getPermission()))
-                    return true;
-
-        return false;
-    }
-
     public boolean hasRole(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
         if (getRolePermission() == null) {
             return true;
         } else
-            for (Role role : event.getGuild().getRolesForUser(author))
+            for (Role role : event.getGuild().getMember(author).getRoles())
                 if (getRolePermission().contains(role.getName()))
                     return true;
 
@@ -107,7 +91,7 @@ public abstract class GilmoreCommand {
     }
 
     public void runCommand(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
-        if (!hasPermission(command, args, channel, author, event)) {
+        if (!hasRole(command, args, channel, author, event)) {
             invalidPermissions(command, args, channel, author, event);
             return;
         }

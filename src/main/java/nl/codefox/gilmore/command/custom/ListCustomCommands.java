@@ -1,9 +1,8 @@
 package nl.codefox.gilmore.command.custom;
 
-import net.dv8tion.jda.entities.Message;
-import net.dv8tion.jda.entities.TextChannel;
-import net.dv8tion.jda.entities.User;
-import net.dv8tion.jda.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import nl.codefox.gilmore.command.CustomCommand;
 import nl.codefox.gilmore.command.GilmoreCommand;
@@ -39,6 +38,6 @@ public class ListCustomCommands extends GilmoreCommand {
 
         builder.append("```");
 
-        Message message = channel.sendMessage(builder.toString());
+        channel.sendMessage(builder.toString()).queue();
     }
 }

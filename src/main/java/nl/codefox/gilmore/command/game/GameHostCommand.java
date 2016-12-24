@@ -1,9 +1,8 @@
 package nl.codefox.gilmore.command.game;
 
-import net.dv8tion.jda.entities.Message;
-import net.dv8tion.jda.entities.TextChannel;
-import net.dv8tion.jda.entities.User;
-import net.dv8tion.jda.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import nl.codefox.gilmore.command.GameCommand;
 import nl.codefox.gilmore.command.GilmoreCommand;
@@ -45,7 +44,7 @@ public class GameHostCommand extends GilmoreCommand {
         String name = StringUtil.arrayToString(args, 0, " ");
 
         if (!GameCommand.gameExists(name)) {
-            Message message = channel.sendMessage(String.format("[%s] `This game doesn't exist, but it could. Try !game create " + name + "`", author.getAsMention(), name));
+            channel.sendMessage(String.format("[%s] `This game doesn't exist, but it could. Try !game create " + name + "`", author.getAsMention(), name)).queue();
         } else {
             GameCommand.getGame(name).notifyUsers(author.getId(), event);
         }

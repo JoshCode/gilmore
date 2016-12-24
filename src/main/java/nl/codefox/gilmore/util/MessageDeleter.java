@@ -1,6 +1,6 @@
 package nl.codefox.gilmore.util;
 
-import net.dv8tion.jda.entities.Message;
+import net.dv8tion.jda.core.entities.Message;
 
 /**
  * @author Joshua Slik

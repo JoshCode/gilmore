@@ -1,9 +1,8 @@
 package nl.codefox.gilmore.command.game;
 
-import net.dv8tion.jda.entities.Message;
-import net.dv8tion.jda.entities.TextChannel;
-import net.dv8tion.jda.entities.User;
-import net.dv8tion.jda.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import nl.codefox.gilmore.command.GameCommand;
 import nl.codefox.gilmore.command.GilmoreCommand;
@@ -14,7 +13,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class GameSubscribeCommand extends GilmoreCommand {
-
 
     @Override
     public String getUsage() {
@@ -47,18 +45,18 @@ public class GameSubscribeCommand extends GilmoreCommand {
         String name = StringUtil.arrayToString(args, 0, " ");
 
         if (!GameCommand.gameExists(name)) {
-            Message message = channel.sendMessage(String.format("[%s] `This game doesn't exist, but it could. Try !game create '%s'`", author.getAsMention(), name));
+            channel.sendMessage(String.format("[%s] `This game doesn't exist, but it could. Try !game create '%s'`", author.getAsMention(), name)).queue();
         } else {
             Game game = GameCommand.getGame(name);
 
             if (game.getInterestedUsers().contains(author.getId())) {
-                Message message = channel.sendMessage(String.format("[%s] `You are already subscribed to the game '%s'`", author.getAsMention(), name));
+                channel.sendMessage(String.format("[%s] `You are already subscribed to the game '%s'`", author.getAsMention(), name)).queue();
                 return;
             }
 
             game.addUser(author.getId());
             GilmoreDatabase.addSubscriber(name, author.getId());
-            Message message = channel.sendMessage(String.format("[%s] `You are now subscribed to the game '%s'`", author.getAsMention(), name));
+            channel.sendMessage(String.format("[%s] `You are now subscribed to the game '%s'`", author.getAsMention(), name)).queue();
         }
 
     }

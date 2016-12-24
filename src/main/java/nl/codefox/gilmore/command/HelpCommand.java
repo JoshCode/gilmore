@@ -1,10 +1,8 @@
 package nl.codefox.gilmore.command;
 
-import net.dv8tion.jda.entities.Message;
-import net.dv8tion.jda.entities.TextChannel;
-import net.dv8tion.jda.entities.User;
-import net.dv8tion.jda.events.message.MessageReceivedEvent;
-
+import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import nl.codefox.gilmore.Gilmore;
 import nl.codefox.gilmore.util.StringUtil;
 
@@ -55,7 +53,7 @@ public class HelpCommand extends GilmoreCommand {
                 builder.append("\tDescription : " + c.getDescription() + "\n");
             }
 
-            if(!CustomCommand.getCommands().isEmpty())
+            if (!CustomCommand.getCommands().isEmpty())
                 builder.append("\n*** Custom commands ***\n");
             for (String c : CustomCommand.getCommands()) {
                 builder.append("> " + c + "\n");
@@ -74,7 +72,7 @@ public class HelpCommand extends GilmoreCommand {
 
             builder.append("```");
         }
-        Message message = channel.sendMessage(builder.toString());
+        channel.sendMessage(builder.toString()).queue();
     }
 
     public boolean getUsage(String label, List<GilmoreCommand> command, StringBuilder builder) {
@@ -84,7 +82,7 @@ public class HelpCommand extends GilmoreCommand {
                 builder.append("\tAliases     : " + StringUtil.listToString(c.getAliases(), ", ") + "\n");
                 builder.append("\tDescription : " + c.getDescription() + "\n");
                 builder.append("\tUsage       : " + c.getUsage() + "\n");
-                builder.append("\tPermission  : " + (c.getPermission() == null ? "None" : c.getPermission().name()) + "\n\n");
+                builder.append("\tPermission  : " + (c.getRolePermission() == null ? "None" : c.getRolePermission().toString()).replace("[", "").replace("]", "") + "\n\n");
                 return true;
             } else {
                 if (getUsage(label, c.getSubCommands(), builder)) {

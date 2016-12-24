@@ -1,7 +1,7 @@
 package nl.codefox.gilmore.command.game;
 
-import net.dv8tion.jda.entities.User;
-import net.dv8tion.jda.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import nl.codefox.gilmore.Gilmore;
 import nl.codefox.gilmore.command.GameCommand;
@@ -11,7 +11,6 @@ import nl.codefox.gilmore.util.Logging;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 
 public class Game {
 

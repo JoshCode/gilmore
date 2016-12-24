@@ -1,9 +1,8 @@
 package nl.codefox.gilmore.command.custom;
 
-import net.dv8tion.jda.entities.Message;
-import net.dv8tion.jda.entities.TextChannel;
-import net.dv8tion.jda.entities.User;
-import net.dv8tion.jda.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import nl.codefox.gilmore.command.CustomCommand;
 import nl.codefox.gilmore.command.GilmoreCommand;
@@ -56,9 +55,9 @@ public class RawCustomCommand extends GilmoreCommand {
             sb.append(CustomCommand.getCommand(label));
             sb.append("```");
 
-            Message message = channel.sendMessage(String.format("[%s] `The command '%s' has the following message:`\n%s", author.getAsMention(), label, sb.toString()));
+            channel.sendMessage(String.format("[%s] `The command '%s' has the following message:`\n%s", author.getAsMention(), label, sb.toString())).queue();
         } else {
-            Message message = channel.sendMessage(String.format("[%s] `This command doesn't exist, please create the command %s, first`", author.getAsMention(), label));
+            channel.sendMessage(String.format("[%s] `This command doesn't exist, please create the command %s, first`", author.getAsMention(), label)).queue();
         }
     }
 }

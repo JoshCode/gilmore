@@ -1,10 +1,9 @@
 package nl.codefox.gilmore.command;
 
-import net.dv8tion.jda.entities.Message;
-import net.dv8tion.jda.entities.Role;
-import net.dv8tion.jda.entities.TextChannel;
-import net.dv8tion.jda.entities.User;
-import net.dv8tion.jda.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.entities.Role;
+import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import nl.codefox.gilmore.Gilmore;
 import nl.codefox.gilmore.util.Logging;
@@ -45,17 +44,17 @@ public class MuteCommand extends GilmoreCommand {
         Role role = getMuteRole();
 
         try {
-            User user = event.getJDA().getUsersByName(args[0]).get(0);
+            User user = event.getJDA().getUsersByName(args[0], true).get(0);
 
-            if (event.getGuild().getRolesForUser(user).contains(role)) {
-                Message message = channel.sendMessage(String.format("[%s] `'%s' has already been muted`", author.getAsMention(), args[0]));
+            if (event.getGuild().getMember(user).getRoles().contains(role)) {
+                channel.sendMessage(String.format("[%s] `'%s' has already been muted`", author.getAsMention(), args[0])).queue();
                 return;
             }
 
-            event.getGuild().getManager().addRoleToUser(user, role).update();
-            Message message = channel.sendMessage(String.format("[%s] `'%s' has been muted`", author.getAsMention(), args[0]));
+            event.getGuild().getController().addRolesToMember(event.getMember(), role).queue();
+            channel.sendMessage(String.format("[%s] `'%s' has been muted`", author.getAsMention(), args[0])).queue();
         } catch (Exception ex) {
-            Message message = channel.sendMessage(String.format("[%s] `Could not mute user '%s'`", author.getAsMention(), args[0]));
+            channel.sendMessage(String.format("[%s] `Could not mute user '%s'`", author.getAsMention(), args[0])).queue();
             Logging.log(ex);
         }
     }
