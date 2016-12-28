@@ -7,7 +7,7 @@ public class LauncherTest {
 
     @org.junit.Test
     public void main() throws Exception {
-        
+
     }
 
 }

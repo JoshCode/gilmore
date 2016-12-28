@@ -1,6 +1,15 @@
 # Ignore IntelliJ IDEA files and folders
 *.idea
 *.iml
+*.ipr
+*.iws
+*.ids
+*.log
+
+conf
+
+/out
+/.gradle
 
 # Ignore Eclipse files and folders
 *.project
@@ -9,9 +18,13 @@
 
 # Ignore NetBeans files and folders
 **/nbproject
+**/nb-configuration.xml
 
 # Ignore Maven files and folders
 **/target
+
+# Ignore DB folder
+**/db
 
 # Ignore logs
 **/logs

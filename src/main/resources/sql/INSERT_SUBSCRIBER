@@ -1,0 +1,6 @@
+INSERT 	INTO GILMORE_GAME_SUBSCRIBER 
+VALUES 
+( 
+	?, 
+	? 
+)
