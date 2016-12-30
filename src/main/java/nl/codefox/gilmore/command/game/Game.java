@@ -1,7 +1,11 @@
 package nl.codefox.gilmore.command.game;
 
+import net.dv8tion.jda.core.entities.Message;
+import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.entities.impl.MessageImpl;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.requests.RestAction;
 
 import nl.codefox.gilmore.Gilmore;
 import nl.codefox.gilmore.command.GameCommand;
@@ -107,7 +111,7 @@ public class Game {
         responses.add(currentMessage.toString());
 
         for (String response : responses) {
-            event.getChannel().sendMessage(response);
+            event.getChannel().sendMessage(response).queue();
 
 //            String.format(
 //                    "[%s] `You're hosting a game of '%s'. Notifying interested users.`\n%s\n`To stop receiving messages about this game type '!game unsubscribe %s'`",
