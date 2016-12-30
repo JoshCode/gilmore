@@ -56,7 +56,7 @@ public class ChannelListener extends ListenerAdapter {
                 }.start();
             } else if (CustomCommand.commandExists(command)) {
                 String commandDesc = CustomCommand.getCommand(command);
-                channel.sendMessage(String.format("[%s] %s", author.getAsMention(), commandDesc));
+                channel.sendMessage(String.format("[%s] %s", author.getAsMention(), commandDesc)).queue();
             }
         }
     }
