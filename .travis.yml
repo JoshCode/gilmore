@@ -12,6 +12,7 @@ before_deploy:
 script:
   - sh ./src/travis/serenity.sh
   - mvn test -B
+  - mvn install cobertura:cobertura coveralls:report
 
 deploy:
   provider: releases
