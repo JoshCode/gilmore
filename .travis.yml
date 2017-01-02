@@ -2,17 +2,19 @@ language: java
 jdk:
   - oraclejdk8
 
+script:
+  - sh ./src/travis/serenity.sh
+  - mvn test -B
+
+after_success:
+  - mvn clean cobertura:cobertura coveralls:report
+
 before_deploy:
   - mvn package
   - cd target
   - zip -r gilmore ./* -x ./maven-archiver\* ./maven-status\* ./classes\* ./surefire-reports\* ./test-classes\* ./generated-sources\* ./generated-test-sources\* ./generated-classes\* ./cobertura\* ./testtarget\*
   - ls
   - cd ..
-
-script:
-  - sh ./src/travis/serenity.sh
-  - mvn test -B
-  - mvn install cobertura:cobertura coveralls:report
 
 deploy:
   provider: releases
