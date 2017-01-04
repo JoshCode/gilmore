@@ -36,7 +36,7 @@ public class EditCustomCommand extends GilmoreCommand {
 
     @Override
     public int getMaximumArguments() {
-        return 100;
+        return 2000;
     }
 
     @Override
