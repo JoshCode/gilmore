@@ -1,5 +1,6 @@
 #!/bin/bash
 
+mvn clean
 mvn install
 
 # Test for PID file
