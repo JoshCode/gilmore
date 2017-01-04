@@ -41,7 +41,7 @@ public class CustomCommand extends GilmoreCommand {
 
     @Override
     public int getMaximumArguments() {
-        return 100;
+        return 2000;
     }
 
     public static boolean commandExists(String command) {
