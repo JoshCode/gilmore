@@ -8,6 +8,7 @@ import nl.codefox.gilmore.command.GilmoreCommand;
 import nl.codefox.gilmore.database.GilmoreDatabase;
 import nl.codefox.gilmore.util.StringUtil;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -31,17 +32,20 @@ public class GameSubscribedCommand extends GilmoreCommand {
     }
 
     @Override
-    public int getMinimumArguments() {
-        return 1;
-    }
-
-    @Override
-    public int getMaximumArguments() {
-        return 100;
-    }
-
-    @Override
     public void process(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
+
+        List<Game> subscribedList = new ArrayList<>();
+
+        for (Game g : GameCommand.getGames()) {
+            if (g.getInterestedUsers().contains(author.getId())) {
+                subscribedList.add(g);
+            }
+        }
+
+        if(subscribedList.isEmpty()) {
+            channel.sendMessage(String.format("[%s] `You aren't subscribed to any games. Try !game list and !game subscribe!`", author.getAsMention())).queue();
+            return;
+        }
 
         StringBuilder reply = new StringBuilder();
         reply.append(String.format("[%s] `You are subscribed to the following games:`", author.getAsMention())).append("\n");
@@ -60,7 +64,6 @@ public class GameSubscribedCommand extends GilmoreCommand {
         }
 
         reply.append("`");
-
         channel.sendMessage(reply.toString()).queue();
     }
 
