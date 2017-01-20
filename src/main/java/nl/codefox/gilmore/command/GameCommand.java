@@ -1,12 +1,6 @@
 package nl.codefox.gilmore.command;
 
-import nl.codefox.gilmore.command.game.Game;
-import nl.codefox.gilmore.command.game.GameCreateCommand;
-import nl.codefox.gilmore.command.game.GameHostCommand;
-import nl.codefox.gilmore.command.game.GameListCommand;
-import nl.codefox.gilmore.command.game.GameRemoveCommand;
-import nl.codefox.gilmore.command.game.GameSubscribeCommand;
-import nl.codefox.gilmore.command.game.GameUnsubscribeCommand;
+import nl.codefox.gilmore.command.game.*;
 import nl.codefox.gilmore.database.GilmoreDatabase;
 
 import java.util.ArrayList;
@@ -24,6 +18,7 @@ public class GameCommand extends GilmoreCommand {
         this.addSubCommand(new GameHostCommand());
         this.addSubCommand(new GameSubscribeCommand());
         this.addSubCommand(new GameUnsubscribeCommand());
+        this.addSubCommand(new GameSubscribedCommand());
         load();
     }
 
