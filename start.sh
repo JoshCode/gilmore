@@ -22,6 +22,11 @@ if [ -f ~/logs/gilmore.pid ]; then
             operating_system="Linux"
         fi
 
+        uname | grep 'Darwin' &> /dev/null
+        if [ $? == 0 ]; then
+            operating_system="Linux"
+        fi
+
         # Test if PID is a java process
         if [ $operating_system == "Windows" ]; then
             ps -p $gilmore_old_pid | grep 'java' &> /dev/null
