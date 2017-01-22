@@ -30,7 +30,7 @@ public class GameListCommand extends GilmoreCommand {
         builder.append("```");
 
         if (!GameCommand.getGames().isEmpty()) {
-            for (Game game : GameCommand.getGames()) {
+            for (Game game : GameCommand.getGames().values()) {
                 builder.append(String.format("> %s\n", game));
             }
         } else {

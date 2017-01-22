@@ -29,20 +29,20 @@ public class ChannelListener extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
-
-        User author = event.getAuthor();
         String message = event.getMessage().getRawContent();
 
         if (!message.startsWith("!")) {
             return;
         }
 
+        User author = event.getAuthor();
+
         if (author != Gilmore.getJDA().getSelfUser()) {
             String[] args = message.split(" ");
             String command = args[0];
             String[] finalArgs = Arrays.copyOfRange(args, 1, args.length);
             TextChannel channel = event.getTextChannel();
-            Optional<GilmoreCommand> c = commands.stream().filter(cc -> cc.getAliases().contains(command)).findFirst();
+            Optional<GilmoreCommand> c = commands.stream().filter(cc -> cc.getAliases().contains(command.toLowerCase())).findFirst();
 
             if (c.isPresent()) {
                 GilmoreCommand cc = c.get();
