@@ -42,7 +42,7 @@ public class ChannelListener extends ListenerAdapter {
             String command = args[0];
             String[] finalArgs = Arrays.copyOfRange(args, 1, args.length);
             TextChannel channel = event.getTextChannel();
-            Optional<GilmoreCommand> c = commands.stream().filter(cc -> cc.getAliases().contains(command)).findFirst();
+            Optional<GilmoreCommand> c = commands.stream().filter(cc -> cc.getAliases().contains(command.toLowerCase())).findFirst();
 
             if (c.isPresent()) {
                 GilmoreCommand cc = c.get();

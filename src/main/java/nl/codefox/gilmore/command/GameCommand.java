@@ -11,11 +11,13 @@ import nl.codefox.gilmore.database.GilmoreDatabase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GameCommand extends GilmoreCommand {
 
-    private static ArrayList<Game> games = new ArrayList<>();
+    private static Map<String, Game> games = new HashMap<String, Game>();
 
     public GameCommand() {
         this.addSubCommand(new GameListCommand());
@@ -53,18 +55,18 @@ public class GameCommand extends GilmoreCommand {
     }
 
     public static void addGames(List<Game> games) {
-        getGames().addAll(games);
+        games.forEach(game -> addGame(game));
     }
 
     public static void addGame(Game game) {
-        getGames().add(game);
+        getGames().put(game.getName().toLowerCase(), game);
     }
 
     public static void removeGame(Game game) {
-        getGames().remove(game);
+        getGames().remove(game.getName().toLowerCase());
     }
 
-    public static ArrayList<Game> getGames() {
+    public static Map<String, Game> getGames() {
         return GameCommand.games;
     }
 
@@ -73,24 +75,10 @@ public class GameCommand extends GilmoreCommand {
     }
 
     public static Game getGame(String name) {
-        for (Game game : getGames()) {
-            if (game.getName().toLowerCase().equals(name.toLowerCase())) {
-                return game;
-            }
-        }
-        return null;
+        return getGames().getOrDefault(name.toLowerCase(), null);
     }
 
     public static boolean gameExists(String name) {
-        if (getGames().isEmpty()) {
-            return false;
-        }
-
-        for (Game game : getGames()) {
-            if (game.getName().toLowerCase().equals(name.toLowerCase())) {
-                return true;
-            }
-        }
-        return false;
+        return getGames().containsKey(name.toLowerCase());
     }
 }
