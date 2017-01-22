@@ -29,13 +29,13 @@ public class ChannelListener extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
-
-        User author = event.getAuthor();
         String message = event.getMessage().getRawContent();
 
         if (!message.startsWith("!")) {
             return;
         }
+
+        User author = event.getAuthor();
 
         if (author != Gilmore.getJDA().getSelfUser()) {
             String[] args = message.split(" ");
