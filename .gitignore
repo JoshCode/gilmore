@@ -34,3 +34,6 @@ conf
 /dist/
 
 /gource/
+
+# Ignore !history command output
+*.history

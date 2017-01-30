@@ -1,86 +1,75 @@
 package nl.codefox.gilmore;
 
+import flexjson.JSONDeserializer;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.entities.Game;
 import net.dv8tion.jda.core.exceptions.RateLimitedException;
-import nl.codefox.gilmore.command.AboutCommand;
-import nl.codefox.gilmore.command.CriticalRoleCommand;
-import nl.codefox.gilmore.command.CustomCommand;
-import nl.codefox.gilmore.command.DiceCommand;
-import nl.codefox.gilmore.command.GameCommand;
-import nl.codefox.gilmore.command.HelpCommand;
-import nl.codefox.gilmore.command.MuteCommand;
-import nl.codefox.gilmore.command.UnmuteCommand;
+import nl.codefox.gilmore.command.HistoryCommand;
 import nl.codefox.gilmore.config.GilmoreConfiguration;
 import nl.codefox.gilmore.listener.ChannelListener;
 import nl.codefox.gilmore.listener.ConnectionListener;
 import nl.codefox.gilmore.util.Logging;
 
-import java.io.File;
-import java.io.IOException;
-
 import javax.security.auth.login.LoginException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class Gilmore {
 
-    private static JDA JDA_INSTANCE;
-    private static ChannelListener commandListener;
-    private static ConnectionListener connectionListener;
+	private static JDA JDA_INSTANCE;
+	private static ChannelListener commandListener;
+	private static ConnectionListener connectionListener;
 
-    public static void main(String[] args) {
+	public static void main(String[] args) {
 
-        try {
-            Logging.info("Gilmore starting up!");
-            GilmoreConfiguration config = GilmoreConfiguration.getInstance();
+		try {
+			Logging.info("Gilmore starting up!");
+			GilmoreConfiguration config = GilmoreConfiguration.getInstance();
 
-            File logLocation = config.getLogLocation();
-            new File(logLocation.getParent()).mkdirs();
-            try {
-                logLocation.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+			File logLocation = config.getLogLocation();
+			new File(logLocation.getParent()).mkdirs();
+			try {
+				logLocation.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 
-            JDABuilder builder = new JDABuilder(AccountType.BOT);
+			JDABuilder builder = new JDABuilder(AccountType.BOT);
 
-            builder.setToken(config.getBotToken());
+			builder.setToken(config.getBotToken());
 
-            commandListener = new ChannelListener()
-                    .registerCommand(new AboutCommand())
-                    .registerCommand(new HelpCommand())
-                    .registerCommand(new GameCommand())
-                    .registerCommand(new DiceCommand())
-                    .registerCommand(new MuteCommand())
-                    .registerCommand(new UnmuteCommand())
-                    .registerCommand(new CustomCommand())
-                    .registerCommand(new CriticalRoleCommand());
+			commandListener = new ChannelListener()
+					.registerCommand(new HistoryCommand());
 
-            connectionListener = new ConnectionListener();
+			connectionListener = new ConnectionListener();
 
-            builder.addListener(commandListener);
-            builder.addListener(connectionListener);
+			builder.addListener(commandListener);
+			builder.addListener(connectionListener);
 
-            JDA_INSTANCE = builder.buildBlocking();
+			JDA_INSTANCE = builder.buildBlocking();
 
-            JDA_INSTANCE.getPresence().setGame(Game.of("with your hearts"));
+			JDA_INSTANCE.getPresence().setGame(Game.of("with your hearts"));
 
-        } catch (LoginException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (RateLimitedException e) {
-            e.printStackTrace();
-        }
+		} catch (LoginException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (RateLimitedException e) {
+			e.printStackTrace();
+		}
 
-    }
+	}
 
-    public static JDA getJDA() {
-        return JDA_INSTANCE;
-    }
+	public static JDA getJDA() {
+		return JDA_INSTANCE;
+	}
 
-    public static ChannelListener getCommandListener() {
-        return commandListener;
-    }
+	public static ChannelListener getCommandListener() {
+		return commandListener;
+	}
 }
