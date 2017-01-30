@@ -12,12 +12,12 @@ import java.util.ArrayList;
  */
 public abstract class Expression {
 
-    public ArrayList<Lexer.Token> tokens;
-    public int value;
-    public String description = "";
+	public ArrayList<Lexer.Token> tokens;
+	public int value;
+	public String description = "";
 
-    public Expression(ArrayList<Lexer.Token> tokens) {
-        this.tokens = tokens;
-    }
+	public Expression(ArrayList<Lexer.Token> tokens) {
+		this.tokens = tokens;
+	}
 
 }

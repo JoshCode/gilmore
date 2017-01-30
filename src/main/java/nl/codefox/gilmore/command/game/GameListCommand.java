@@ -3,7 +3,6 @@ package nl.codefox.gilmore.command.game;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-
 import nl.codefox.gilmore.command.GameCommand;
 import nl.codefox.gilmore.command.GilmoreCommand;
 
@@ -13,33 +12,33 @@ import java.util.List;
 public class GameListCommand extends GilmoreCommand {
 
 
-    @Override
-    public String getDescription() {
-        return "";
-    }
+	@Override
+	public String getDescription() {
+		return "";
+	}
 
-    @Override
-    public List<String> getAliases() {
-        return Arrays.asList("!game list");
-    }
+	@Override
+	public List<String> getAliases() {
+		return Arrays.asList("!game list");
+	}
 
-    @Override
-    public void process(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
-        StringBuilder builder = new StringBuilder(String.format("[%s] `Here is a list of all available games`\n", author.getAsMention()));
+	@Override
+	public void process(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
+		StringBuilder builder = new StringBuilder(String.format("[%s] `Here is a list of all available games`\n", author.getAsMention()));
 
-        builder.append("```");
+		builder.append("```");
 
-        if (!GameCommand.getGames().isEmpty()) {
-            for (Game game : GameCommand.getGames()) {
-                builder.append(String.format("> %s\n", game));
-            }
-        } else {
-            builder.append("There are currently no registered games!");
-        }
+		if (!GameCommand.getGames().isEmpty()) {
+			for (Game game : GameCommand.getGames()) {
+				builder.append(String.format("> %s\n", game));
+			}
+		} else {
+			builder.append("There are currently no registered games!");
+		}
 
-        builder.append("```");
+		builder.append("```");
 
-        channel.sendMessage(builder.toString()).queue();
-    }
+		channel.sendMessage(builder.toString()).queue();
+	}
 
 }
