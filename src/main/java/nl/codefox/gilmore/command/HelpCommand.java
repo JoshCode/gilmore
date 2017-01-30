@@ -8,6 +8,8 @@ import nl.codefox.gilmore.util.StringUtil;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class HelpCommand extends GilmoreCommand {
@@ -58,10 +60,8 @@ public class HelpCommand extends GilmoreCommand {
             for (String c : CustomCommand.getCommands()) {
                 builder.append("> " + c + "\n");
             }
-
-            builder.append("```");
-        } else {
-            String label = StringUtil.arrayToString(args, 0, " ");
+        } else if (isCommand(args)) {
+            String label = getLabel(args);
 
             if (!label.startsWith("!")) {
                 label = "!" + label;
@@ -70,9 +70,38 @@ public class HelpCommand extends GilmoreCommand {
             builder.append(String.format("[%s] ```Here's more information about the '%s' command;\n", author.getAsMention(), label));
             getUsage(label, Gilmore.getCommandListener().getCommands(), builder);
 
-            builder.append("```");
+        } else {
+            String label = getLabel(args);
+
+            if (!label.startsWith("!")) {
+                label = "!" + label;
+            }
+
+            // TODO: Finalize this language
+            builder.append(String.format("[%s] ```The '%s' command does not exist (yet);\n", author.getAsMention(), label));
         }
+        builder.append("```");
         channel.sendMessage(builder.toString()).queue();
+    }
+
+    // Todo: Create unit tests
+    private Predicate<GilmoreCommand> commandMatchesPredicate(String[] args) {
+        return (GilmoreCommand s) ->
+                Objects.equals(s.getAliases().get(0), getLabel(args)) ||
+                        Objects.equals(s.getAliases().get(0), "!" + getLabel(args));
+    }
+
+    // Todo: Create unit tests
+    private boolean isCommand(String[] args) {
+        return Gilmore.getCommandListener().getCommands().stream().filter(
+                commandMatchesPredicate(args))
+                .collect(Collectors.toList()).size() == 0;
+    }
+
+
+    // Todo: Create unit tests
+    private String getLabel(String[] args) {
+        return StringUtil.arrayToString(args, 0, " ");
     }
 
     public boolean getUsage(String label, List<GilmoreCommand> command, StringBuilder builder) {
@@ -92,5 +121,4 @@ public class HelpCommand extends GilmoreCommand {
         }
         return false;
     }
-
 }
