@@ -3,6 +3,7 @@ package nl.codefox.gilmore.command;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import nl.codefox.gilmore.config.GilmoreConfiguration;
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,7 +25,7 @@ public class AboutCommand extends GilmoreCommand {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("```");
-		sb.append("Version : ").append("v1.0.0-SNAPSHOT").append("\n");
+		sb.append("Version : ").append(GilmoreConfiguration.getInstance().getVersion()).append("\n");
 		sb.append("GitHub  : ").append("https://github.com/joshcode/gilmore");
 		sb.append("```");
 

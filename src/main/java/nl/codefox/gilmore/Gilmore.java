@@ -75,4 +75,5 @@ public class Gilmore {
 	public static ChannelListener getCommandListener() {
 		return commandListener;
 	}
+
 }

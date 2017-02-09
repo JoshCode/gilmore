@@ -1,8 +1,8 @@
 package nl.codefox.gilmore.config;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import nl.codefox.gilmore.Gilmore;
+
+import java.io.*;
 import java.lang.reflect.Method;
 import java.util.Properties;
 
@@ -24,6 +24,8 @@ public class GilmoreConfiguration {
 	private File logLocation;
 	private String botToken = "token";
 	private String botTokenTesting = "testingtoken";
+
+	private String version = null;
 
 	private GilmoreConfiguration() {
 		String home = System.getProperty("user.home");
@@ -127,7 +129,12 @@ public class GilmoreConfiguration {
 		this.botTokenTesting = botToken;
 	}
 
+	public String getVersion() {
+		return this.version;
+	}
+
 	public void load() {
+		loadGeneralProperties();
 
 		try {
 			String home = System.getProperty("user.home");
@@ -165,8 +172,34 @@ public class GilmoreConfiguration {
 			System.out.println(String.format("Exception when loading in configuration, using default configuration values.", CONFIGURATION_PATH));
 			ex.printStackTrace();
 		}
-
-
 	}
 
+	private void loadGeneralProperties() {
+		Properties prop = new Properties();
+		InputStream input = null;
+
+		try {
+			String filename = ".properties";
+			input = Gilmore.class.getClassLoader().getResourceAsStream(filename);
+			if (input == null) {
+				System.out.println("Sorry, unable to find " + filename);
+				return;
+			}
+
+			prop.load(input);
+
+			this.version = prop.getProperty("gilmore.version");
+
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		} finally {
+			if (input != null) {
+				try {
+					input.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 }
