@@ -46,8 +46,7 @@ public class Gilmore {
 					.registerCommand(new DiceCommand())
 					.registerCommand(new MuteCommand())
 					.registerCommand(new UnmuteCommand())
-					.registerCommand(new CustomCommand())
-					.registerCommand(new CriticalRoleCommand());
+					.registerCommand(new CustomCommand());
 
 			connectionListener = new ConnectionListener();
 
