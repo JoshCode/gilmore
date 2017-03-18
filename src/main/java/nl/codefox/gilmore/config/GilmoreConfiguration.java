@@ -142,10 +142,6 @@ public class GilmoreConfiguration {
 			File configurationFile = new File(home, CONFIGURATION_PATH);
 			Properties properties = new Properties();
 			properties.load(new FileReader(configurationFile));
-			Enumeration<?> enumeration = properties.propertyNames();
-			while(enumeration.hasMoreElements()) {
-				System.out.println(enumeration.nextElement());
-			}
 
 			for (Method method : GilmoreConfiguration.class.getMethods()) {
 				if (method.isAnnotationPresent(GilmoreConfigurationItem.class)) {
