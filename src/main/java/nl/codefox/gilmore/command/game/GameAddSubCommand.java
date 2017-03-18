@@ -40,7 +40,7 @@ public class GameAddSubCommand extends GilmoreCommand {
 
     @Override
     public List<String> getRolePermission() {
-        return Arrays.asList("Administrator", "Server Owner");
+        return Arrays.asList("Mod", "Administrator", "Server Owner");
     }
 
     @Override
