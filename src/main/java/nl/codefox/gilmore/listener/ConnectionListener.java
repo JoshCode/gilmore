@@ -16,6 +16,8 @@ public class ConnectionListener extends ListenerAdapter {
 		builder.append("#4 - If it is Thursday, we discuss the show #live in the channel #live, come join us there!```");
 		builder.append("*I am a bot, and this message was automatic. Is it Thursday yet?*");
 
+		if(!event.getMember().getUser().hasPrivateChannel())
+			event.getMember().getUser().openPrivateChannel();
 		event.getMember().getUser().getPrivateChannel().sendMessage(builder.toString());
 	}
 

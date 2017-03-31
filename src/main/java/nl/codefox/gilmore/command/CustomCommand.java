@@ -41,7 +41,9 @@ public class CustomCommand extends GilmoreCommand {
 	}
 
 	public static boolean commandExists(String command) {
-		return commands.containsKey(command);
+		if(commands != null)
+			return commands.containsKey(command);
+		return false;
 	}
 
 	public static Set<String> getCommands() {
