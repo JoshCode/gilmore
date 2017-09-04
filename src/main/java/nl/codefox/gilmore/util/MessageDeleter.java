@@ -32,7 +32,7 @@ public class MessageDeleter implements Runnable {
 		boolean deleted = false;
 		while (!deleted)
 			if (System.nanoTime() / 1_000_000 > targetTime) {
-				message.deleteMessage();
+				message.delete().queue();
 				deleted = true;
 			} else {
 				try {

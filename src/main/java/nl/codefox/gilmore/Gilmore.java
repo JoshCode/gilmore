@@ -50,8 +50,8 @@ public class Gilmore {
 
 			connectionListener = new ConnectionListener();
 
-			builder.addListener(commandListener);
-			builder.addListener(connectionListener);
+			builder.addEventListener(commandListener);
+			builder.addEventListener(connectionListener);
 
 			JDA_INSTANCE = builder.buildBlocking();
 

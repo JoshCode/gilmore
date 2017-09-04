@@ -1,8 +1,5 @@
 package nl.codefox.gilmore.util;
 
-import nl.codefox.gilmore.Gilmore;
-
-import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,13 +11,10 @@ import java.util.regex.Pattern;
 
 public class Resources {
 
-	private static final String FONT_URI = "/cocogoose.otf";
 	private static Map<String, String> SQL = new HashMap<String, String>();
-	private static Font font;
 
 	static {
 		loadSQL();
-		loadFont();
 	}
 
 	private static void loadSQL() {
@@ -81,19 +75,6 @@ public class Resources {
 		}
 		Logging.debug("[Resources] " + SQL.size() + " SQL statements have been loaded in.");
 	}
-
-	private static void loadFont() {
-		Logging.debug("[Resources] Getting font from '" + FONT_URI + "'");
-		try {
-			font = Font.createFont(Font.TRUETYPE_FONT, Gilmore.class.getResourceAsStream(FONT_URI));
-			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-			ge.registerFont(font);
-			Logging.debug("[Resources] Font loaded!");
-		} catch (Exception ex) {
-			Logging.log(ex);
-		}
-	}
-
 	public static String getSQL(String key) {
 		return SQL.get(key);
 	}
