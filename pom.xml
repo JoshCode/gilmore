@@ -8,7 +8,8 @@
 
 	<groupId>nl.codefox</groupId>
 	<artifactId>gilmore</artifactId>
-	<version>1.0.3</version>
+	<version>1.1.0</version>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -78,7 +79,7 @@
 		<dependency>
 			<groupId>net.dv8tion</groupId>
 			<artifactId>JDA</artifactId>
-			<version>3.0.BETA2_108</version>
+			<version>3.3.0_260</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
