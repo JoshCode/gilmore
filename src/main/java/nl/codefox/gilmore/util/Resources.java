@@ -54,7 +54,7 @@ public class Resources {
 	}
 
 	private static void loadSQLAsResourceList() {
-		Class loader = Resources.class.getClass();
+		ClassLoader loader = Resources.class.getClassLoader();
 
 		Pattern pattern = Pattern.compile("^sql.*");
 		Collection<String> list = ResourceList.getResources(pattern);
@@ -62,7 +62,7 @@ public class Resources {
 		for (String str : list) {
 			String[] strarr = str.split("/");
 			if (strarr.length > 1) {
-				try (BufferedReader fr = new BufferedReader(new InputStreamReader(loader.getResourceAsStream("/" + str)))) {
+				try (BufferedReader fr = new BufferedReader(new InputStreamReader(loader.getResourceAsStream(str)))) {
 					String sql = "";
 					String sqlLine;
 					while ((sqlLine = fr.readLine()) != null) {
