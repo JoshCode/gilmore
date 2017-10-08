@@ -1,8 +1,4 @@
 #!/bin/bash
-
-mvn clean
-mvn install
-
 # Test for PID file
 if [ -f ~/logs/gilmore.pid ]; then
     gilmore_old_pid=$(cat ~/logs/gilmore.pid)
@@ -35,7 +31,3 @@ if [ -f ~/logs/gilmore.pid ]; then
         fi
     fi
 fi
-
-java -cp target/gilmore-*-jar-with-dependencies.jar nl.codefox.gilmore.Gilmore &
-echo $! > ~/logs/gilmore.pid
-echo "[start.sh] Started new gilmore process $!"
