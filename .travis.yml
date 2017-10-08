@@ -1,6 +1,6 @@
 language: java
 jdk:
-  - oraclejdk8
+  - oraclejdk9
 
 script:
   - sh ./src/travis/serenity.sh
@@ -24,7 +24,7 @@ deploy:
   on:
     tags: true
     all_branches: true
-    jdk: oraclejdk8
+    jdk: oraclejdk9
 
 notifications:
   email:
