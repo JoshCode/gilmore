@@ -20,7 +20,6 @@ public class Resources {
 
 	static {
 		loadSQL();
-		loadFont();
 	}
 
 	private static void loadSQL() {
