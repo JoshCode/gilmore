@@ -13,6 +13,8 @@ import java.util.stream.Collectors;
 
 public abstract class GilmoreCommand {
 
+	private final String ALL_CHANNELS = "*";
+	
 	private final String MISSING_PERMISSION_CHANNEL = "[%s] `Sorry, I cannot run that command for you, this command is channel restricted.`";
 	private final String MISSING_PERMISSION = "[%s] `Sorry, I cannot run that command for you, you don't have permission.`";
 	private final String INVALID_USAGE = "[%s] `Sorry, I cannot run that command without the correct arguments. %s`";
@@ -50,6 +52,12 @@ public abstract class GilmoreCommand {
 	public List<String> getRolePermission() {
 		return null;
 	}
+	
+	public List<String> getSupportedChannels() {
+		List<String> channels = new ArrayList<String>();
+		channels.add(ALL_CHANNELS);	// By default, commands being run in all channels.
+		return channels;
+	}
 
 	public void addSubCommand(GilmoreCommand command) {
 		subCommands.add(command);
@@ -60,6 +68,10 @@ public abstract class GilmoreCommand {
 	}
 
 	public void process(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
+	}
+
+	public void invalidChannel(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
+		channel.sendMessage(String.format(MISSING_PERMISSION_CHANNEL, author.getAsMention())).queue();
 	}
 
 	public void invalidPermissions(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
@@ -89,8 +101,14 @@ public abstract class GilmoreCommand {
 	}
 
 	public void runCommand(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
+		
 		if (!hasRole(command, args, channel, author, event)) {
 			invalidPermissions(command, args, channel, author, event);
+			return;
+		}
+		
+		if(!getSupportedChannels().contains(ALL_CHANNELS) && !getSupportedChannels().contains(channel.getName())) {
+			invalidChannel(command, args, channel, author, event);
 			return;
 		}
 
