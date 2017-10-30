@@ -46,13 +46,12 @@ public class Gilmore {
 					.registerCommand(new DiceCommand())
 					.registerCommand(new MuteCommand())
 					.registerCommand(new UnmuteCommand())
-					.registerCommand(new CustomCommand())
-					.registerCommand(new CriticalRoleCommand());
+					.registerCommand(new CustomCommand());
 
 			connectionListener = new ConnectionListener();
 
-			builder.addListener(commandListener);
-			builder.addListener(connectionListener);
+			builder.addEventListener(commandListener);
+			builder.addEventListener(connectionListener);
 
 			JDA_INSTANCE = builder.buildBlocking();
 

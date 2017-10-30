@@ -4,6 +4,7 @@ import nl.codefox.gilmore.Gilmore;
 
 import java.io.*;
 import java.lang.reflect.Method;
+import java.util.Enumeration;
 import java.util.Properties;
 
 public class GilmoreConfiguration {
@@ -138,7 +139,8 @@ public class GilmoreConfiguration {
 
 		try {
 			String home = System.getProperty("user.home");
-			File configurationFile = new File(home, CONFIGURATION_PATH);
+			File configurationFile;
+			configurationFile = new File(home, CONFIGURATION_PATH);
 			Properties properties = new Properties();
 			properties.load(new FileReader(configurationFile));
 

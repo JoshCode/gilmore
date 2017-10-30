@@ -22,8 +22,7 @@ public class ResourceList {
 	 * @param pattern the pattern to match
 	 * @return the resources in the order they are found
 	 */
-	public static Collection<String> getResources(
-			final Pattern pattern) {
+	public static Collection<String> getResources(final Pattern pattern) {
 		final ArrayList<String> retval = new ArrayList<String>();
 		final String classPath = System.getProperty("java.class.path", ".");
 		final String[] classPathElements = classPath.split(System.getProperty("path.separator"));

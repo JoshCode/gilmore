@@ -105,7 +105,7 @@ public class CriticalRoleCommand extends GilmoreCommand {
 			File temp = new File(System.getProperty("user.home"), "temp.png");
 			ImageIO.write(image, "png", temp);
 
-			channel.sendFile(temp, null).queue(m1 -> message.deleteMessage().queue());
+			channel.sendFile(temp, null).queue(m1 -> message.delete().queue());
 			temp.delete();
 
 		} catch (Exception ex) {

@@ -19,12 +19,13 @@ public class GameCommand extends GilmoreCommand {
 		this.addSubCommand(new GameSubscribeCommand());
 		this.addSubCommand(new GameUnsubscribeCommand());
 		this.addSubCommand(new GameSubscribedCommand());
+		this.addSubCommand(new GameAddSubCommand());
 		load();
 	}
 
 	@Override
 	public String getUsage() {
-		return "Usage: !game [list, create, remove, host, subscribe, unsubscribe]";
+		return "Usage: !game [list, create, remove, host, subscribe, unsubscribe, addsub]";
 	}
 
 	@Override
