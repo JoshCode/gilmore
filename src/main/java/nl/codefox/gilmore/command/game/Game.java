@@ -9,6 +9,7 @@ import nl.codefox.gilmore.util.Logging;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 public class Game {
@@ -50,13 +51,16 @@ public class Game {
 						host.getAsMention(), name
 				));
 		StringBuilder mentions = new StringBuilder();
-		for (String uid : users) {
+
+		Iterator<String> it = users.iterator();
+		while(it.hasNext()) {
+			String uid = it.next();
 			User user = Gilmore.getJDA().getUserById(uid);
 			String mention;
 			if (user == null) {
 				Logging.error("UserID '" + uid + "' not found on this server, removing from subscribers");
 				Game game = GameCommand.getGame(name);
-				game.removeUser(uid);
+				it.remove();
 				GilmoreDatabase.removeSubscriber(name, uid);
 			} else {
 				mention = user.getAsMention();
