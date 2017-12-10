@@ -1,172 +1,207 @@
 package nl.codefox.gilmore.config;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import nl.codefox.gilmore.Gilmore;
+
+import java.io.*;
 import java.lang.reflect.Method;
+import java.util.Enumeration;
 import java.util.Properties;
 
 public class GilmoreConfiguration {
 
-    public static final boolean TESTING = false;
+	public static final boolean TESTING = false;
 
-    private static final String CONFIGURATION_PATH = "conf/gilmore.conf";
-    private static GilmoreConfiguration instance;
+	private static final String CONFIGURATION_PATH = "conf/gilmore.conf";
+	private static GilmoreConfiguration instance;
 
-    private String databaseManagementSystem = "mysql";
-    private String databaseHostname = "localhost";
-    private Integer databasePort = 3306;
-    private String databasePassword = "password";
-    private String databaseUsername = "username";
-    private String databaseName = "GILMORE";
-    private Boolean debug = false;
-    private String logPath = "logs/gilmore.log";
-    private File logLocation;
-    private String botToken = "token";
-    private String botTokenTesting = "testingtoken";
+	private String databaseManagementSystem = "mysql";
+	private String databaseHostname = "localhost";
+	private Integer databasePort = 3306;
+	private String databasePassword = "password";
+	private String databaseUsername = "username";
+	private String databaseName = "GILMORE";
+	private Boolean debug = false;
+	private String logPath = "logs/gilmore.log";
+	private File logLocation;
+	private String botToken = "token";
+	private String botTokenTesting = "testingtoken";
 
-    private GilmoreConfiguration() {
-        String home = System.getProperty("user.home");
-        logLocation = new File(home, logPath);
-    }
+	private String version = null;
 
-    public static GilmoreConfiguration getInstance() {
-        if (instance == null) {
-            instance = new GilmoreConfiguration();
-            new GilmoreConfigurationListener(CONFIGURATION_PATH);
-            instance.load();
-        }
-        return instance;
-    }
+	private GilmoreConfiguration() {
+		String home = System.getProperty("user.home");
+		logLocation = new File(home, logPath);
+	}
 
-    public String getDatabaseManagementSystem() {
-        return databaseManagementSystem;
-    }
+	public static GilmoreConfiguration getInstance() {
+		if (instance == null) {
+			instance = new GilmoreConfiguration();
+			new GilmoreConfigurationListener(CONFIGURATION_PATH);
+			instance.load();
+		}
+		return instance;
+	}
 
-    @GilmoreConfigurationItem(key = "db_managmentsystem", type = String.class)
-    public void setDatabaseManagmentSystem(String databaseManagementSystem) {
-        this.databaseManagementSystem = databaseManagementSystem;
-    }
+	public String getDatabaseManagementSystem() {
+		return databaseManagementSystem;
+	}
 
-    public String getDatabaseHostname() {
-        return databaseHostname;
-    }
+	@GilmoreConfigurationItem(key = "db_managmentsystem", type = String.class)
+	public void setDatabaseManagmentSystem(String databaseManagementSystem) {
+		this.databaseManagementSystem = databaseManagementSystem;
+	}
 
-    @GilmoreConfigurationItem(key = "db_hostname", type = String.class)
-    public void setDatabaseHostname(String databaseHostname) {
-        this.databaseHostname = databaseHostname;
-    }
+	public String getDatabaseHostname() {
+		return databaseHostname;
+	}
 
-    public Integer getDatabasePort() {
-        return databasePort;
-    }
+	@GilmoreConfigurationItem(key = "db_hostname", type = String.class)
+	public void setDatabaseHostname(String databaseHostname) {
+		this.databaseHostname = databaseHostname;
+	}
 
-    @GilmoreConfigurationItem(key = "db_port", type = Integer.class)
-    public void setDatabasePort(Integer databasePort) {
-        this.databasePort = databasePort;
-    }
+	public Integer getDatabasePort() {
+		return databasePort;
+	}
 
-    public String getDatabaseUsername() {
-        return databaseUsername;
-    }
+	@GilmoreConfigurationItem(key = "db_port", type = Integer.class)
+	public void setDatabasePort(Integer databasePort) {
+		this.databasePort = databasePort;
+	}
 
-    @GilmoreConfigurationItem(key = "db_username", type = String.class)
-    public void getDatabaseUsername(String databaseUsername) {
-        this.databaseUsername = databaseUsername;
-    }
+	public String getDatabaseUsername() {
+		return databaseUsername;
+	}
 
-    public String getDatabasePassword() {
-        return databasePassword;
-    }
+	@GilmoreConfigurationItem(key = "db_username", type = String.class)
+	public void getDatabaseUsername(String databaseUsername) {
+		this.databaseUsername = databaseUsername;
+	}
 
-    @GilmoreConfigurationItem(key = "db_password", type = String.class)
-    public void setDatabasePassword(String databasePassword) {
-        this.databasePassword = databasePassword;
-    }
+	public String getDatabasePassword() {
+		return databasePassword;
+	}
 
-    public String getDatabaseName() {
-        return databaseName;
-    }
+	@GilmoreConfigurationItem(key = "db_password", type = String.class)
+	public void setDatabasePassword(String databasePassword) {
+		this.databasePassword = databasePassword;
+	}
 
-    @GilmoreConfigurationItem(key = "db_name", type = String.class)
-    public void setDatabaseName(String databaseName) {
-        this.databaseName = databaseName;
-    }
+	public String getDatabaseName() {
+		return databaseName;
+	}
 
-    public Boolean isDebug() {
-        return debug;
-    }
+	@GilmoreConfigurationItem(key = "db_name", type = String.class)
+	public void setDatabaseName(String databaseName) {
+		this.databaseName = databaseName;
+	}
 
-    @GilmoreConfigurationItem(key = "debug", type = Boolean.class)
-    public void setDebug(Boolean debug) {
-        this.debug = debug;
-    }
+	public Boolean isDebug() {
+		return debug;
+	}
 
-    public File getLogLocation() {
-        return logLocation;
-    }
+	@GilmoreConfigurationItem(key = "debug", type = Boolean.class)
+	public void setDebug(Boolean debug) {
+		this.debug = debug;
+	}
 
-    @GilmoreConfigurationItem(key = "log_location", type = String.class)
-    public void setLogLocation(File logLocation) {
-        this.logLocation = logLocation;
-    }
+	public File getLogLocation() {
+		return logLocation;
+	}
 
-    public String getBotToken() {
-        if(TESTING)
-            return botTokenTesting;
-        return botToken;
-    }
+	@GilmoreConfigurationItem(key = "log_location", type = String.class)
+	public void setLogLocation(File logLocation) {
+		this.logLocation = logLocation;
+	}
 
-    @GilmoreConfigurationItem(key = "bot_token", type = String.class)
-    public void setBotToken(String botToken) {
-        this.botToken = botToken;
-    }
+	public String getBotToken() {
+		if (TESTING)
+			return botTokenTesting;
+		return botToken;
+	}
 
-    @GilmoreConfigurationItem(key = "bot_token_testing", type = String.class)
-    public void setBotTokenTesting(String botToken) {
-        this.botTokenTesting = botToken;
-    }
+	@GilmoreConfigurationItem(key = "bot_token", type = String.class)
+	public void setBotToken(String botToken) {
+		this.botToken = botToken;
+	}
 
-    public void load() {
+	@GilmoreConfigurationItem(key = "bot_token_testing", type = String.class)
+	public void setBotTokenTesting(String botToken) {
+		this.botTokenTesting = botToken;
+	}
 
-        try {
-            String home = System.getProperty("user.home");
-            File configurationFile = new File(home, CONFIGURATION_PATH);
-            Properties properties = new Properties();
-            properties.load(new FileReader(configurationFile));
+	public String getVersion() {
+		return this.version;
+	}
 
-            for (Method method : GilmoreConfiguration.class.getMethods()) {
-                if (method.isAnnotationPresent(GilmoreConfigurationItem.class)) {
-                    GilmoreConfigurationItem item = method.getAnnotation(GilmoreConfigurationItem.class);
+	public void load() {
+		loadGeneralProperties();
 
-                    if (properties.containsKey(item.key())) {
-                        if (item.type() == Integer.class) {
-                            Integer value = Integer.parseInt((String) properties.get(item.key()));
-                            method.invoke(this, value);
-                            System.out.println(String.format("[GilmoreConfiguration] %s(%s)", method.getName(), value));
-                            continue;
-                        } else if (item.type() == Boolean.class) {
-                            Boolean value = Boolean.parseBoolean((String) properties.get(item.key()));
-                            method.invoke(this, value);
-                            System.out.println(String.format("[GilmoreConfiguration] %s(%s)", method.getName(), value));
-                            continue;
-                        }
+		try {
+			String home = System.getProperty("user.home");
+			File configurationFile;
+			configurationFile = new File(home, CONFIGURATION_PATH);
+			Properties properties = new Properties();
+			properties.load(new FileReader(configurationFile));
 
-                        String value = (String) properties.get(item.key());
-                        method.invoke(this, value);
-                        System.out.println(String.format("[GilmoreConfiguration] %s(%s)", method.getName(), value));
-                    }
-                }
-            }
-        } catch (FileNotFoundException ex) {
-            System.out.println(String.format("Configuration file '%s' not found, using default configuration values.", CONFIGURATION_PATH));
-            ex.printStackTrace();
-        } catch (Exception ex) {
-            System.out.println(String.format("Exception when loading in configuration, using default configuration values.", CONFIGURATION_PATH));
-            ex.printStackTrace();
-        }
+			for (Method method : GilmoreConfiguration.class.getMethods()) {
+				if (method.isAnnotationPresent(GilmoreConfigurationItem.class)) {
+					GilmoreConfigurationItem item = method.getAnnotation(GilmoreConfigurationItem.class);
 
+					if (properties.containsKey(item.key())) {
+						if (item.type() == Integer.class) {
+							Integer value = Integer.parseInt((String) properties.get(item.key()));
+							method.invoke(this, value);
+							System.out.println(String.format("[GilmoreConfiguration] %s(%s)", method.getName(), value));
+							continue;
+						} else if (item.type() == Boolean.class) {
+							Boolean value = Boolean.parseBoolean((String) properties.get(item.key()));
+							method.invoke(this, value);
+							System.out.println(String.format("[GilmoreConfiguration] %s(%s)", method.getName(), value));
+							continue;
+						}
 
-    }
+						String value = (String) properties.get(item.key());
+						method.invoke(this, value);
+						System.out.println(String.format("[GilmoreConfiguration] %s(%s)", method.getName(), value));
+					}
+				}
+			}
+		} catch (FileNotFoundException ex) {
+			System.out.println(String.format("Configuration file '%s' not found, using default configuration values.", CONFIGURATION_PATH));
+			ex.printStackTrace();
+		} catch (Exception ex) {
+			System.out.println(String.format("Exception when loading in configuration, using default configuration values.", CONFIGURATION_PATH));
+			ex.printStackTrace();
+		}
+	}
 
+	private void loadGeneralProperties() {
+		Properties prop = new Properties();
+		InputStream input = null;
+
+		try {
+			String filename = ".properties";
+			input = Gilmore.class.getClassLoader().getResourceAsStream(filename);
+			if (input == null) {
+				System.out.println("Sorry, unable to find " + filename);
+				return;
+			}
+
+			prop.load(input);
+
+			this.version = prop.getProperty("gilmore.version");
+
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		} finally {
+			if (input != null) {
+				try {
+					input.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 }

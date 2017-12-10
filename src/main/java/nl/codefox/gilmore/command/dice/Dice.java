@@ -7,22 +7,22 @@ import java.util.Random;
 
 public class Dice {
 
-    private final Random random = new Random();
-    private final ArrayList<Lexer.Token> tokens;
-    private String breakdown;
+	private final Random random = new Random();
+	private final ArrayList<Lexer.Token> tokens;
+	private String breakdown;
 
-    public Dice(String str) {
-        tokens = Lexer.lex(str);
+	public Dice(String str) {
+		tokens = Lexer.lex(str);
 
-    }
+	}
 
-    public String getBreakdown() {
-        return breakdown;
-    }
+	public String getBreakdown() {
+		return breakdown;
+	}
 
-    public int roll() {
-        Addition expr = new Addition(tokens);
-        breakdown = expr.description;
-        return expr.value;
-    }
+	public int roll() {
+		Addition expr = new Addition(tokens);
+		breakdown = expr.description;
+		return expr.value;
+	}
 }

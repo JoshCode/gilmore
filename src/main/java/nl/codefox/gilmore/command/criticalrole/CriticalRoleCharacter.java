@@ -5,163 +5,163 @@ import java.util.List;
 
 public class CriticalRoleCharacter {
 
-    private static List<CriticalRoleCharacter> characters = new ArrayList<CriticalRoleCharacter>();
+	private static List<CriticalRoleCharacter> characters = new ArrayList<CriticalRoleCharacter>();
 
-    private List<String> aliases = new ArrayList<String>();
-    private String resource = "?";
-    private String name = "?";
-    private String title = "?";
-    private String strength = "?";
-    private String currentHP = "?";
-    private String maxHP = "?";
-    private String tempHP = "?";
-    private String armourClass = "?";
-    private String status = "?";
-    private String dexerity = "?";
-    private String constitution = "?";
-    private String intelligence = "?";
-    private String wisdom = "?";
-    private String charisma = "?";
+	private List<String> aliases = new ArrayList<String>();
+	private String resource = "?";
+	private String name = "?";
+	private String title = "?";
+	private String strength = "?";
+	private String currentHP = "?";
+	private String maxHP = "?";
+	private String tempHP = "?";
+	private String armourClass = "?";
+	private String status = "?";
+	private String dexerity = "?";
+	private String constitution = "?";
+	private String intelligence = "?";
+	private String wisdom = "?";
+	private String charisma = "?";
 
-    public static void clear() {
-        characters.clear();
-    }
+	public static void clear() {
+		characters.clear();
+	}
 
-    public static void addCharacter(CriticalRoleCharacter character) {
-        characters.add(character);
-    }
+	public static void addCharacter(CriticalRoleCharacter character) {
+		characters.add(character);
+	}
 
-    public static CriticalRoleCharacter getCharacter(String name) {
-        for (CriticalRoleCharacter character : characters) {
-            if (character.getAliases().contains(name)) {
-                return character;
-            }
-        }
-        return null;
-    }
+	public static CriticalRoleCharacter getCharacter(String name) {
+		for (CriticalRoleCharacter character : characters) {
+			if (character.getAliases().contains(name)) {
+				return character;
+			}
+		}
+		return null;
+	}
 
-    public List<String> getAliases() {
-        return aliases;
-    }
+	public List<String> getAliases() {
+		return aliases;
+	}
 
-    public void setAliases(List<String> aliases) {
-        for (int i = 0; i < aliases.size(); i++) {
-            aliases.set(i, aliases.get(i).toLowerCase());
-        }
-        this.aliases.addAll(aliases);
-    }
+	public void setAliases(List<String> aliases) {
+		for (int i = 0; i < aliases.size(); i++) {
+			aliases.set(i, aliases.get(i).toLowerCase());
+		}
+		this.aliases.addAll(aliases);
+	}
 
-    public String getResource() {
-        return resource;
-    }
+	public String getResource() {
+		return resource;
+	}
 
-    public void setResource(String resource) {
-        this.resource = resource;
-    }
+	public void setResource(String resource) {
+		this.resource = resource;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-        this.aliases.add(name.toLowerCase());
-    }
+	public void setName(String name) {
+		this.name = name;
+		this.aliases.add(name.toLowerCase());
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public String getStrength() {
-        return strength;
-    }
+	public String getStrength() {
+		return strength;
+	}
 
-    public void setStrength(String strength) {
-        this.strength = strength;
-    }
+	public void setStrength(String strength) {
+		this.strength = strength;
+	}
 
-    public String getCurrentHP() {
-        return currentHP;
-    }
+	public String getCurrentHP() {
+		return currentHP;
+	}
 
-    public void setCurrentHP(String currentHP) {
-        this.currentHP = currentHP;
-    }
+	public void setCurrentHP(String currentHP) {
+		this.currentHP = currentHP;
+	}
 
-    public String getMaxHP() {
-        return maxHP;
-    }
+	public String getMaxHP() {
+		return maxHP;
+	}
 
-    public void setMaxHP(String maxHP) {
-        this.maxHP = maxHP;
-    }
+	public void setMaxHP(String maxHP) {
+		this.maxHP = maxHP;
+	}
 
-    public String getTempHP() {
-        return tempHP;
-    }
+	public String getTempHP() {
+		return tempHP;
+	}
 
-    public void setTempHP(String tempHP) {
-        this.tempHP = tempHP;
-    }
+	public void setTempHP(String tempHP) {
+		this.tempHP = tempHP;
+	}
 
-    public String getArmourClass() {
-        return armourClass;
-    }
+	public String getArmourClass() {
+		return armourClass;
+	}
 
-    public void setArmourClass(String armourClass) {
-        this.armourClass = armourClass;
-    }
+	public void setArmourClass(String armourClass) {
+		this.armourClass = armourClass;
+	}
 
-    public String getStatus() {
-        return status;
-    }
+	public String getStatus() {
+		return status;
+	}
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
-    public String getDexerity() {
-        return dexerity;
-    }
+	public String getDexerity() {
+		return dexerity;
+	}
 
-    public void setDexerity(String dexerity) {
-        this.dexerity = dexerity;
-    }
+	public void setDexerity(String dexerity) {
+		this.dexerity = dexerity;
+	}
 
-    public String getConstitution() {
-        return constitution;
-    }
+	public String getConstitution() {
+		return constitution;
+	}
 
-    public void setConstitution(String constitution) {
-        this.constitution = constitution;
-    }
+	public void setConstitution(String constitution) {
+		this.constitution = constitution;
+	}
 
-    public String getIntelligence() {
-        return intelligence;
-    }
+	public String getIntelligence() {
+		return intelligence;
+	}
 
-    public void setIntelligence(String intelligence) {
-        this.intelligence = intelligence;
-    }
+	public void setIntelligence(String intelligence) {
+		this.intelligence = intelligence;
+	}
 
-    public String getWisdom() {
-        return wisdom;
-    }
+	public String getWisdom() {
+		return wisdom;
+	}
 
-    public void setWisdom(String wisdom) {
-        this.wisdom = wisdom;
-    }
+	public void setWisdom(String wisdom) {
+		this.wisdom = wisdom;
+	}
 
-    public String getCharisma() {
-        return charisma;
-    }
+	public String getCharisma() {
+		return charisma;
+	}
 
-    public void setCharisma(String charisma) {
-        this.charisma = charisma;
-    }
+	public void setCharisma(String charisma) {
+		this.charisma = charisma;
+	}
 
 }
