@@ -64,7 +64,6 @@ public class Gilmore {
 		} catch (RateLimitedException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	public static JDA getJDA() {

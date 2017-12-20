@@ -1,9 +1,11 @@
 package nl.codefox.gilmore.command;
 
+import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import nl.codefox.gilmore.config.GilmoreConfiguration;
+import nl.codefox.gilmore.util.GilEmbedBuilder;
 
 import java.util.Collections;
 import java.util.List;
@@ -22,14 +24,12 @@ public class AboutCommand extends GilmoreCommand {
 
 	@Override
 	public void process(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
-		StringBuilder sb = new StringBuilder();
+		EmbedBuilder eb = new GilEmbedBuilder();
 
-		sb.append("```");
-		sb.append("Version : ").append(GilmoreConfiguration.getInstance().getVersion()).append("\n");
-		sb.append("GitHub  : ").append("https://github.com/joshcode/gilmore");
-		sb.append("```");
+		eb.addField("Version", GilmoreConfiguration.getInstance().getVersion(), false);
+		eb.addField("GitHub", "https://github.com/joshcode/gilmore", false);
 
-		channel.sendMessage(sb.toString()).queue();
+		channel.sendMessage(eb.build()).queue();
 	}
 
 }
