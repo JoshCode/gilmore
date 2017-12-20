@@ -45,7 +45,7 @@ public class DiceCommand extends GilmoreCommand {
 
 	@Override
 	public void process(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
-        if (args.length > 0 && args[0].equalsIgnoreCase("stats")) {
+		if (args.length > 0 && args[0].equalsIgnoreCase("stats")) {
 			StringBuilder builder = new StringBuilder();
 			Dice dice = new Dice("4d6kh3");
 			for (int i = 0; i < 6; i++) {
@@ -72,5 +72,5 @@ public class DiceCommand extends GilmoreCommand {
 
 			channel.sendMessage(msg).queue();
 		}
-    }
+	}
 }

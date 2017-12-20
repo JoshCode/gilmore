@@ -68,12 +68,12 @@ public class HelpCommand extends GilmoreCommand {
 			}
 
 			boolean commandExists = false;
-			
+
 			builder.append(String.format("[%s] ```Here's more information about the '%s' command;\n", author.getAsMention(), label));
 			commandExists = getUsage(label, Gilmore.getCommandListener().getCommands(), builder);
 			builder.append("```");
-			
-			if(!commandExists) {
+
+			if (!commandExists) {
 				builder = new StringBuilder();
 				builder.append(String.format("[%s] ```The '%s' command does not exist (yet)```", author.getAsMention(), label));
 			}

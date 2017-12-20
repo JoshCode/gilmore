@@ -4,7 +4,6 @@ import nl.codefox.gilmore.Gilmore;
 
 import java.io.*;
 import java.lang.reflect.Method;
-import java.util.Enumeration;
 import java.util.Properties;
 
 public class GilmoreConfiguration {
