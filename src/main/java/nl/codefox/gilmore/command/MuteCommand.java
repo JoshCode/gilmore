@@ -8,6 +8,7 @@ import nl.codefox.gilmore.Gilmore;
 import nl.codefox.gilmore.util.Logging;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class MuteCommand extends GilmoreCommand {
@@ -24,7 +25,7 @@ public class MuteCommand extends GilmoreCommand {
 
 	@Override
 	public List<String> getAliases() {
-		return Arrays.asList("!mute");
+		return Collections.singletonList("!mute");
 	}
 
 

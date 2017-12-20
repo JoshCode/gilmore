@@ -95,9 +95,9 @@ public class CriticalRoleCommand extends GilmoreCommand {
 			float max = (crc.getMaxHP().equals("?") ? 0 : Integer.parseInt(crc.getMaxHP()));
 
 			float n = ((float) CriticalRoleConstants.HP_BAR_WIDTH / 100);
-			float m = (((float) current / (float) max) * 100);
+			float m = ((current / max) * 100);
 
-			int bar = (int) Math.round(n * m);
+			int bar = Math.round(n * m);
 
 			graphics.setColor(CriticalRoleConstants.HP_BAR_COLOUR);
 			graphics.fillRect(CriticalRoleConstants.HP_BAR_X, CriticalRoleConstants.HP_BAR_Y, bar, CriticalRoleConstants.HP_BAR_HEIGHT);

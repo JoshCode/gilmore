@@ -3,6 +3,7 @@ package nl.codefox.gilmore.command.game;
 import nl.codefox.gilmore.command.GilmoreCommand;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class GameAddSubCommand extends GilmoreCommand {
@@ -26,7 +27,7 @@ public class GameAddSubCommand extends GilmoreCommand {
 
 	@Override
 	public List<String> getAliases() {
-		return Arrays.asList("!game addsub");
+		return Collections.singletonList("!game addsub");
 	}
 
 	@Override

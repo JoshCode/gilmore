@@ -6,7 +6,7 @@ package nl.codefox.gilmore;
 public class LauncherTest {
 
     @org.junit.Test
-    public void main() throws Exception {
+    public void main() {
 
     }
 

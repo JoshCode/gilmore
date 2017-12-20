@@ -3,7 +3,7 @@ package nl.codefox.gilmore.command;
 import nl.codefox.gilmore.command.custom.*;
 import nl.codefox.gilmore.database.GilmoreDatabase;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -27,7 +27,7 @@ public class CustomCommand extends GilmoreCommand {
 
 	@Override
 	public List<String> getAliases() {
-		return Arrays.asList("!custom");
+		return Collections.singletonList("!custom");
 	}
 
 	@Override
@@ -41,9 +41,7 @@ public class CustomCommand extends GilmoreCommand {
 	}
 
 	public static boolean commandExists(String command) {
-		if (commands != null)
-			return commands.containsKey(command);
-		return false;
+		return commands != null && commands.containsKey(command);
 	}
 
 	public static Set<String> getCommands() {

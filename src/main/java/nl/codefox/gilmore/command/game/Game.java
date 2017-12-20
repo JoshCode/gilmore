@@ -14,7 +14,7 @@ import java.util.List;
 
 public class Game {
 
-	private List<String> users = new ArrayList<String>();
+	private List<String> users = new ArrayList<>();
 
 	private String name;
 

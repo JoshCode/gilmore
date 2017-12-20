@@ -9,7 +9,7 @@ public class ConnectionListener extends ListenerAdapter {
 	public void onGuildMemberJoin(GuildMemberJoinEvent event) {
 		StringBuilder builder = new StringBuilder();
 
-		builder.append(String.format("**Critical Role Discord Chat Rules**\n", event.getMember().getAsMention()));
+		builder.append("**Critical Role Discord Chat Rules**\n");
 		builder.append("```#1 - Each channel says at the top if Critical Role spoilers are allowed or not. NO SPOILERS IN GENERAL CHAT.\n");
 		builder.append("#2 - Don't Be a Dick. Otherwise, WELCOME!!!\n");
 		builder.append("#3 - As long as you follow the above rules, we have chat channels for everything.  Playing games (Overwatch, Tabletop Simulatior, Rocket League, etc.), organizing DND/RPG games (LFG), discussing Critical Role or Game of Thrones or artwork or programming. We do it all in this community!\n");

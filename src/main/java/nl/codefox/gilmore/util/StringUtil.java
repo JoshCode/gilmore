@@ -5,27 +5,27 @@ import java.util.List;
 public class StringUtil {
 
 	public static String arrayToString(String[] array, int start, String delimiter) {
-		String ret = "";
+		StringBuilder ret = new StringBuilder();
 		for (int i = start; i < array.length; i++) {
 			if (i < array.length - 1) {
-				ret += array[i] + delimiter;
+				ret.append(array[i]).append(delimiter);
 			} else {
-				ret += array[i];
+				ret.append(array[i]);
 			}
 		}
-		return ret;
+		return ret.toString();
 	}
 
 	public static String listToString(List<String> list, String delimiter) {
-		String ret = "";
+		StringBuilder ret = new StringBuilder();
 		for (int i = 0; i < list.size(); i++) {
 			if (i < list.size() - 1) {
-				ret += list.get(i) + delimiter;
+				ret.append(list.get(i)).append(delimiter);
 			} else {
-				ret += list.get(i);
+				ret.append(list.get(i));
 			}
 		}
-		return ret;
+		return ret.toString();
 	}
 
 }

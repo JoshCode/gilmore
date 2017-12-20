@@ -8,6 +8,7 @@ import nl.codefox.gilmore.command.GilmoreCommand;
 import nl.codefox.gilmore.database.GilmoreDatabase;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class DeleteCustomCommand extends GilmoreCommand {
@@ -24,7 +25,7 @@ public class DeleteCustomCommand extends GilmoreCommand {
 
 	@Override
 	public List<String> getAliases() {
-		return Arrays.asList("!custom delete");
+		return Collections.singletonList("!custom delete");
 	}
 
 	@Override

@@ -44,7 +44,7 @@ public class GameUnsubscribeCommand extends GilmoreCommand {
 		String name = StringUtil.arrayToString(args, 0, " ");
 
 		if (!GameCommand.gameExists(name)) {
-			channel.sendMessage(String.format("[%s] `This game doesn't exist. Try !game list to get a list of available games", author.getAsMention(), name)).queue();
+			channel.sendMessage(String.format("[%s] `This game doesn't exist. Try !game list to get a list of available games", author.getAsMention())).queue();
 		} else {
 			Game game = GameCommand.getGame(name);
 
