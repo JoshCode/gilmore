@@ -55,7 +55,7 @@ public class Gilmore {
 
 			JDA_INSTANCE = builder.buildBlocking();
 
-			JDA_INSTANCE.getPresence().setGame(Game.of("with your hearts"));
+			JDA_INSTANCE.getPresence().setGame(Game.of(Game.GameType.DEFAULT, "with your hearts"));
 
 		} catch (LoginException e) {
 			e.printStackTrace();
