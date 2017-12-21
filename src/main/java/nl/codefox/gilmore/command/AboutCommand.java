@@ -1,6 +1,7 @@
 package nl.codefox.gilmore.command;
 
 import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -29,7 +30,10 @@ public class AboutCommand extends GilmoreCommand {
 		eb.addField("Version", GilmoreConfiguration.getInstance().getVersion(), false);
 		eb.addField("GitHub", "https://github.com/joshcode/gilmore", false);
 
-		channel.sendMessage(eb.build()).queue();
+		MessageBuilder mb = new MessageBuilder();
+		mb.setEmbed(eb.build());
+		mb.append(String.format("[%s]", author.getAsMention()));
+		channel.sendMessage(mb.build()).queue();
 	}
 
 }
