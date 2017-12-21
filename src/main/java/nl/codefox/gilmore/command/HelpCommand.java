@@ -98,15 +98,19 @@ public class HelpCommand extends GilmoreCommand {
 	}
 
 	private boolean getUsage(String label, List<GilmoreCommand> commands, EmbedBuilder embedBuilder) {
-		for (GilmoreCommand command : commands) {
-			if (command.getAliases().contains(label)) {
+		for (GilmoreCommand c : commands) {
+			if (c.getAliases().contains(label)) {
 				embedBuilder.setTitle(label);
-				embedBuilder.addField("Aliases", StringUtil.listToString(command.getAliases(), ", "), false);
-				embedBuilder.addField("Description", command.getDescription(), false);
-				embedBuilder.addField("Usage", command.getUsage(), false);
-				embedBuilder.addField("Permission", (command.getRolePermission() == null ? "None" : command.getRolePermission().toString()).replace("[", "").replace("]", ""), false);
+				embedBuilder.addField("Aliases", StringUtil.listToString(c.getAliases(), ", "), false);
+				embedBuilder.addField("Description", c.getDescription(), false);
+				embedBuilder.addField("Usage", c.getUsage(), false);
+
+				List<String> subCommands = c.getSubCommands().stream().map(sub -> sub.getAliases().get(0).replace(c.getAliases().get(0) + " ", "")).collect(Collectors.toList());
+				embedBuilder.addField("Subcommands", StringUtil.listToString(subCommands, ", "),false);
+
+				embedBuilder.addField("Permission", (c.getRolePermission() == null ? "None" : c.getRolePermission().toString()).replace("[", "").replace("]", ""), false);
 				return true;
-			} else if (commandExists(label, command.getSubCommands()))
+			} else if (commandExists(label, c.getSubCommands()))
 				return true;
 		}
 		return false;

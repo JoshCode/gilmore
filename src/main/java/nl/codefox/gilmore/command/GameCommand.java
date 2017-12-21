@@ -25,7 +25,7 @@ public class GameCommand extends GilmoreCommand {
 
 	@Override
 	public String getUsage() {
-		return "!game [list, create, remove, host, subscribe, unsubscribe, addsub]";
+		return "!game <subcommand>";
 	}
 
 	@Override
