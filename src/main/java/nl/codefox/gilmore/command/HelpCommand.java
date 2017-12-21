@@ -39,8 +39,6 @@ public class HelpCommand extends GilmoreCommand {
 	@Override
 	public void process(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
 
-		StringBuilder builder = new StringBuilder();
-
 		if (args.length == 0) {
 			EmbedBuilder eb = new GilEmbedBuilder();
 
@@ -84,14 +82,14 @@ public class HelpCommand extends GilmoreCommand {
 				StringBuilder descBuilder = eb.getDescriptionBuilder();
 				descBuilder.append(String.format("The '%s' command does not exist (yet)", label));
 				eb.setColor(new Color(255, 0, 0));
+			} else {
+				StringBuilder descBuilder = eb.getDescriptionBuilder();
+				descBuilder.append("Here's more information about **")
+						.append(label)
+						.append("**!");
+
+				getUsage(label, Gilmore.getCommandListener().getCommands(), eb);
 			}
-
-			StringBuilder descBuilder = eb.getDescriptionBuilder();
-			descBuilder.append("Here's more information about **")
-					.append(label)
-					.append("**!");
-
-			getUsage(label, Gilmore.getCommandListener().getCommands(), eb);
 
 			MessageBuilder mb = new MessageBuilder();
 			mb.setEmbed(eb.build());
