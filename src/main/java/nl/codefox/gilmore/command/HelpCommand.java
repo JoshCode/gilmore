@@ -2,11 +2,9 @@ package nl.codefox.gilmore.command;
 
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.MessageBuilder;
-import net.dv8tion.jda.core.entities.MessageEmbed;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.core.requests.Route;
 import nl.codefox.gilmore.Gilmore;
 import nl.codefox.gilmore.util.GilEmbedBuilder;
 import nl.codefox.gilmore.util.StringUtil;
@@ -64,7 +62,7 @@ public class HelpCommand extends GilmoreCommand {
 			}
 
 			if (!CustomCommand.getCommands().isEmpty()) {
-				if(CustomCommand.getCommands().size() == 1) {
+				if (CustomCommand.getCommands().size() == 1) {
 					eb.addField("Custom Commands", "There is **1** custom command, type `!custom list` to see them!", false);
 				} else {
 					eb.addField("Custom Commands", "There are **" + CustomCommand.getCommands().size() + "** custom commands, type `!custom list` to see them!", false);
@@ -88,6 +86,11 @@ public class HelpCommand extends GilmoreCommand {
 				eb.setColor(new Color(255, 0, 0));
 			}
 
+			StringBuilder descBuilder = eb.getDescriptionBuilder();
+			descBuilder.append("Here's more information about **")
+					.append(label)
+					.append("**!");
+
 			getUsage(label, Gilmore.getCommandListener().getCommands(), eb);
 
 			MessageBuilder mb = new MessageBuilder();
@@ -100,13 +103,12 @@ public class HelpCommand extends GilmoreCommand {
 	private boolean getUsage(String label, List<GilmoreCommand> commands, EmbedBuilder embedBuilder) {
 		for (GilmoreCommand c : commands) {
 			if (c.getAliases().contains(label)) {
-				embedBuilder.setTitle(label);
 				embedBuilder.addField("Aliases", StringUtil.listToString(c.getAliases(), ", "), false);
 				embedBuilder.addField("Description", c.getDescription(), false);
 				embedBuilder.addField("Usage", c.getUsage(), false);
 
 				List<String> subCommands = c.getSubCommands().stream().map(sub -> sub.getAliases().get(0).replace(c.getAliases().get(0) + " ", "")).collect(Collectors.toList());
-				embedBuilder.addField("Subcommands", StringUtil.listToString(subCommands, ", "),false);
+				embedBuilder.addField("Subcommands", StringUtil.listToString(subCommands, ", "), false);
 
 				embedBuilder.addField("Permission", (c.getRolePermission() == null ? "None" : c.getRolePermission().toString()).replace("[", "").replace("]", ""), false);
 				return true;
