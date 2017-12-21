@@ -60,11 +60,16 @@ public class HelpCommand extends GilmoreCommand {
 			}
 
 			if (!CustomCommand.getCommands().isEmpty()) {
-				if (CustomCommand.getCommands().size() == 1) {
-					eb.addField("Custom Commands", "There is **1** custom command, type `!custom list` to see them!", false);
-				} else {
-					eb.addField("Custom Commands", "There are **" + CustomCommand.getCommands().size() + "** custom commands, type `!custom list` to see them!", false);
+//				if (CustomCommand.getCommands().size() == 1) {
+//					eb.addField("Custom Commands", "There is **1** custom command, type `!custom list` to see them!", false);
+//				} else {
+//					eb.addField("Custom Commands", "There are **" + CustomCommand.getCommands().size() + "** custom commands, type `!custom list` to see them!", false);
+//				}
+				StringBuilder sb = new StringBuilder();
+				for(String c : CustomCommand.getCommands()) {
+					sb.append("**").append(c).append("**").append("\n");
 				}
+				eb.addField("Custom commands",sb.toString(),false);
 			}
 
 			MessageBuilder mb = new MessageBuilder();
