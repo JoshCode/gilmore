@@ -29,7 +29,7 @@ public class GilEmbedBuilder extends EmbedBuilder {
 				" | " +
 				df.format(date) +
 				" | " +
-				"*" + String.valueOf(System.currentTimeMillis() - startTime) + " ms*";
+				String.valueOf(System.currentTimeMillis() - startTime) + " ms";
 
 		this.setFooter(footerBuilder, null);
 		return super.build();
