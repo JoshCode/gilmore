@@ -51,7 +51,7 @@ public class DiceCommand extends GilmoreCommand {
 		
 			for (int i = 0; i < 6; i++) {
 				int result = dice.roll();
-				string breakdown = dice.getBreakdown();
+				String breakdown = dice.getBreakdown();
 				builder.append(String.format("%s = %d\n", breakdown, result));
 			}
 
