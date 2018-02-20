@@ -4,7 +4,6 @@ import nl.codefox.gilmore.Gilmore;
 
 import java.io.*;
 import java.lang.reflect.Method;
-import java.util.Enumeration;
 import java.util.Properties;
 
 public class GilmoreConfiguration {
@@ -171,7 +170,7 @@ public class GilmoreConfiguration {
 			System.out.println(String.format("Configuration file '%s' not found, using default configuration values.", CONFIGURATION_PATH));
 			ex.printStackTrace();
 		} catch (Exception ex) {
-			System.out.println(String.format("Exception when loading in configuration, using default configuration values.", CONFIGURATION_PATH));
+			System.out.println("Exception when loading in configuration, using default configuration values.");
 			ex.printStackTrace();
 		}
 	}

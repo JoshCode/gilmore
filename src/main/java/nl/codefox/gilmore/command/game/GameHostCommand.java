@@ -7,7 +7,7 @@ import nl.codefox.gilmore.command.GameCommand;
 import nl.codefox.gilmore.command.GilmoreCommand;
 import nl.codefox.gilmore.util.StringUtil;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class GameHostCommand extends GilmoreCommand {
@@ -24,7 +24,7 @@ public class GameHostCommand extends GilmoreCommand {
 
 	@Override
 	public List<String> getAliases() {
-		return Arrays.asList("!game host");
+		return Collections.singletonList("!game host");
 	}
 
 	@Override

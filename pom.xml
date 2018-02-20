@@ -57,6 +57,15 @@
 					<maxmem>256m</maxmem>
 					<!-- aggregated reports for multi-module projects -->
 					<aggregate>true</aggregate>
+					<check>
+						<branchRate>85</branchRate>
+						<lineRate>85</lineRate>
+						<haltOnFailure>true</haltOnFailure>
+						<totalBranchRate>85</totalBranchRate>
+						<totalLineRate>85</totalLineRate>
+						<packageLineRate>85</packageLineRate>
+						<packageBranchRate>85</packageBranchRate>
+					</check>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -80,7 +89,7 @@
 		<dependency>
 			<groupId>net.dv8tion</groupId>
 			<artifactId>JDA</artifactId>
-			<version>3.3.0_260</version>
+			<version>3.3.1_308</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>

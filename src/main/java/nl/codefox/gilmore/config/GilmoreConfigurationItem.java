@@ -9,8 +9,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface GilmoreConfigurationItem {
 
-	public String key();
+	String key();
 
-	public Class<?> type();
+	Class<?> type();
 
 }

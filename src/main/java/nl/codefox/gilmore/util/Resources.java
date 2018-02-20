@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 public class Resources {
 
 	private static final String FONT_URI = "/cocogoose.otf";
-	private static Map<String, String> SQL = new HashMap<String, String>();
+	private static Map<String, String> SQL = new HashMap<>();
 	private static Font font;
 
 	static {
@@ -36,13 +36,13 @@ public class Resources {
 			String line;
 			while ((line = br.readLine()) != null) {
 				try (BufferedReader fr = new BufferedReader(new InputStreamReader(loader.getResourceAsStream("sql/" + line)))) {
-					String sql = "";
+					StringBuilder sql = new StringBuilder();
 					String sqlLine;
 					while ((sqlLine = fr.readLine()) != null) {
-						sql += sqlLine + "\n";
+						sql.append(sqlLine).append("\n");
 					}
 
-					SQL.put(line, sql);
+					SQL.put(line, sql.toString());
 					Logging.debug("[Resources] SQL '" + line + "' loaded in");
 				}
 			}
@@ -63,15 +63,15 @@ public class Resources {
 			String[] strarr = str.split("/");
 			if (strarr.length > 1) {
 				try (BufferedReader fr = new BufferedReader(new InputStreamReader(loader.getResourceAsStream(str)))) {
-					String sql = "";
+					StringBuilder sql = new StringBuilder();
 					String sqlLine;
 					while ((sqlLine = fr.readLine()) != null) {
-						sql += sqlLine + "\n";
+						sql.append(sqlLine).append("\n");
 					}
 
 					String SQLName = strarr[strarr.length - 1];
 
-					SQL.put(SQLName, sql);
+					SQL.put(SQLName, sql.toString());
 					Logging.debug("[Resources] SQL '" + SQLName + "' loaded in");
 				} catch (IOException e) {
 					e.printStackTrace();

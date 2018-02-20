@@ -25,33 +25,33 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class GoogleSheetsUtil {
 	/*
-     * 
-     * 
-     * 
-     * 
-     * 
-     * 
-     * 
-     * 
-     * Go no futher. 
-     * Everything beyond is terrible.
-     * I hate google API's.
-     * 
-     * 
-     * 
-     * 
-     * 
-     * 
-     * 
-     * 
-     * 
-     * 
-     */
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 * Go no futher.
+	 * Everything beyond is terrible.
+	 * I hate google API's.
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 */
 
 	static final Charset UTF_8 = Charset.forName("UTF-8");
 	/**
@@ -72,7 +72,7 @@ public class GoogleSheetsUtil {
 	 * ~/.credentials/sheets.googleapis.com-java-quickstart.json
 	 */
 	private static final List<String> SCOPES =
-			Arrays.asList(SheetsScopes.SPREADSHEETS_READONLY);
+			Collections.singletonList(SheetsScopes.SPREADSHEETS_READONLY);
 	/**
 	 * Global instance of the HTTP transport.
 	 */

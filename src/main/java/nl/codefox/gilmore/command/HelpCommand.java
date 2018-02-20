@@ -6,7 +6,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import nl.codefox.gilmore.Gilmore;
 import nl.codefox.gilmore.util.StringUtil;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,7 +24,7 @@ public class HelpCommand extends GilmoreCommand {
 
 	@Override
 	public List<String> getAliases() {
-		return Arrays.asList("!help");
+		return Collections.singletonList("!help");
 	}
 
 	@Override
@@ -67,13 +67,11 @@ public class HelpCommand extends GilmoreCommand {
 				label = "!" + label;
 			}
 
-			boolean commandExists = false;
-			
 			builder.append(String.format("[%s] ```Here's more information about the '%s' command;\n", author.getAsMention(), label));
-			commandExists = getUsage(label, Gilmore.getCommandListener().getCommands(), builder);
+			boolean commandExists = getUsage(label, Gilmore.getCommandListener().getCommands(), builder);
 			builder.append("```");
-			
-			if(!commandExists) {
+
+			if (!commandExists) {
 				builder = new StringBuilder();
 				builder.append(String.format("[%s] ```The '%s' command does not exist (yet)```", author.getAsMention(), label));
 			}

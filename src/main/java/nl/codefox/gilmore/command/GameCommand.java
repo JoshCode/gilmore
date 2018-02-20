@@ -4,7 +4,7 @@ import nl.codefox.gilmore.command.game.*;
 import nl.codefox.gilmore.database.GilmoreDatabase;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class GameCommand extends GilmoreCommand {
@@ -35,7 +35,7 @@ public class GameCommand extends GilmoreCommand {
 
 	@Override
 	public List<String> getAliases() {
-		return Arrays.asList("!game");
+		return Collections.singletonList("!game");
 	}
 
 	@Override

@@ -7,6 +7,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import nl.codefox.gilmore.util.Logging;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class UnmuteCommand extends GilmoreCommand {
@@ -23,7 +24,7 @@ public class UnmuteCommand extends GilmoreCommand {
 
 	@Override
 	public List<String> getAliases() {
-		return Arrays.asList("!unmute");
+		return Collections.singletonList("!unmute");
 	}
 
 	@Override

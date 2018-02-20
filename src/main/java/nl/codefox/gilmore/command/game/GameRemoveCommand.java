@@ -9,6 +9,7 @@ import nl.codefox.gilmore.database.GilmoreDatabase;
 import nl.codefox.gilmore.util.StringUtil;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class GameRemoveCommand extends GilmoreCommand {
@@ -25,7 +26,7 @@ public class GameRemoveCommand extends GilmoreCommand {
 
 	@Override
 	public List<String> getAliases() {
-		return Arrays.asList("!game remove");
+		return Collections.singletonList("!game remove");
 	}
 
 	@Override

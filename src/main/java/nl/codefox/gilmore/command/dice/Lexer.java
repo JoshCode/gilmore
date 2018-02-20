@@ -41,13 +41,13 @@ public class Lexer {
 			System.out.println(token);
 	}
 
-	public static enum TokenType {
+	public enum TokenType {
 		COMMENT("\\[([^\\]]+)\\]"), DIE("(\\d+)?[dD](\\d+)"), REROLLONCE("ro<(\\d+)"), REROLL("r<(\\d+)"), EXPLODING("\\!"), KEEPHIGH("k(h?)(\\d+)"), KEEPLOW("kl(\\d+)"),
 		CRITSUCCESS("cs>(\\d+)"), CRITFAIL("cf<(\\d+)"), MULTIPLICATION("\\*"), NEGATION("\\+?\\-"), ADDITION("\\+"), ATOMIC("(\\d+)"), GIBBERISH("[a-zA-Z]+"), WHITESPACE("(\\s+)");
 
 		public final String pattern;
 
-		private TokenType(String pattern) {
+		TokenType(String pattern) {
 			this.pattern = pattern;
 		}
 	}

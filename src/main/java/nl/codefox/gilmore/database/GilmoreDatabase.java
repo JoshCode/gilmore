@@ -52,7 +52,7 @@ public class GilmoreDatabase {
 
 	public static List<Game> getGames() {
 		Logging.debug("[GilmoreDatabase] Getting games from database");
-		List<Game> games = new ArrayList<Game>();
+		List<Game> games = new ArrayList<>();
 
 		try {
 			PreparedStatement stmt = getConnection().prepareStatement(Resources.getSQL("SELECT_GAMES"));

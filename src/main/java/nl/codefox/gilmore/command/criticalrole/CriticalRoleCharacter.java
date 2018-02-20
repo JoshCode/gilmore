@@ -5,9 +5,9 @@ import java.util.List;
 
 public class CriticalRoleCharacter {
 
-	private static List<CriticalRoleCharacter> characters = new ArrayList<CriticalRoleCharacter>();
+	private static List<CriticalRoleCharacter> characters = new ArrayList<>();
 
-	private List<String> aliases = new ArrayList<String>();
+	private List<String> aliases = new ArrayList<>();
 	private String resource = "?";
 	private String name = "?";
 	private String title = "?";

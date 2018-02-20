@@ -14,7 +14,7 @@ import java.util.List;
 
 public class Game {
 
-	private List<String> users = new ArrayList<String>();
+	private List<String> users = new ArrayList<>();
 
 	private String name;
 
@@ -53,7 +53,7 @@ public class Game {
 		StringBuilder mentions = new StringBuilder();
 
 		Iterator<String> it = users.iterator();
-		while(it.hasNext()) {
+		while (it.hasNext()) {
 			String uid = it.next();
 			User user = Gilmore.getJDA().getUserById(uid);
 			String mention;

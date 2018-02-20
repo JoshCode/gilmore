@@ -5,7 +5,7 @@ import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import nl.codefox.gilmore.config.GilmoreConfiguration;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class AboutCommand extends GilmoreCommand {
@@ -17,7 +17,7 @@ public class AboutCommand extends GilmoreCommand {
 
 	@Override
 	public List<String> getAliases() {
-		return Arrays.asList("!about");
+		return Collections.singletonList("!about");
 	}
 
 	@Override

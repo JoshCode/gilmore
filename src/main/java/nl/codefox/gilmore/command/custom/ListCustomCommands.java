@@ -6,7 +6,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import nl.codefox.gilmore.command.CustomCommand;
 import nl.codefox.gilmore.command.GilmoreCommand;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class ListCustomCommands extends GilmoreCommand {
@@ -18,7 +18,7 @@ public class ListCustomCommands extends GilmoreCommand {
 
 	@Override
 	public List<String> getAliases() {
-		return Arrays.asList("!custom list");
+		return Collections.singletonList("!custom list");
 	}
 
 	@Override
