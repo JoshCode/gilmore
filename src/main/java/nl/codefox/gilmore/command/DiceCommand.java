@@ -48,8 +48,11 @@ public class DiceCommand extends GilmoreCommand {
 		if (args.length > 0 && args[0].equalsIgnoreCase("stats")) {
 			StringBuilder builder = new StringBuilder();
 			Dice dice = new Dice("4d6kh3");
+		
 			for (int i = 0; i < 6; i++) {
-				builder.append(String.format("%s = %d\n", dice.getBreakdown(), dice.roll()));
+				int result = dice.roll();
+				String breakdown = dice.getBreakdown();
+				builder.append(String.format("%s = %d\n", breakdown, result));
 			}
 
 			channel.sendMessage(builder.toString()).queue();
