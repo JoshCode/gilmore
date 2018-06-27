@@ -8,7 +8,7 @@ import java.util.Properties;
 
 public class GilmoreConfiguration {
 
-	public static final boolean TESTING = false;
+	private Boolean debug = false;
 
 	private static final String CONFIGURATION_PATH = "conf/gilmore.conf";
 	private static GilmoreConfiguration instance;
@@ -19,7 +19,6 @@ public class GilmoreConfiguration {
 	private String databasePassword = "password";
 	private String databaseUsername = "username";
 	private String databaseName = "GILMORE";
-	private Boolean debug = false;
 	private String logPath = "logs/gilmore.log";
 	private File logLocation;
 	private String botToken = "token";
@@ -114,7 +113,7 @@ public class GilmoreConfiguration {
 	}
 
 	public String getBotToken() {
-		if (TESTING)
+		if (isDebug())
 			return botTokenTesting;
 		return botToken;
 	}
