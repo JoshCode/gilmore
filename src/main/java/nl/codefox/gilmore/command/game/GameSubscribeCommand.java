@@ -44,7 +44,7 @@ public class GameSubscribeCommand extends GilmoreCommand {
 		String name = StringUtil.arrayToString(args, 0, " ");
 
 		if (!GameCommand.gameExists(name)) {
-			channel.sendMessage(String.format("[%s] `This game doesn't exist, but it could. Try !game create '%s'`", author.getAsMention(), name)).queue();
+			channel.sendMessage(String.format("[%s] `This game doesn't exist, but it could. Ask an @Administrator to !game create '%s'`", author.getAsMention(), name)).queue();
 		} else {
 			Game game = GameCommand.getGame(name);
 
