@@ -1,11 +1,15 @@
 package nl.codefox.gilmore.command;
 
+import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import nl.codefox.gilmore.Gilmore;
+import nl.codefox.gilmore.util.GilEmbedBuilder;
 import nl.codefox.gilmore.util.StringUtil;
 
+import java.awt.*;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,66 +39,102 @@ public class HelpCommand extends GilmoreCommand {
 	@Override
 	public void process(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
 
-		StringBuilder builder = new StringBuilder();
-
 		if (args.length == 0) {
-			builder.append(String.format("[%s] ```Here is a list of all avaliable commands;\n", author.getAsMention()));
+			EmbedBuilder eb = new GilEmbedBuilder();
+
+			StringBuilder descBuilder = eb.getDescriptionBuilder();
+			descBuilder.append("Here's a list of all available commands");
 
 			for (GilmoreCommand c : Gilmore.getCommandListener().getCommands()) {
-				if (c.getSubCommands().size() > 0) {
+				StringBuilder titleBuilder = new StringBuilder();
+				if (!c.getSubCommands().isEmpty()) {
 					List<String> subCommands = c.getSubCommands().stream().map(sub -> sub.getAliases().get(0).replace(c.getAliases().get(0) + " ", "")).collect(Collectors.toList());
 
-					builder.append("> " + c.getAliases().get(0) + " [");
-					builder.append(StringUtil.listToString(subCommands, ", "));
-					builder.append("]\n");
+					titleBuilder.append(c.getAliases().get(0) + " [");
+					titleBuilder.append(StringUtil.listToString(subCommands, ", "));
+					titleBuilder.append("]");
 				} else {
-					builder.append("> " + c.getAliases().get(0) + "\n");
+					titleBuilder.append(c.getAliases().get(0));
 				}
-				builder.append("\tDescription : " + c.getDescription() + "\n");
+				eb.addField(titleBuilder.toString(), c.getDescription(), false);
 			}
 
-			if (!CustomCommand.getCommands().isEmpty())
-				builder.append("\n*** Custom commands ***\n");
-			for (String c : CustomCommand.getCommands()) {
-				builder.append("> " + c + "\n");
+			if (!CustomCommand.getCommands().isEmpty()) {
+				if (CustomCommand.getCommands().size() == 1) {
+					eb.addField("Custom Commands", "There is **1** custom command, type `!custom list` to see them!", false);
+				} else {
+					eb.addField("Custom Commands", "There are **" + CustomCommand.getCommands().size() + "** custom commands, type `!custom list` to see them!", false);
+				}
 			}
 
-			builder.append("```");
+			MessageBuilder mb = new MessageBuilder();
+			mb.setEmbed(eb.build());
+			mb.append(String.format("[%s]", author.getAsMention()));
+			channel.sendMessage(mb.build()).queue();
 		} else {
+			EmbedBuilder eb = new GilEmbedBuilder();
 			String label = StringUtil.arrayToString(args, 0, " ");
-
 			if (!label.startsWith("!")) {
 				label = "!" + label;
 			}
 
-			builder.append(String.format("[%s] ```Here's more information about the '%s' command;\n", author.getAsMention(), label));
-			boolean commandExists = getUsage(label, Gilmore.getCommandListener().getCommands(), builder);
-			builder.append("```");
+			if (!commandExists(label)) {
+				StringBuilder descBuilder = eb.getDescriptionBuilder();
+				descBuilder.append(String.format("The '%s' command does not exist (yet)", label));
+				eb.setColor(new Color(255, 0, 0));
+			} else {
+				StringBuilder descBuilder = eb.getDescriptionBuilder();
+				descBuilder.append("Here's more information about **")
+						.append(label)
+						.append("**!");
 
-			if (!commandExists) {
-				builder = new StringBuilder();
-				builder.append(String.format("[%s] ```The '%s' command does not exist (yet)```", author.getAsMention(), label));
+				getUsage(label, Gilmore.getCommandListener().getCommands(), eb);
 			}
+
+			MessageBuilder mb = new MessageBuilder();
+			mb.setEmbed(eb.build());
+			mb.append(String.format("[%s]", author.getAsMention()));
+			channel.sendMessage(mb.build()).queue();
 		}
-		channel.sendMessage(builder.toString()).queue();
 	}
 
-	public boolean getUsage(String label, List<GilmoreCommand> command, StringBuilder builder) {
-		for (GilmoreCommand c : command) {
+	private boolean getUsage(String label, List<GilmoreCommand> commands, EmbedBuilder embedBuilder) {
+		for (GilmoreCommand c : commands) {
 			if (c.getAliases().contains(label)) {
-				builder.append("> " + label + "\n");
-				builder.append("\tAliases     : " + StringUtil.listToString(c.getAliases(), ", ") + "\n");
-				builder.append("\tDescription : " + c.getDescription() + "\n");
-				builder.append("\tUsage       : " + c.getUsage() + "\n");
-				builder.append("\tPermission  : " + (c.getRolePermission() == null ? "None" : c.getRolePermission().toString()).replace("[", "").replace("]", "") + "\n\n");
+				embedBuilder.addField("Aliases", StringUtil.listToString(c.getAliases(), ", "), false);
+				embedBuilder.addField("Description", c.getDescription(), false);
+				embedBuilder.addField("Usage", c.getUsage(), false);
+
+				List<String> subCommands = c.getSubCommands().stream().map(sub -> sub.getAliases().get(0).replace(c.getAliases().get(0) + " ", "")).collect(Collectors.toList());
+				embedBuilder.addField("Subcommands", StringUtil.listToString(subCommands, ", "), false);
+
+				embedBuilder.addField("Permission", (c.getRolePermission() == null ? "None" : c.getRolePermission().toString()).replace("[", "").replace("]", ""), false);
+				return true;
+			} else if (commandExists(label, c.getSubCommands()))
+				return true;
+		}
+		return false;
+	}
+
+	private boolean commandExists(String label) {
+		for (GilmoreCommand c : Gilmore.getCommandListener().getCommands()) {
+			if (c.getAliases().contains(label)) {
 				return true;
 			} else {
-				if (getUsage(label, c.getSubCommands(), builder)) {
+				if (commandExists(label, c.getSubCommands()))
 					return true;
-				}
 			}
 		}
 		return false;
 	}
 
+	private boolean commandExists(String label, List<GilmoreCommand> commands) {
+		for (GilmoreCommand c : commands) {
+			if (c.getAliases().contains(label)) {
+				return true;
+			} else if (commandExists(label, c.getSubCommands()))
+				return true;
+		}
+		return false;
+	}
 }

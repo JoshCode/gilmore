@@ -32,16 +32,15 @@ public class GilmoreDatabase {
 				Logging.debug("[GilmoreDatabase] \tdatabaseUsername = " + config.getDatabaseUsername());
 				Logging.debug("[GilmoreDatabase] \tdatabasePassword = " + config.getDatabasePassword());
 
-				connection = DriverManager.getConnection(
-						String.format("jdbc:%s://%s:%d/%s?useSSL=false", config.getDatabaseManagementSystem(), config.getDatabaseHostname(),
-								config.getDatabasePort(), config.getDatabaseName()),
-						config.getDatabaseUsername(), config.getDatabasePassword()
-				);
+				String connUrl = String.format("jdbc:%s://%s:%d/%s?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Europe/Amsterdam", config.getDatabaseManagementSystem(), config.getDatabaseHostname(), config.getDatabasePort(), config.getDatabaseName());
+
+				connection = DriverManager.getConnection(connUrl, config.getDatabaseUsername(), config.getDatabasePassword());
 
 				Logging.debug("[GilmoreDatabase] Successful connection to database!");
 			}
 
 			Logging.debug("[GilmoreDatabase] Returning connection to database");
+
 			return connection;
 		} catch (Exception ex) {
 			Logging.error("[GilmoreDatabase] [GilmoreDatabase] Could not make connection to the database");

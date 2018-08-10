@@ -54,8 +54,7 @@ public class GameAddSubAddCommand extends GilmoreCommand {
 	public void process(String command, String[] args, TextChannel channel, User author, MessageReceivedEvent event) {
 
 		String name = mainCommand.getSelectedGame();
-		ArrayList<String> userIDs = new ArrayList<>();
-		userIDs.addAll(Arrays.asList(args));
+		ArrayList<String> userIDs = new ArrayList<>(Arrays.asList(args));
 
 		if (!GameCommand.gameExists(name)) {
 			channel.sendMessage(String.format("[%s] `This game doesn't exist, but it could. Try !game create '%s'`", author.getAsMention(), name)).queue();
